@@ -17,20 +17,20 @@ public class AttemptRequestTest {
     @Test
     public void canMakeAttemptRequest() {
         UUID randID = randomUUID();
-        AttemptRequest request = new AttemptRequest("DoeJ24", randID, "L1");
-        assertEquals("DoeJ24", request.getUserName());
-        assertEquals(randID, request.getCourseID());
-        assertEquals("L1", request.getObjective());
+        AttemptRequestRequest request = new AttemptRequestRequest("DoeJ24", randID, "L1");
+        assertEquals("DoeJ24", request.userName);
+        assertEquals(randID, request.courseID);
+        assertEquals("L1", request.objective);
     }
 
     @Test
-    public void canMakeAttemptResponse() {
+    public void canMakeAttemptRequestResponse() {
         UUID randID = randomUUID();
-        AttemptResponse response = new AttemptResponse("DoeJ24", randID, "L1", "pending");
-        assertEquals("DoeJ24", response.getUserName());
-        assertEquals(randID, response.getCourseID());
-        assertEquals("L1", response.getObjective());
-        assertEquals("pending", response.getAttemptStatus());
+        AttemptRequestResponse response = new AttemptRequestResponse("DoeJ24", randID, "L1", "pending");
+        assertEquals("DoeJ24", response.userName);
+        assertEquals(randID, response.courseID);
+        assertEquals("L1", response.objective);
+        assertEquals("pending", response.attemptStatus);
     }
 
 
