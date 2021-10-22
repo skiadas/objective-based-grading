@@ -33,6 +33,16 @@ public class AttemptRequestTest {
         assertEquals("pending", response.attemptStatus);
     }
 
+    @Test
+    public void HandleRequestAndSeeStudentValidity(){
+        UUID randID = randomUUID();
+        AttemptRequestRequest request = new AttemptRequestRequest("DoeJ24", randID, "L1");
+        Response response = ARInteractor.handle(request);
+        ErrorResponse errResponse = new ErrorResponse("Invalid Student");
+        assertEquals(errResponse, response);
+
+    }
+
 
 
 }
