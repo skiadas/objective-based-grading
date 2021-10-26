@@ -1,23 +1,36 @@
 package obg;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Course {
 
-    static UUID CourseID;
-    private ArrayList Students;
-    private ArrayList Objectives;
-    public Course(UUID courseID,ArrayList students,ArrayList objectives) {
-        Students=students;
-        Objectives= objectives;
-        CourseID=courseID;
+    public UUID courseID;
+    public String courseName;
+    public ArrayList<String> students;
+    public ArrayList<String> objectives;
+
+    public Course(UUID courseID, String courseName, ArrayList<String> students, ArrayList<String> objectives) {
+        this.students = students;
+        this.objectives = objectives;
+        this.courseID = courseID;
+        this.courseName = courseName;
 
     }
-    public Boolean checkValidStudent(String UserName){
 
-        return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course that = (Course) o;
+        return courseID == that.courseID;
     }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(courseID, courseName, students, objectives);
+    }
+
 }
+

@@ -2,6 +2,7 @@ package obg;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
@@ -9,14 +10,9 @@ import static org.junit.Assert.*;
 
 public class AttemptRequestTest {
 
-    private UUID randID= randomUUID();
+    public UUID randID = randomUUID();
+    public static final UUID testUUID = new UUID(0x6ba7b8109dad11d1L, 0x80b400c04fd430c8L);
     private AttemptRequestRequest request = new AttemptRequestRequest("DoeJ24", randID, "L1");
-
-    @Test
-    public void getInstructortest () {
-
-
-    }
 
     @Test
     public void canMakeAttemptRequest() {
@@ -35,19 +31,18 @@ public class AttemptRequestTest {
     }
 
     @Test
-    public void HandleRequestAndSeeStudentValidity(){
-        Response response = ARInteractor.handle(request);
-        ErrorResponse errResponse = new ErrorResponse("Invalid Student");
-        assertEquals(errResponse, response);
+    public void CheckIsCourseValid() {
+        ArrayList<String> students = new ArrayList();
+        ArrayList<String> objectives = new ArrayList();
+        Course newCourse = new Course(testUUID, "course2", students, objectives);
+        CourseTestGateway testGateway = new CourseTestGateway(newCourse);
+        Course course1 = new Course(randID, "courseName", students, objectives );
+        Course course2 = new Course(testUUID, "course2", students, objectives );
+        assertTrue(testGateway.isValidCourse(course2));
+        assertFalse(testGateway.isValidCourse(course1));
 
     }
-    @Test
-    public void HandleRequestAndVerifyCourseInvalid(){
-        Response response = ARInteractor.handle(request);
-        ErrorResponse errResponse = new ErrorResponse("Invalid Course");
-        assertEquals(errResponse,response);
 
-    }
 
 
 }
