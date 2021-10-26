@@ -19,6 +19,13 @@ public class Course {
 
     }
 
+    public Course(UUID courseID, String courseName) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        students = new ArrayList<>();
+        objectives = new ArrayList<>();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

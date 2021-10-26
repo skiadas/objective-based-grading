@@ -1,5 +1,7 @@
 package obg;
 
+import java.util.UUID;
+
 public class CourseTestGateway implements Gateway{
     private Course providedCourse;
 
@@ -14,7 +16,8 @@ public class CourseTestGateway implements Gateway{
     }
 
 
-
-
-
+    @Override
+    public Course getCourse(UUID courseId) {
+        return null;
+    }
 }

@@ -2,7 +2,6 @@ package obg;
 
 import org.junit.Test;
 
-import java.util.EnumMap;
 import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
@@ -14,7 +13,7 @@ public class ViewTargetGradeCourseTests {
 
     @Test
     public void canCreateCourseObject() {
-        assertEquals("CS321", course.getName());
+        assertEquals("CS321", course.getCourseName());
     }
 
     @Test

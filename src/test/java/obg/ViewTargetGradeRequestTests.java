@@ -10,8 +10,7 @@ public class ViewTargetGradeRequestTests {
 
     @Test
     public void canCreateViewTargetGradeRequest() {
-        ViewTargetGradeRequest request = new ViewTargetGradeRequest("youngm22", UUID.randomUUID(), "A");
-        assertEquals("youngm22", request.studentId);
+        ViewTargetGradeRequest request = new ViewTargetGradeRequest(UUID.randomUUID(), "A");
         assertEquals("A", request.grade);
     }
 }
