@@ -8,22 +8,22 @@ public class ObjectiveGradeResponse {
     UUID courseId;
     String gradeStatus;
 
-    public ObjectiveGradeResponse(String studentId, UUID courseId, String gradeStatus){
+    public ObjectiveGradeResponse(String studentId, UUID courseId, String gradeStatus) {
         this.studentId = studentId;
         this.courseId = courseId;
         this.gradeStatus = gradeStatus;
     }
 
 
-    public String getStudentId(){
+    public String getStudentId() {
         return studentId;
     }
 
-    public UUID getCourseId(){
+    public UUID getCourseId() {
         return courseId;
     }
 
-    public String getGradeStatus(){
+    public String getGradeStatus() {
         return gradeStatus;
     }
 

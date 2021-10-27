@@ -2,7 +2,7 @@ package obg;
 
 import java.util.Objects;
 
-public class ErrorResponse implements Response{
+public class ErrorResponse implements Response {
     private String errMessage;
 
     public ErrorResponse(String errMessage) {
@@ -13,11 +13,11 @@ public class ErrorResponse implements Response{
         return new ErrorResponse(errorMessage);
     }
 
-    public static ErrorResponse invalidStudentError(){
+    public static ErrorResponse invalidStudentError() {
         return createErrorResponse("Invalid Student");
     }
 
-    public static ErrorResponse invalidCourseError(){
+    public static ErrorResponse invalidCourseError() {
         return createErrorResponse("Invalid Course");
     }
 

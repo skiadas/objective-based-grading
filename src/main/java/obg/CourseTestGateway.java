@@ -2,7 +2,7 @@ package obg;
 
 import java.util.UUID;
 
-public class CourseTestGateway implements Gateway{
+public class CourseTestGateway implements Gateway {
     private Course providedCourse;
 
     public CourseTestGateway(Course providedCourse) {
@@ -10,8 +10,7 @@ public class CourseTestGateway implements Gateway{
     }
 
 
-
-    public boolean isValidCourse(Course requestCourse){
+    public boolean isValidCourse(Course requestCourse) {
         return requestCourse.equals(providedCourse);
     }
 

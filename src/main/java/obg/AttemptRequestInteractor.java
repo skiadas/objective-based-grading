@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class AttemptRequestInteractor {
 
-    public static Response handle(AttemptRequestRequest request){
+    public static Response handle(AttemptRequestRequest request) {
         String requestUserName = request.userName;
         CourseTestGateway studentGateway = new CourseTestGateway(null);
         AttemptRequestResponse attemptResponse = new AttemptRequestResponse("", UUID.randomUUID(), "", "");

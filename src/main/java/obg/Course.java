@@ -35,7 +35,7 @@ public class Course {
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return Objects.hash(courseID, courseName, students, objectives);
     }
 

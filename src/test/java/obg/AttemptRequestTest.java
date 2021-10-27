@@ -36,13 +36,12 @@ public class AttemptRequestTest {
         ArrayList<String> objectives = new ArrayList();
         Course newCourse = new Course(testUUID, "course2", students, objectives);
         CourseTestGateway testGateway = new CourseTestGateway(newCourse);
-        Course course1 = new Course(randID, "courseName", students, objectives );
-        Course course2 = new Course(testUUID, "course2", students, objectives );
+        Course course1 = new Course(randID, "courseName", students, objectives);
+        Course course2 = new Course(testUUID, "course2", students, objectives);
         assertTrue(testGateway.isValidCourse(course2));
         assertFalse(testGateway.isValidCourse(course1));
 
     }
-
 
 
 }

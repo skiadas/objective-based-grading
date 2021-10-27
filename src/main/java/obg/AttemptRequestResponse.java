@@ -2,7 +2,7 @@ package obg;
 
 import java.util.UUID;
 
-public class AttemptRequestResponse implements Response{
+public class AttemptRequestResponse implements Response {
 
     public final String userName;
     public final UUID courseID;

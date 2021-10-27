@@ -8,8 +8,7 @@ public class AttemptSummary {
     List<Integer> list = new ArrayList<>();
 
 
-
-    public int addAttempt(int score){
+    public int addAttempt(int score) {
         return score;
     }
 }

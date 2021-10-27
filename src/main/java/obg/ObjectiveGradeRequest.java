@@ -12,11 +12,11 @@ public class ObjectiveGradeRequest {
         this.courseId = courseId;
     }
 
-    public String getStudentId(){
+    public String getStudentId() {
         return studentId;
     }
 
-    public UUID getCourseId(){
+    public UUID getCourseId() {
         return courseId;
     }
 }

@@ -23,7 +23,11 @@ public class ObjectiveMap {
 
     }
 
-    public int getGrade(){return grade;}
+    public int getGrade() {
+        return grade;
+    }
 
-    public String getStudentId() {return studentId;}
+    public String getStudentId() {
+        return studentId;
+    }
 }
