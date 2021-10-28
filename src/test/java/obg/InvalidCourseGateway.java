@@ -1,8 +1,10 @@
 package obg;
 
+import obg.mocks.GatewayTestDummy;
+
 import java.util.UUID;
 
-public class InvalidCourseGateway implements Gateway {
+public class InvalidCourseGateway extends GatewayTestDummy {
     UUID providedCourseId;
 
     @Override

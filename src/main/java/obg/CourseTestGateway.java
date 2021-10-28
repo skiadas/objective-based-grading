@@ -1,5 +1,6 @@
 package obg;
 
+import java.util.List;
 import java.util.UUID;
 
 public class CourseTestGateway implements Gateway {
@@ -23,5 +24,13 @@ public class CourseTestGateway implements Gateway {
     @Override
     public boolean isValidLetterGrade(String letterGrade) {
         return false;
+    }
+
+    public Instructor getInstructor(UUID instructorId) {
+        return null;
+    }
+
+    public List<Course> getCoursesTaughtBy(Instructor instructor) {
+        return null;
     }
 }

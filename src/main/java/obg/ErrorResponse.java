@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class ErrorResponse implements Response {
     private String errMessage;
+
     public ErrorResponse(String errMessage) {
         this.errMessage = errMessage;
     }
@@ -22,6 +23,9 @@ public class ErrorResponse implements Response {
 
     public static ErrorResponse invalidLetterGradeError() { return createErrorResponse("Invalid lettergrade"); }
 
+    public static ErrorResponse invalidInstructor() {
+        return createErrorResponse("Invalid Instructor");
+    }
 
     @Override
     public boolean equals(Object o) {
