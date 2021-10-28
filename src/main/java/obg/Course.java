@@ -1,6 +1,7 @@
 package obg;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,13 +11,13 @@ public class Course {
     public String courseName;
     public ArrayList<String> students;
     public ArrayList<String> objectives;
+    public HashMap<String, Object> gradeBreaks = new HashMap<>();
 
     public Course(UUID courseID, String courseName, ArrayList<String> students, ArrayList<String> objectives) {
         this.students = students;
         this.objectives = objectives;
         this.courseID = courseID;
         this.courseName = courseName;
-
     }
 
     public Course(UUID courseID, String courseName) {

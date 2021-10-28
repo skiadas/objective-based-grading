@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class ErrorResponse implements Response {
     private String errMessage;
-
     public ErrorResponse(String errMessage) {
         this.errMessage = errMessage;
     }
@@ -20,6 +19,8 @@ public class ErrorResponse implements Response {
     public static ErrorResponse invalidCourseError() {
         return createErrorResponse("Invalid Course");
     }
+
+    public static ErrorResponse invalidLetterGradeError() { return createErrorResponse("Invalid lettergrade"); }
 
 
     @Override

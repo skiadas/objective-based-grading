@@ -9,4 +9,9 @@ public class ValidCourseGateway implements Gateway {
     public Course getCourse(UUID courseId) {
         return course;
     }
+
+    @Override
+    public boolean isValidLetterGrade(String letterGrade) {
+        return false;
+    }
 }

@@ -5,10 +5,10 @@ import java.util.UUID;
 public class ViewTargetGradeRequest {
 
     public final UUID courseId;
-    public final String grade;
+    public final String letterGrade;
 
     public ViewTargetGradeRequest(UUID courseId, String letterGrade) {
         this.courseId = courseId;
-        this.grade = letterGrade;
+        this.letterGrade = letterGrade;
     }
 }

@@ -2,12 +2,9 @@ package obg;
 
 import java.util.UUID;
 
-public class InvalidCourseGateway implements Gateway {
-    UUID providedCourseId;
-
+public class TargetGradeRequirementsGateway implements Gateway{
     @Override
     public Course getCourse(UUID courseId) {
-        providedCourseId = courseId;
         return null;
     }
 

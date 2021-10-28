@@ -19,4 +19,9 @@ public class CourseTestGateway implements Gateway {
     public Course getCourse(UUID courseId) {
         return null;
     }
+
+    @Override
+    public boolean isValidLetterGrade(String letterGrade) {
+        return false;
+    }
 }

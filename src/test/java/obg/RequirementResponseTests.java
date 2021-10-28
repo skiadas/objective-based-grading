@@ -13,5 +13,4 @@ public class RequirementResponseTests {
         assertEquals("A", response.grade);
     }
 
-
 }
