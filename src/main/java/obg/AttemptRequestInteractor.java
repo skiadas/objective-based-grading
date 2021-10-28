@@ -22,12 +22,14 @@ public class AttemptRequestInteractor {
         Course course1 = new Course(request.courseID,null,null,null);
         Student student1 = new Student(null, request.userName, null);
         if(!gateway.isValidCourse(course1)){
-            return ErrorResponse.invalidCourseError();
+            return ErrorResponse.invalidCourse();
         }
         else if(!gateway.isValidStudent(student1)) {
-            return ErrorResponse.invalidStudentError();
+            return ErrorResponse.invalidStudent();
         }
-
+        else if(!gateway.isValidObjective(request.objective)) {
+            return ErrorResponse.invalidObjective();
+        }
         return attemptResponse;
     }
 }

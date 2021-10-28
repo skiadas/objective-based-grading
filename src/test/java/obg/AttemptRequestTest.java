@@ -15,9 +15,9 @@ public class AttemptRequestTest {
     public UUID randID;
     public UUID testUUID;
     private AttemptRequestRequest request;
-    private List<Student> students;
     private ArrayList<String> objectives;
     private List<Course> courses;
+    private List<Student> students;
 
     @Before
     public void setUp() throws Exception {
@@ -28,14 +28,14 @@ public class AttemptRequestTest {
     }
 
     @Test
-    public void canMakeAttemptRequest() {
+    public void canMakeAttemptRequestTest() {
         assertEquals("DoeJ24", request.userName);
         assertEquals(randID, request.courseID);
         assertEquals("L1", request.objective);
     }
 
     @Test
-    public void canMakeAttemptRequestResponse() {
+    public void canMakeAttemptRequestResponseTest() {
         AttemptRequestResponse response = new AttemptRequestResponse("DoeJ24", randID, "L1", "pending");
         assertEquals("DoeJ24", response.userName);
         assertEquals(randID, response.courseID);
@@ -44,25 +44,30 @@ public class AttemptRequestTest {
     }
 
     @Test
-    public void CheckInvalidCourseError(){
+    public void CheckInvalidCourseErrorTest(){
         List<Course> courses = makeCourses();
         CourseProvidingGateway testGateway = new CourseProvidingGateway(courses);
         AttemptRequestInteractor interactor = new AttemptRequestInteractor(testGateway);
         Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.invalidCourseError(),response);
+        assertEquals(ErrorResponse.invalidCourse(),response);
     }
 
     @Test
-    public void checkInvalidStudentError(){
-        List<Student> students = makeStudents();
-        List<Course> courseList = new ArrayList<>();
-        Course course1 = new Course( new UUID(0x6ba7b8109dad11d1L, 0x80b400c04fd430c8L), null, null, null);
-        courseList.add(course1);
-        AttemptRequestRequest request1 = new AttemptRequestRequest("joe", new UUID(0x6ba7b8109dad11d1L, 0x80b400c04fd430c8L), "S5");
-        InvalidStudentGateway gateway = new InvalidStudentGateway(students, courseList);
+    public void checkInvalidStudentErrorTest(){
+        students = makeStudents();
+        InvalidStudentGateway gateway = new InvalidStudentGateway(students);
         AttemptRequestInteractor interactor = new AttemptRequestInteractor(gateway);
-        Response response = interactor.handle(request1);
-        assertEquals(ErrorResponse.invalidStudentError(), response);
+        Response response = interactor.handle(request);
+        assertEquals(ErrorResponse.invalidStudent(), response);
+    }
+
+    @Test
+    public void checkInvalidObjectiveTest(){
+        objectives.add("F5");
+        InvalidObjectiveGateway gateway = new InvalidObjectiveGateway(objectives);
+        AttemptRequestInteractor interactor = new AttemptRequestInteractor(gateway);
+        Response response = interactor.handle(request);
+        assertEquals(ErrorResponse.invalidObjective(), response);
     }
 
 

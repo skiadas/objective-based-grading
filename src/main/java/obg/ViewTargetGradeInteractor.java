@@ -12,9 +12,9 @@ public class ViewTargetGradeInteractor {
         Course course = gateway.getCourse(request.courseId);
         lettergrade = request.letterGrade;
         if (course == null) {
-            return ErrorResponse.invalidCourseError();
+            return ErrorResponse.invalidCourse();
         } else if (!gateway.isValidLetterGrade(request.letterGrade)) {
-            return ErrorResponse.invalidLetterGradeError();
+            return ErrorResponse.invalidLetterGrade();
         }
         return new RequirementsResponse(request.letterGrade);
     }

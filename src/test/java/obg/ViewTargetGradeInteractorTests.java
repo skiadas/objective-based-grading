@@ -22,7 +22,7 @@ public class ViewTargetGradeInteractorTests {
         InvalidCourseGateway gateway = new InvalidCourseGateway();
         ViewTargetGradeInteractor interactor = new ViewTargetGradeInteractor(gateway);
         Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.invalidCourseError(), response);
+        assertEquals(ErrorResponse.invalidCourse(), response);
         assertEquals(request.courseId, gateway.providedCourseId);
     }
 
@@ -31,7 +31,7 @@ public class ViewTargetGradeInteractorTests {
         invalidLetterGradeGateway gateway = new invalidLetterGradeGateway();
         ViewTargetGradeInteractor interactor = new ViewTargetGradeInteractor(gateway);
         Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.invalidLetterGradeError(), response);
+        assertEquals(ErrorResponse.invalidLetterGrade(), response);
         assertEquals(request.letterGrade, gateway.providedLetterGrade);
     }
 

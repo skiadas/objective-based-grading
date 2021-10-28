@@ -15,4 +15,6 @@ public interface Gateway {
     boolean isValidCourse(Course course1);
 
     boolean isValidStudent(Student student);
+
+    boolean isValidObjective(String objective);
 }

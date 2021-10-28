@@ -8,9 +8,8 @@ public class InvalidStudentGateway extends GatewayTestDummy {
     List<Student> students;
     List<Course> courses;
 
-    public InvalidStudentGateway(List<Student> students, List<Course> courses) {
+    public InvalidStudentGateway(List<Student> students) {
         this.students = students;
-        this.courses = courses;
     }
 
     public boolean isValidStudent(Student givenStudent) {
