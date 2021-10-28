@@ -16,7 +16,7 @@ public class ViewTargetGradeInteractor {
         } else if (!gateway.isValidLetterGrade(request.letterGrade)) {
             return ErrorResponse.invalidLetterGradeError();
         }
-        return null;
+        return new RequirementsResponse(request.letterGrade);
     }
 
 }

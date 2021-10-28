@@ -35,4 +35,15 @@ public class ViewTargetGradeInteractorTests {
         assertEquals(request.letterGrade, gateway.providedLetterGrade);
     }
 
+    @Test
+    public void interactorAsksCourseForGradeRequirements() {
+        TargetGradeRequirementsGateway gateway = new TargetGradeRequirementsGateway();
+        ViewTargetGradeInteractor interactor = new ViewTargetGradeInteractor(gateway);
+        ViewTargetGradeRequest request = new ViewTargetGradeRequest(UUID.randomUUID(), "A");
+        Response response = interactor.handle(request);
+        RequirementsResponse expectedResponse = new RequirementsResponse("A");
+        assertEquals(expectedResponse, response);
+        //todo: assert statement that checks interactor uses gateway to get response (their gradeRequirements are the same)
+    }
+
 }
