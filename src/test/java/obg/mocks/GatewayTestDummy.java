@@ -12,6 +12,11 @@ public class GatewayTestDummy implements Gateway {
         return null;
     }
 
+    @Override
+    public boolean isValidLetterGrade(String letterGrade) {
+        return false;
+    }
+
     public Instructor getInstructor(UUID instructorId) {
         return null;
     }

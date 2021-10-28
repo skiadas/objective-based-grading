@@ -42,6 +42,19 @@ public class AttemptRequestTest {
         assertFalse(testGateway.isValidCourse(course1));
 
     }
+    @Test
+    public void CheckInvalidCourseError(){
+        ArrayList<String> students = new ArrayList();
+        ArrayList<String> objectives = new ArrayList();
+        Course newCourse = new Course(testUUID, "course2", students, objectives);
+        CourseTestGateway testGateway = new CourseTestGateway(newCourse);
+        Course course1 = new Course(randID, "courseName", students, objectives );
+        Course course2 = new Course(testUUID, "course2", students, objectives );
+        AttemptRequestRequest request= new AttemptRequestRequest("dave", randID, "C1");
+        AttemptRequestInteractor interactor = new AttemptRequestInteractor(testGateway);
+        Response response = interactor.handle(request);
+        assertEquals(ErrorResponse.invalidCourseError(),response);
 
+    }
 
 }

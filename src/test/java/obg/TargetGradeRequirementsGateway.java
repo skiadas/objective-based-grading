@@ -1,8 +1,10 @@
 package obg;
 
+import obg.mocks.GatewayTestDummy;
+
 import java.util.UUID;
 
-public class TargetGradeRequirementsGateway implements Gateway{
+public class TargetGradeRequirementsGateway extends GatewayTestDummy {
     @Override
     public Course getCourse(UUID courseId) {
         return null;

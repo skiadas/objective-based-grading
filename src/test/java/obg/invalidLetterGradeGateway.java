@@ -1,8 +1,10 @@
 package obg;
 
+import obg.mocks.GatewayTestDummy;
+
 import java.util.UUID;
 
-public class invalidLetterGradeGateway implements Gateway {
+public class invalidLetterGradeGateway extends GatewayTestDummy {
     public String providedLetterGrade;
 
     @Override
