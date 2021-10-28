@@ -20,6 +20,10 @@ public class CourseProvidingGateway extends GatewayTestDummy {
         return instructor;
     }
 
+    public boolean isValidCourse(Course course){
+        return providedCourses.contains(course);
+    }
+
     public List<Course> getCoursesTaughtBy(Instructor instructor) {
         givenInstructor = instructor;
         return providedCourses;

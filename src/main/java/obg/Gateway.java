@@ -11,4 +11,8 @@ public interface Gateway {
     Instructor getInstructor(UUID instructorId);
 
     List<Course> getCoursesTaughtBy(Instructor instructor);
+
+    boolean isValidCourse(Course course1);
+
+    boolean isValidStudent(Student student);
 }

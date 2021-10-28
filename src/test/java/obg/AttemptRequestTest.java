@@ -1,8 +1,10 @@
 package obg;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
@@ -10,9 +12,20 @@ import static org.junit.Assert.*;
 
 public class AttemptRequestTest {
 
-    public UUID randID = randomUUID();
-    public static final UUID testUUID = new UUID(0x6ba7b8109dad11d1L, 0x80b400c04fd430c8L);
-    private AttemptRequestRequest request = new AttemptRequestRequest("DoeJ24", randID, "L1");
+    public UUID randID;
+    public UUID testUUID;
+    private AttemptRequestRequest request;
+    private List<Student> students;
+    private ArrayList<String> objectives;
+    private List<Course> courses;
+
+    @Before
+    public void setUp() throws Exception {
+        randID = randomUUID();
+        testUUID = new UUID(0x6ba7b8109dad11d1L, 0x80b400c04fd430c8L);
+        request = new AttemptRequestRequest("DoeJ24", randID, "L1");
+        objectives = new ArrayList<>();
+    }
 
     @Test
     public void canMakeAttemptRequest() {
@@ -31,30 +44,49 @@ public class AttemptRequestTest {
     }
 
     @Test
-    public void CheckIsCourseValid() {
-        ArrayList<String> students = new ArrayList();
-        ArrayList<String> objectives = new ArrayList();
-        Course newCourse = new Course(testUUID, "course2", students, objectives);
-        CourseTestGateway testGateway = new CourseTestGateway(newCourse);
-        Course course1 = new Course(randID, "courseName", students, objectives);
-        Course course2 = new Course(testUUID, "course2", students, objectives);
-        assertTrue(testGateway.isValidCourse(course2));
-        assertFalse(testGateway.isValidCourse(course1));
-
-    }
-    @Test
     public void CheckInvalidCourseError(){
-        ArrayList<String> students = new ArrayList();
-        ArrayList<String> objectives = new ArrayList();
-        Course newCourse = new Course(testUUID, "course2", students, objectives);
-        CourseTestGateway testGateway = new CourseTestGateway(newCourse);
-        Course course1 = new Course(randID, "courseName", students, objectives );
-        Course course2 = new Course(testUUID, "course2", students, objectives );
-        AttemptRequestRequest request= new AttemptRequestRequest("dave", randID, "C1");
+        List<Course> courses = makeCourses();
+        CourseProvidingGateway testGateway = new CourseProvidingGateway(courses);
         AttemptRequestInteractor interactor = new AttemptRequestInteractor(testGateway);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidCourseError(),response);
+    }
 
+    @Test
+    public void checkInvalidStudentError(){
+        List<Student> students = makeStudents();
+        List<Course> courseList = new ArrayList<>();
+        Course course1 = new Course( new UUID(0x6ba7b8109dad11d1L, 0x80b400c04fd430c8L), null, null, null);
+        courseList.add(course1);
+        AttemptRequestRequest request1 = new AttemptRequestRequest("joe", new UUID(0x6ba7b8109dad11d1L, 0x80b400c04fd430c8L), "S5");
+        InvalidStudentGateway gateway = new InvalidStudentGateway(students, courseList);
+        AttemptRequestInteractor interactor = new AttemptRequestInteractor(gateway);
+        Response response = interactor.handle(request1);
+        assertEquals(ErrorResponse.invalidStudentError(), response);
+    }
+
+
+
+    private List<Student> makeStudents(){
+        Student student1 = makeStudent("student1", null);
+        Student student2 = makeStudent("student2", null);
+        Student student3 = makeStudent("student3", null);
+        students = List.of(student1, student2, student3);
+        return students;
+    }
+
+    private Student makeStudent(String userName, List<Course> studentCourses) { return new Student(UUID.randomUUID(), userName, studentCourses);}
+
+    private List<Course> makeCourses() {
+        Course course1 = makeCourse("course1");
+        Course course2 = makeCourse("course2");
+        Course course3 = makeCourse("course3");
+        courses = List.of(course1, course2, course3);
+        return courses;
+    }
+
+    private Course makeCourse(String courseName) {
+        return new Course(UUID.randomUUID(), courseName);
     }
 
 }
