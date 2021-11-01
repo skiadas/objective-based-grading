@@ -1,8 +1,10 @@
 package obg;
 
+import obg.mocks.GatewayTestDummy;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +32,7 @@ public class InstructorCourseListInteractorTest {
 
     @Test
     public void returnErrorIfInvalidInstructorId() {
-        Gateway gateway = new InvalidInstructorGateway();
+        InstructorCourseListGateway gateway = new InvalidInstructorGateway();
         interactor = new InstructorCourseListInteractor(gateway);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidInstructor(), response);
@@ -58,5 +60,38 @@ public class InstructorCourseListInteractorTest {
 
     private Course makeCourse(String courseName) {
         return new Course(UUID.randomUUID(), courseName);
+    }
+
+    private static class InvalidInstructorGateway implements InstructorCourseListGateway {
+        UUID givenInstructorId;
+
+        public Instructor getInstructor(UUID instructorId) {
+            givenInstructorId = instructorId;
+            return null;
+        }
+
+        public List<Course> getCoursesTaughtBy(Instructor instructor) {
+            return null;
+        }
+    }
+
+    private static class CourseProvidingGateway implements InstructorCourseListGateway {
+        private List<Course> providedCourses;
+        public Instructor instructor;
+        public Instructor givenInstructor;
+
+        public CourseProvidingGateway(List<Course> courses) {
+            providedCourses = new ArrayList<>(courses);
+        }
+
+        public Instructor getInstructor(UUID instructorId) {
+            instructor = new Instructor(instructorId);
+            return instructor;
+        }
+
+        public List<Course> getCoursesTaughtBy(Instructor instructor) {
+            givenInstructor = instructor;
+            return providedCourses;
+        }
     }
 }

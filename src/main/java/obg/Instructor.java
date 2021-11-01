@@ -8,4 +8,8 @@ public class Instructor {
     public Instructor(UUID instructorId) {
         this.instructorId = instructorId;
     }
+
+    public UUID getInstructorId() {
+        return instructorId;
+    }
 }

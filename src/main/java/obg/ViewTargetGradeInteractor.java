@@ -1,10 +1,10 @@
 package obg;
 
 public class ViewTargetGradeInteractor {
-    private Gateway gateway;
+    private ViewTargetGradeGateway gateway;
     private String lettergrade;
 
-    public ViewTargetGradeInteractor(Gateway gateway) {
+    public ViewTargetGradeInteractor(ViewTargetGradeGateway gateway) {
         this.gateway = gateway;
     }
 

@@ -6,19 +6,19 @@ public class AttemptRequestInteractor {
 
     private AttemptRequestResponse attemptResponse;
 
-    public AttemptRequestInteractor(Gateway studentGateway) {
-        this.studentGateway = studentGateway;
-    }
+    private AttemptRequestGateway gateway;
 
-    private Gateway studentGateway;
+    public AttemptRequestInteractor(AttemptRequestGateway gateway) {
+        this.gateway = gateway;
+    }
 
     public Response handle(AttemptRequestRequest request){
         attemptResponse = new AttemptRequestResponse("", UUID.randomUUID(), "", "");
-        return getIsCourseResponse(request, studentGateway);
+        return getIsCourseResponse(request, gateway);
 
     }
 
-    private Response getIsCourseResponse(AttemptRequestRequest request, Gateway gateway) {
+    private Response getIsCourseResponse(AttemptRequestRequest request, AttemptRequestGateway gateway) {
         Course course1 = new Course(request.courseID,null,null,null);
         Student student1 = new Student(null, request.userName, null);
         if(!gateway.isValidCourse(course1)){

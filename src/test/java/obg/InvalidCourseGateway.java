@@ -4,7 +4,7 @@ import obg.mocks.GatewayTestDummy;
 
 import java.util.UUID;
 
-public class InvalidCourseGateway extends GatewayTestDummy {
+public class InvalidCourseGateway implements ViewTargetGradeGateway {
     UUID providedCourseId;
 
     @Override

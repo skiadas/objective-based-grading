@@ -3,9 +3,9 @@ package obg;
 import java.util.List;
 
 public class InstructorCourseListInteractor {
-    private Gateway gateway;
+    private InstructorCourseListGateway gateway;
 
-    public InstructorCourseListInteractor(Gateway gateway) {
+    public InstructorCourseListInteractor(InstructorCourseListGateway gateway) {
         this.gateway = gateway;
     }
 
