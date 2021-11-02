@@ -1,8 +1,7 @@
 package obg;
 
 public class ViewTargetGradeInteractor {
-    private ViewTargetGradeGateway gateway;
-    private String lettergrade;
+    private final ViewTargetGradeGateway gateway;
 
     public ViewTargetGradeInteractor(ViewTargetGradeGateway gateway) {
         this.gateway = gateway;
@@ -10,7 +9,6 @@ public class ViewTargetGradeInteractor {
 
     public Response handle(ViewTargetGradeRequest request) {
         Course course = gateway.getCourse(request.courseId);
-        lettergrade = request.letterGrade;
         if (course == null) {
             return ErrorResponse.invalidCourse();
         } else if (!gateway.isValidLetterGrade(request.letterGrade)) {

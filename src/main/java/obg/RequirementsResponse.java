@@ -8,6 +8,11 @@ public class RequirementsResponse implements Response{
     public final String grade;
     public final EnumMap<ObjectiveGroup, Integer> objectiveRequirements;
 
+    public RequirementsResponse(String grade) {
+        this.grade = grade;
+        objectiveRequirements = new EnumMap<>(ObjectiveGroup.class);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -19,11 +24,5 @@ public class RequirementsResponse implements Response{
     @Override
     public int hashCode() {
         return Objects.hash(grade, objectiveRequirements);
-    }
-
-    public RequirementsResponse(String grade) {
-        this.grade = grade;
-        objectiveRequirements = new EnumMap<>(ObjectiveGroup.class);
-
     }
 }
