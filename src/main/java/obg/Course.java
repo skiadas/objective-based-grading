@@ -8,7 +8,7 @@ public class Course {
     public String courseName;
     public ArrayList<String> students;
     public ArrayList<String> objectives;
-    public HashMap <String, Object> gradeBreaks = new HashMap<>();
+    public GradeBreakPoints gradeBreaks = new GradeBreakPoints();
 
     public Course(UUID courseID, String courseName, ArrayList<String> students, ArrayList<String> objectives) {
         this.students = students;

@@ -6,7 +6,7 @@ import java.util.Objects;
 public class TargetGradeRequirementsResponse implements Response{
 
     public final String grade;
-    public static final EnumMap<ObjectiveGroup, Integer> objectiveRequirements = new EnumMap<>(ObjectiveGroup.class);
+    public static EnumMap objectiveRequirements = new EnumMap<>(ObjectiveGroup.class);
 
     public TargetGradeRequirementsResponse(String grade) {
         this.grade = grade;
