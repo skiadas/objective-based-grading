@@ -36,8 +36,8 @@ public class InMemoryGateway implements Gateway {
         return false;
     }
 
-    public boolean isValidStudent(Student student) {
-        return false;
+    public Student getStudent(Student student) {
+        return student;
     }
 
     public boolean isValidObjective(String objective) {

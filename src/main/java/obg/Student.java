@@ -15,6 +15,12 @@ public class Student {
         this.courses = courses;
     }
 
+    public Student(Student givenStudent) {
+        this.studentId = givenStudent.studentId;
+        this.userName = givenStudent.userName;
+        this.courses = givenStudent.courses;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

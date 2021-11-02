@@ -30,12 +30,8 @@ public class GatewayTestDummy implements Gateway {
         return false;
     }
 
-    public boolean isValidStudent(Student givenStudent) {
-        return false;
+    public Student getStudent(Student givenStudent) {
+        return null;
     }
 
-    @Override
-    public boolean isValidObjective(String objective) {
-        return false;
-    }
 }

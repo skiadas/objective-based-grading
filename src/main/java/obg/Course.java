@@ -24,6 +24,10 @@ public class Course {
         objectives = new ArrayList<>();
     }
 
+    public boolean isValidObjective(String objective){
+        return objectives.contains(objective);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

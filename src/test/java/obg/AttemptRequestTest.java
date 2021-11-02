@@ -16,7 +16,6 @@ public class AttemptRequestTest {
     public UUID testUUID;
     private AttemptRequestRequest request;
     private ArrayList<String> objectives;
-    private List<Course> courses;
     private List<Student> students;
 
     @Before
@@ -25,6 +24,7 @@ public class AttemptRequestTest {
         testUUID = new UUID(0x6ba7b8109dad11d1L, 0x80b400c04fd430c8L);
         request = new AttemptRequestRequest("DoeJ24", randID, "L1");
         objectives = new ArrayList<>();
+        objectives.add("C1");
     }
 
     @Test
@@ -45,8 +45,7 @@ public class AttemptRequestTest {
 
     @Test
     public void CheckInvalidCourseErrorTest(){
-        List<Course> courses = makeCourses();
-        CourseProvidingGateway testGateway = new CourseProvidingGateway(courses);
+        InvalidRequestCourseGateway testGateway = new InvalidRequestCourseGateway();
         AttemptRequestInteractor interactor = new AttemptRequestInteractor(testGateway);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidCourse(),response);
@@ -55,7 +54,7 @@ public class AttemptRequestTest {
     @Test
     public void checkInvalidStudentErrorTest(){
         students = makeStudents();
-        InvalidStudentGateway gateway = new InvalidStudentGateway(students);
+        InvalidStudentGateway gateway = new InvalidStudentGateway();
         AttemptRequestInteractor interactor = new AttemptRequestInteractor(gateway);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidStudent(), response);
@@ -63,8 +62,8 @@ public class AttemptRequestTest {
 
     @Test
     public void checkInvalidObjectiveTest(){
-        objectives.add("F5");
-        InvalidObjectiveGateway gateway = new InvalidObjectiveGateway(objectives);
+        Course course1 = new Course(null, null, null, objectives);
+        InvalidObjectiveGateway gateway = new InvalidObjectiveGateway(course1);
         AttemptRequestInteractor interactor = new AttemptRequestInteractor(gateway);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidObjective(), response);
@@ -82,16 +81,5 @@ public class AttemptRequestTest {
 
     private Student makeStudent(String userName, List<Course> studentCourses) { return new Student(UUID.randomUUID(), userName, studentCourses);}
 
-    private List<Course> makeCourses() {
-        Course course1 = makeCourse("course1");
-        Course course2 = makeCourse("course2");
-        Course course3 = makeCourse("course3");
-        courses = List.of(course1, course2, course3);
-        return courses;
-    }
-
-    private Course makeCourse(String courseName) {
-        return new Course(UUID.randomUUID(), courseName);
-    }
 
 }

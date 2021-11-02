@@ -1,5 +1,6 @@
 package obg;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class AttemptRequestInteractor {
@@ -19,17 +20,14 @@ public class AttemptRequestInteractor {
     }
 
     private Response getIsCourseResponse(AttemptRequestRequest request, AttemptRequestGateway gateway) {
-        Course course1 = new Course(request.courseID,null,null,null);
+        ArrayList<String> objectives = new ArrayList<>();
         Student student1 = new Student(null, request.userName, null);
-        if(!gateway.isValidCourse(course1)){
-            return ErrorResponse.invalidCourse();
-        }
-        else if(!gateway.isValidStudent(student1)) {
-            return ErrorResponse.invalidStudent();
-        }
-        else if(!gateway.isValidObjective(request.objective)) {
-            return ErrorResponse.invalidObjective();
-        }
+        Course course = new Course(request.courseID, null, null, objectives);
+
+        if(gateway.getCourse(request.courseID) == null){ return ErrorResponse.invalidCourse(); }
+        else if(gateway.getStudent(student1) == null) { return ErrorResponse.invalidStudent(); }
+        else if(!course.isValidObjective(request.objective)) { return ErrorResponse.invalidObjective(); }
+
         return attemptResponse;
     }
 }

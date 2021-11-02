@@ -1,25 +1,23 @@
 package obg;
 
-import obg.mocks.GatewayTestDummy;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class InvalidObjectiveGateway extends GatewayTestDummy {
-    public InvalidObjectiveGateway(List<String> objectives) {
-        this.objectives = objectives;
+public class InvalidObjectiveGateway implements AttemptRequestGateway {
+    private final Course course1;
+
+    public InvalidObjectiveGateway(Course course1) {
+        this.course1 = course1;
     }
 
-    private List<String> objectives;
-
-    public boolean isValidObjective(String givenObjective){
-        return objectives.contains(givenObjective);
+    @Override
+    public Course getCourse(UUID courseId) {
+        return new Course(courseId, null, null, null);
     }
 
-    public boolean isValidCourse(Course course1) {
-        return true;
+    public Student getStudent(Student student) {
+        return student;
     }
 
-    public boolean isValidStudent(Student student) {
-        return true;
-    }
 }
