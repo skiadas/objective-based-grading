@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class RequirementResponseTests {
     @Test
     public void canCreateRequirementsResponseObject() {
-        RequirementsResponse response = new RequirementsResponse("A");
+        TargetGradeRequirementsResponse response = new TargetGradeRequirementsResponse("A");
         assertTrue(response.objectiveRequirements.isEmpty());
         assertEquals("A", response.grade);
     }

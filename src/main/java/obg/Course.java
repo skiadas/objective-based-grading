@@ -1,9 +1,6 @@
 package obg;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class Course {
 
@@ -11,7 +8,7 @@ public class Course {
     public String courseName;
     public ArrayList<String> students;
     public ArrayList<String> objectives;
-    public HashMap<String, Object> gradeBreaks = new HashMap<>();
+    public HashMap <String, Object> gradeBreaks = new HashMap<>();
 
     public Course(UUID courseID, String courseName, ArrayList<String> students, ArrayList<String> objectives) {
         this.students = students;

@@ -35,15 +35,22 @@ public class ViewTargetGradeInteractorTests {
     }
 
     @Test
-    public void interactorAsksCourseForGradeRequirements() {
+    public void interactorGeneratesCorrectResponse() {
         TargetGradeRequirementsGateway gateway = new TargetGradeRequirementsGateway();
         ViewTargetGradeInteractor interactor = new ViewTargetGradeInteractor(gateway);
         ViewTargetGradeRequest request = new ViewTargetGradeRequest(UUID.randomUUID(), "A");
         Response actualResponse = interactor.handle(request);
-        //todo: set-up expectedResponse and test with actualResponse
-        RequirementsResponse expectedResponse = new RequirementsResponse("A");
+        TargetGradeRequirementsResponse expectedResponse = generateExpectedResponse();
         assertEquals(expectedResponse, actualResponse);
         //todo: assert statement that checks interactor uses gateway to get response (their gradeRequirements are the same)
+    }
+
+    private TargetGradeRequirementsResponse generateExpectedResponse() {
+        TargetGradeRequirementsResponse expectedResponse = new TargetGradeRequirementsResponse("A");
+        expectedResponse.objectiveRequirements.put(ObjectiveGroup.BASIC, 4);
+        expectedResponse.objectiveRequirements.put(ObjectiveGroup.CORE, 4);
+        expectedResponse.objectiveRequirements.put(ObjectiveGroup.EXTRA, 3);
+        return expectedResponse;
     }
 
     private static class InvalidCourseGateway implements ViewTargetGradeGateway {

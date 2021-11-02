@@ -3,21 +3,20 @@ package obg;
 import java.util.EnumMap;
 import java.util.Objects;
 
-public class RequirementsResponse implements Response{
+public class TargetGradeRequirementsResponse implements Response{
 
     public final String grade;
-    public final EnumMap<ObjectiveGroup, Integer> objectiveRequirements;
+    public static final EnumMap<ObjectiveGroup, Integer> objectiveRequirements = new EnumMap<>(ObjectiveGroup.class);
 
-    public RequirementsResponse(String grade) {
+    public TargetGradeRequirementsResponse(String grade) {
         this.grade = grade;
-        objectiveRequirements = new EnumMap<>(ObjectiveGroup.class);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RequirementsResponse that = (RequirementsResponse) o;
+        TargetGradeRequirementsResponse that = (TargetGradeRequirementsResponse) o;
         return Objects.equals(grade, that.grade) && Objects.equals(objectiveRequirements, that.objectiveRequirements);
     }
 
