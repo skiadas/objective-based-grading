@@ -45,8 +45,8 @@ public class InstructorCourseListInteractorTest {
         when(gateway.getCoursesTaughtBy(instructor))
                 .thenReturn(courses);
         Response response = interactor.handle(request);
-        verify(gateway.getInstructor(request.instructorId));
-        verify(gateway.getCoursesTaughtBy(instructor));
+        verify(gateway).getInstructor(request.instructorId);
+        verify(gateway).getCoursesTaughtBy(instructor);
         assertEquals(new CourseListResponse(courses), response);
 
     }

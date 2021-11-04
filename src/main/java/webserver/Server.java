@@ -1,11 +1,14 @@
 package webserver;
 
+import obg.Course;
 import obg.Gateway;
 import obg.Instructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import spark.Spark;
 import webserver.firewall.Firewall;
+
+import java.util.UUID;
 
 import static spark.Spark.*;
 
@@ -45,7 +48,11 @@ public class Server {
 
     private static InMemoryGateway makeAndPrepareGateway() {
         InMemoryGateway gateway = new InMemoryGateway();
-        gateway.addInstructor(new Instructor("skiadas", "Haris", "Skiadas"));
+        Instructor instructor = new Instructor("skiadas", "Haris", "Skiadas");
+        Course course = new Course(UUID.randomUUID(), "course1");
+        gateway.instructors.put(instructor.getInstructorId(), instructor);
+        gateway.courses.put(course.courseID, course);
+        gateway.assignCourseInstructor(course, instructor);
         return gateway;
     }
 }
