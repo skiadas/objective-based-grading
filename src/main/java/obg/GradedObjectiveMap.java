@@ -5,7 +5,7 @@ import java.util.List;
 
 public class GradedObjectiveMap {
 
-    HashMap<String, ObjectiveAttemptList> map = new HashMap<>();
+    HashMap<String, ObjectiveAttemptList> objectiveMap = new HashMap<>();
 
     public void createObjectiveList(String obj, List<Integer> aScore) {
         add(obj, aScore);
