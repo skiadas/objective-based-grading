@@ -6,29 +6,35 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ViewTargetGradeInteractorTests {
     private ViewTargetGradeRequest request;
+    private ViewTargetGradeGateway gatewayMock;
+    private ViewTargetGradeInteractor interactor;
 
     @Before
     public void setUp() {
         UUID courseId = UUID.randomUUID();
         request = new ViewTargetGradeRequest(courseId, "Z");
+        gatewayMock = mock(ViewTargetGradeGateway.class);
+        interactor = new ViewTargetGradeInteractor(gatewayMock);
     }
 
     @Test
-    public void invalidCourseErrorResponse() {
-        InvalidCourseGateway gateway = new InvalidCourseGateway();
-        ViewTargetGradeInteractor interactor = new ViewTargetGradeInteractor(gateway);
+    public void errorResponseForInvalidCourse() {
+        when(gatewayMock.getCourse(request.courseId))
+                .thenReturn(null);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidCourse(), response);
-        assertEquals(request.courseId, gateway.providedCourseId);
     }
 
     @Test
-    public void invalidLetterGradeResponse() {
-        InvalidLetterGradeGateway gateway = new InvalidLetterGradeGateway();
-        ViewTargetGradeInteractor interactor = new ViewTargetGradeInteractor(gateway);
+    public void errorResponseForInvalidLetterGrade() {
+        ViewTargetGradeRequest request = new ViewTargetGradeRequest(UUID.randomUUID(), "Z");
+        when(gatewayMock.getCourse(request.courseId))
+                .thenReturn(new Course(UUID.randomUUID(), "course"));
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidLetterGrade(), response);
     }
@@ -63,24 +69,6 @@ public class ViewTargetGradeInteractorTests {
         expectedResponse.objectiveRequirements.put(ObjectiveGroup.CORE, c);
         expectedResponse.objectiveRequirements.put(ObjectiveGroup.EXTRA, e);
         return expectedResponse;
-    }
-
-    private static class InvalidCourseGateway implements ViewTargetGradeGateway {
-        UUID providedCourseId;
-
-        public Course getCourse(UUID courseId) {
-            providedCourseId = courseId;
-            return null;
-        }
-
-    }
-
-    private static class InvalidLetterGradeGateway implements ViewTargetGradeGateway {
-
-        public Course getCourse(UUID courseId) {
-            return new Course(UUID.randomUUID(), "course1");
-        }
-
     }
 
     private static class TargetGradeRequirementsGateway implements ViewTargetGradeGateway {
