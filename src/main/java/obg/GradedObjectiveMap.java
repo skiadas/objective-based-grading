@@ -7,14 +7,17 @@ public class GradedObjectiveMap {
 
     HashMap<String, ObjectiveAttemptList> map = new HashMap<>();
 
+    public void createObjectiveList(String obj, List<Integer> aScore) {
+        add(obj, aScore);
+    }
 
     public void add(String obj, List<Integer> aScore) {
 
-        if (map.containsKey(obj)) {
-            map.get(obj).addAll(aScore);
+        if (objectiveMap.containsKey(obj)) {
+            objectiveMap.get(obj).addAll(aScore);
         }
         else {
-            map.put(obj, new ObjectiveAttemptList());
+            objectiveMap.put(obj, new ObjectiveAttemptList());
         }
 
     }
@@ -22,5 +25,4 @@ public class GradedObjectiveMap {
     public String getObjective(String objective) {
         return objective;
     }
-
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/objective-based-grading.iml" filepath="$PROJECT_DIR$/.idea/objective-based-grading.iml" />
+      <module fileurl="file://$PROJECT_DIR$/objective-based-grading.iml" filepath="$PROJECT_DIR$/objective-based-grading.iml" />
     </modules>
   </component>
 </project>
