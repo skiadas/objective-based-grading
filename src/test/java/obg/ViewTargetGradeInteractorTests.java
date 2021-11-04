@@ -36,20 +36,33 @@ public class ViewTargetGradeInteractorTests {
 
     @Test
     public void interactorGeneratesCorrectResponse() {
-        TargetGradeRequirementsGateway gateway = new TargetGradeRequirementsGateway();
-        ViewTargetGradeInteractor interactor = new ViewTargetGradeInteractor(gateway);
-        ViewTargetGradeRequest request = new ViewTargetGradeRequest(UUID.randomUUID(), "A");
-        Response actualResponse = interactor.handle(request);
-        TargetGradeRequirementsResponse expectedResponse = generateExpectedResponse();
-        assertEquals(expectedResponse, actualResponse);
-        //todo: assert statement that checks interactor uses gateway to get response (their gradeRequirements are the same)
+        generateCorrectGradeResponse("A-", 4, 3,2);
     }
 
-    private TargetGradeRequirementsResponse generateExpectedResponse() {
-        TargetGradeRequirementsResponse expectedResponse = new TargetGradeRequirementsResponse("A");
-        expectedResponse.objectiveRequirements.put(ObjectiveGroup.BASIC, 4);
-        expectedResponse.objectiveRequirements.put(ObjectiveGroup.CORE, 4);
-        expectedResponse.objectiveRequirements.put(ObjectiveGroup.EXTRA, 3);
+    @Test
+    public void interactorGeneratesCorrectResponseForDPlus() {
+        generateCorrectGradeResponse("D+", 1, 1, 0);
+    }
+
+    @Test
+    public void interactorGeneratesCorrectResponseForF(){
+        generateCorrectGradeResponse("F", 0, 0, 0);
+    }
+
+    private void generateCorrectGradeResponse(String grade, int b, int c, int e) {
+        TargetGradeRequirementsGateway gradeGateway = new TargetGradeRequirementsGateway();
+        ViewTargetGradeInteractor gradeInteractor = new ViewTargetGradeInteractor(gradeGateway);
+        ViewTargetGradeRequest request = new ViewTargetGradeRequest(UUID.randomUUID(), grade);
+        Response actualResponse = gradeInteractor.handle(request);
+        TargetGradeRequirementsResponse expectedResponse = generateExpectedResponse(grade, b, c, e);
+        assertEquals(expectedResponse, actualResponse);
+    }
+
+    private TargetGradeRequirementsResponse generateExpectedResponse(String grade, int b, int c, int e) {
+        TargetGradeRequirementsResponse expectedResponse = new TargetGradeRequirementsResponse(grade);
+        expectedResponse.objectiveRequirements.put(ObjectiveGroup.BASIC, b);
+        expectedResponse.objectiveRequirements.put(ObjectiveGroup.CORE, c);
+        expectedResponse.objectiveRequirements.put(ObjectiveGroup.EXTRA, e);
         return expectedResponse;
     }
 
@@ -66,6 +79,7 @@ public class ViewTargetGradeInteractorTests {
         }
 
     }
+
     private static class InvalidLetterGradeGateway implements ViewTargetGradeGateway {
         public String providedLetterGrade;
 
@@ -78,6 +92,7 @@ public class ViewTargetGradeInteractorTests {
             return false;
         }
     }
+
     private static class TargetGradeRequirementsGateway implements ViewTargetGradeGateway {
         public Course getCourse(UUID courseId) {
             return new Course(UUID.randomUUID(), "course1");
