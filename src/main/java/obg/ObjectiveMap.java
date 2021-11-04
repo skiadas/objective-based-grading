@@ -9,7 +9,7 @@ public class ObjectiveMap {
     private static String getStudentId;
     int grade;
 
-    public static void main(String[] args) {
+    public static void objectMap(String[] args) {
         String[][] getObjectiveAndGrade = {{"L1", "4"}, {"S1", "2"}};
         ObjectiveMap.obj = args;
         HashMap<String, String[][]> map = new HashMap<>();
