@@ -5,11 +5,11 @@ import java.util.Objects;
 
 public class TargetGradeRequirementsResponse implements Response{
 
-    public final String grade;
+    public final String letterGrade;
     public EnumMap<ObjectiveGroup, Integer> objectiveRequirements = new EnumMap<>(ObjectiveGroup.class);
 
-    public TargetGradeRequirementsResponse(String grade) {
-        this.grade = grade;
+    public TargetGradeRequirementsResponse(String letterGrade) {
+        this.letterGrade = letterGrade;
     }
 
     @Override
@@ -17,11 +17,11 @@ public class TargetGradeRequirementsResponse implements Response{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TargetGradeRequirementsResponse that = (TargetGradeRequirementsResponse) o;
-        return Objects.equals(grade, that.grade) && Objects.equals(objectiveRequirements, that.objectiveRequirements);
+        return Objects.equals(letterGrade, that.letterGrade) && Objects.equals(objectiveRequirements, that.objectiveRequirements);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(grade, objectiveRequirements);
+        return Objects.hash(letterGrade, objectiveRequirements);
     }
 }

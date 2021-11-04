@@ -31,7 +31,6 @@ public class ViewTargetGradeInteractorTests {
         ViewTargetGradeInteractor interactor = new ViewTargetGradeInteractor(gateway);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidLetterGrade(), response);
-        assertEquals(request.letterGrade, gateway.providedLetterGrade);
     }
 
     @Test
@@ -74,23 +73,14 @@ public class ViewTargetGradeInteractorTests {
             return null;
         }
 
-        public boolean isValidLetterGrade(String letterGrade) {
-            return false;
-        }
-
     }
 
     private static class InvalidLetterGradeGateway implements ViewTargetGradeGateway {
-        public String providedLetterGrade;
 
         public Course getCourse(UUID courseId) {
             return new Course(UUID.randomUUID(), "course1");
         }
 
-        public boolean isValidLetterGrade(String letterGrade) {
-            providedLetterGrade = letterGrade;
-            return false;
-        }
     }
 
     private static class TargetGradeRequirementsGateway implements ViewTargetGradeGateway {
@@ -98,8 +88,5 @@ public class ViewTargetGradeInteractorTests {
             return new Course(UUID.randomUUID(), "course1");
         }
 
-        public boolean isValidLetterGrade(String letterGrade) {
-            return true;
-        }
     }
 }

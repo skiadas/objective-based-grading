@@ -12,8 +12,4 @@ public class ValidCourseGateway extends GatewayTestDummy {
         return course;
     }
 
-    @Override
-    public boolean isValidLetterGrade(String letterGrade) {
-        return false;
-    }
 }

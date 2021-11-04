@@ -18,10 +18,6 @@ public class InMemoryGateway implements Gateway {
         return courses.get(courseId);
     }
 
-    public boolean isValidLetterGrade(String letterGrade) {
-        return false;
-    }
-
     public Instructor getInstructor(String instructorId) {
         return instructors.get(instructorId);
     }

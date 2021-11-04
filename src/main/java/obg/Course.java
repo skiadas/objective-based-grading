@@ -1,6 +1,9 @@
 package obg;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 public class Course {
 
@@ -9,6 +12,7 @@ public class Course {
     public ArrayList<String> students;
     public ArrayList<String> objectives;
     public GradeBreakPoints gradeBreaks = new GradeBreakPoints();
+
 
     public Course(UUID courseID, String courseName, ArrayList<String> students, ArrayList<String> objectives) {
         this.students = students;
@@ -41,5 +45,8 @@ public class Course {
         return Objects.hash(courseID, courseName, students, objectives);
     }
 
+    public boolean isValidLetterGrade(String letterGrade) {
+        List<String> letterGrades = new ArrayList<>(List.of("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"));
+        return letterGrades.contains(letterGrade);
+    }
 }
-

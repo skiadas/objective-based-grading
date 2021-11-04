@@ -10,7 +10,7 @@ public class RequirementResponseTests {
     public void canCreateRequirementsResponseObject() {
         TargetGradeRequirementsResponse response = new TargetGradeRequirementsResponse("A");
         assertTrue(response.objectiveRequirements.isEmpty());
-        assertEquals("A", response.grade);
+        assertEquals("A", response.letterGrade);
     }
 
 }
