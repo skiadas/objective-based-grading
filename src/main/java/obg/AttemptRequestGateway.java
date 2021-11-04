@@ -7,4 +7,7 @@ public interface AttemptRequestGateway {
 
     Student getStudent(Student student);
 
+    boolean objectiveInCourse(String objective, Course course);
+
+    boolean getStudentIsEnrolled(Student student1, Course course);
 }

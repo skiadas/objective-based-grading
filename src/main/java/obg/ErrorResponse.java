@@ -29,6 +29,8 @@ public class ErrorResponse implements Response {
 
     public static ErrorResponse invalidObjective() { return createErrorResponse("Invalid Objective"); }
 
+    public static ErrorResponse notEnrolled() { return createErrorResponse("Student not enrolled"); }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

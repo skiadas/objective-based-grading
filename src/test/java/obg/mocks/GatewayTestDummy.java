@@ -17,6 +17,16 @@ public class GatewayTestDummy implements Gateway {
         return null;
     }
 
+    @Override
+    public boolean objectiveInCourse(String objective, Course course) {
+        return false;
+    }
+
+    @Override
+    public boolean getStudentIsEnrolled(Student student1, Course course) {
+        return false;
+    }
+
     public Instructor getInstructor(String instructorId) {
         return null;
     }

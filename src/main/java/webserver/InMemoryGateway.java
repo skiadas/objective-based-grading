@@ -41,6 +41,16 @@ public class InMemoryGateway implements Gateway {
         return student;
     }
 
+    @Override
+    public boolean objectiveInCourse(String objective, Course course) {
+        return false;
+    }
+
+    @Override
+    public boolean getStudentIsEnrolled(Student student1, Course course) {
+        return false;
+    }
+
     public boolean isValidObjective(String objective) {
         return false;
     }
