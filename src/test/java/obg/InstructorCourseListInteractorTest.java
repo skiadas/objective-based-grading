@@ -1,6 +1,5 @@
 package obg;
 
-import obg.mocks.GatewayTestDummy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,13 +11,13 @@ import static org.junit.Assert.assertEquals;
 
 public class InstructorCourseListInteractorTest {
 
-    private UUID instructorId;
+    private String instructorId;
     private InstructorCourseListRequest request;
     private InstructorCourseListInteractor interactor;
 
     @Before
     public void setUp() {
-        instructorId = UUID.randomUUID();
+        instructorId = "instr";
         request = new InstructorCourseListRequest(instructorId);
     }
 
@@ -63,9 +62,9 @@ public class InstructorCourseListInteractorTest {
     }
 
     private static class InvalidInstructorGateway implements InstructorCourseListGateway {
-        UUID givenInstructorId;
+        String givenInstructorId;
 
-        public Instructor getInstructor(UUID instructorId) {
+        public Instructor getInstructor(String instructorId) {
             givenInstructorId = instructorId;
             return null;
         }
@@ -84,7 +83,7 @@ public class InstructorCourseListInteractorTest {
             providedCourses = new ArrayList<>(courses);
         }
 
-        public Instructor getInstructor(UUID instructorId) {
+        public Instructor getInstructor(String instructorId) {
             instructor = new Instructor(instructorId);
             return instructor;
         }

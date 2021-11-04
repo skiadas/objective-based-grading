@@ -36,17 +36,17 @@ public class InMemoryGatewayTest {
 
     @Test
     public void canFindInstructor() {
-        Instructor i = makeInstructor();
+        Instructor i = makeInstructor("instr");
         g.instructors.put(i.getInstructorId(), i);
         assertEquals(i, g.getInstructor(i.getInstructorId()));
-        assertNull(g.getInstructor(UUID.randomUUID()));
+        assertNull(g.getInstructor("unknown"));
     }
 
     @Test
     public void canFindCourseAssignedToInstructor() {
         Course c1 = makeCourse("course1");
         Course c2 = makeCourse("course2");
-        Instructor i = makeInstructor();
+        Instructor i = makeInstructor("instr");
         g.courses.put(c1.courseID, c1);
         g.courses.put(c2.courseID, c2);
         g.instructors.put(i.getInstructorId(), i);
@@ -58,7 +58,7 @@ public class InMemoryGatewayTest {
         return new Course(UUID.randomUUID(), name);
     }
 
-    private Instructor makeInstructor() {
-        return new Instructor(UUID.randomUUID());
+    private Instructor makeInstructor(String username) {
+        return new Instructor(username);
     }
 }

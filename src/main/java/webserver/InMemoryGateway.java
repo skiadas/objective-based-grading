@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 
 public class InMemoryGateway implements Gateway {
     Map<UUID, Course> courses = new HashMap<>();
-    Map<UUID, Instructor> instructors = new HashMap<>();
+    Map<String, Instructor> instructors = new HashMap<String, Instructor>();
     List<CourseInstructorPair> courseInstructorPairs = new ArrayList<>();
+    Map<String, Student> students = new HashMap<>();
 
     public Course getCourse(UUID courseId) {
         return courses.get(courseId);
@@ -21,8 +22,12 @@ public class InMemoryGateway implements Gateway {
         return false;
     }
 
-    public Instructor getInstructor(UUID instructorId) {
+    public Instructor getInstructor(String instructorId) {
         return instructors.get(instructorId);
+    }
+
+    public void addInstructor(Instructor instructor) {
+        instructors.put(instructor.getInstructorId(), instructor);
     }
 
     public List<Course> getCoursesTaughtBy(Instructor instructor) {
@@ -48,12 +53,15 @@ public class InMemoryGateway implements Gateway {
         courseInstructorPairs.add(new CourseInstructorPair(c, i));
     }
 
+    public Student getStudent(String username) {
+        return students.get(username);
+    }
+
     private static class CourseInstructorPair {
         private final Course course;
         private final Instructor instructor;
 
         public CourseInstructorPair(Course c, Instructor i) {
-
             this.course = c;
             this.instructor = i;
         }

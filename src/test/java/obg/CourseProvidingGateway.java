@@ -4,7 +4,6 @@ import obg.mocks.GatewayTestDummy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class CourseProvidingGateway extends GatewayTestDummy {
     private List<Course> providedCourses;
@@ -15,7 +14,7 @@ public class CourseProvidingGateway extends GatewayTestDummy {
         providedCourses = new ArrayList<>(courses);
     }
 
-    public Instructor getInstructor(UUID instructorId) {
+    public Instructor getInstructor(String instructorId) {
         instructor = new Instructor(instructorId);
         return instructor;
     }

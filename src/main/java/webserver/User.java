@@ -1,13 +1,12 @@
 package webserver;
 
-public class User {
-    private final String username;
+import java.util.List;
 
-    public User(String username) {
-        this.username = username;
-    }
+public abstract class User {
+    public abstract boolean isAuthenticated();
+    abstract boolean canActAs(Role role);
 
-    public String getUsername() {
-        return username;
+    public enum Role {
+        Student, Instructor, Admin
     }
 }

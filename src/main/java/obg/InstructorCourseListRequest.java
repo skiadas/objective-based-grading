@@ -1,11 +1,9 @@
 package obg;
 
-import java.util.UUID;
-
 public class InstructorCourseListRequest {
-    public final UUID instructorId;
+    public final String instructorId;
 
-    public InstructorCourseListRequest(UUID instructorId) {
+    public InstructorCourseListRequest(String instructorId) {
         this.instructorId = instructorId;
     }
 }

@@ -1,15 +1,21 @@
 package obg;
 
-import java.util.UUID;
-
 public class Instructor {
-    private final UUID instructorId;
+    private final String instructorId;
+    private String first;
+    private String last;
 
-    public Instructor(UUID instructorId) {
+    public Instructor(String instructorId) {
         this.instructorId = instructorId;
     }
 
-    public UUID getInstructorId() {
+    public Instructor(String instructorId, String first, String last) {
+        this.instructorId = instructorId;
+        this.first = first;
+        this.last = last;
+    }
+
+    public String getInstructorId() {
         return instructorId;
     }
 }

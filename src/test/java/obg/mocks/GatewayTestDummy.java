@@ -13,12 +13,16 @@ public class GatewayTestDummy implements Gateway {
         return null;
     }
 
+    public Student getStudent(Student student) {
+        return null;
+    }
+
     @Override
     public boolean isValidLetterGrade(String letterGrade) {
         return false;
     }
 
-    public Instructor getInstructor(UUID instructorId) {
+    public Instructor getInstructor(String instructorId) {
         return null;
     }
 
@@ -30,8 +34,19 @@ public class GatewayTestDummy implements Gateway {
         return false;
     }
 
-    public Student getStudent(Student givenStudent) {
+    public boolean isValidStudent(Student givenStudent) {
+        return false;
+    }
+
+    public boolean isValidObjective(String objective) {
+        return false;
+    }
+
+    public Student getStudent(String username) {
         return null;
     }
 
+    public void addInstructor(Instructor instructor) {
+
+    }
 }
