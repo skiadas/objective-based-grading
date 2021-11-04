@@ -8,31 +8,31 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class InstructorCourseListInteractorTest {
 
-    private String instructorId;
     private InstructorCourseListRequest request;
     private InstructorCourseListInteractor interactor;
+    private InstructorCourseListGateway gateway;
 
     @Before
     public void setUp() {
-        instructorId = "instr";
-        request = new InstructorCourseListRequest(instructorId);
+        request = new InstructorCourseListRequest("instr");
+        gateway = mock(InstructorCourseListGateway.class);
+        interactor = new InstructorCourseListInteractor(gateway);
     }
 
     @Test
-    public void interactorAsksGatewayForCorrectInstructorId() {
-        InvalidInstructorGateway gateway = new InvalidInstructorGateway();
-        interactor = new InstructorCourseListInteractor(gateway);
+    public void interactorAsksGatewayForCorrectInstructorIdMockito() {
         interactor.handle(request);
-        assertEquals(instructorId, gateway.givenInstructorId);
+        verify(gateway).getInstructor(request.instructorId);
     }
 
     @Test
     public void returnErrorIfInvalidInstructorId() {
-        InstructorCourseListGateway gateway = new InvalidInstructorGateway();
-        interactor = new InstructorCourseListInteractor(gateway);
+        when(gateway.getInstructor(request.instructorId))
+                .thenReturn(null);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidInstructor(), response);
     }
@@ -40,11 +40,14 @@ public class InstructorCourseListInteractorTest {
     @Test
     public void returnListOfCoursesThatInstructorTeaches() {
         List<Course> courses = makeCourses();
-        CourseProvidingGateway gateway = new CourseProvidingGateway(courses);
-        interactor = new InstructorCourseListInteractor(gateway);
+        Instructor instructor = new Instructor(request.instructorId);
+        when(gateway.getInstructor(request.instructorId))
+                .thenReturn(instructor);
+        when(gateway.getCoursesTaughtBy(instructor))
+                .thenReturn(courses);
         Response response = interactor.handle(request);
-        // TODO: Need better way here
-        assertEquals(gateway.instructor, gateway.givenInstructor);
+        verify(gateway.getInstructor(request.instructorId));
+        verify(gateway.getCoursesTaughtBy(instructor));
         assertEquals(new CourseListResponse(courses), response);
 
     }
@@ -53,44 +56,11 @@ public class InstructorCourseListInteractorTest {
         Course course1 = makeCourse("course1");
         Course course2 = makeCourse("course2");
         Course course3 = makeCourse("course3");
-        List<Course> courses = List.of(course1, course2, course3);
-        return courses;
+        return List.of(course1, course2, course3);
     }
 
     private Course makeCourse(String courseName) {
         return new Course(UUID.randomUUID(), courseName);
     }
 
-    private static class InvalidInstructorGateway implements InstructorCourseListGateway {
-        String givenInstructorId;
-
-        public Instructor getInstructor(String instructorId) {
-            givenInstructorId = instructorId;
-            return null;
-        }
-
-        public List<Course> getCoursesTaughtBy(Instructor instructor) {
-            return null;
-        }
-    }
-
-    private static class CourseProvidingGateway implements InstructorCourseListGateway {
-        private List<Course> providedCourses;
-        public Instructor instructor;
-        public Instructor givenInstructor;
-
-        public CourseProvidingGateway(List<Course> courses) {
-            providedCourses = new ArrayList<>(courses);
-        }
-
-        public Instructor getInstructor(String instructorId) {
-            instructor = new Instructor(instructorId);
-            return instructor;
-        }
-
-        public List<Course> getCoursesTaughtBy(Instructor instructor) {
-            givenInstructor = instructor;
-            return providedCourses;
-        }
-    }
 }
