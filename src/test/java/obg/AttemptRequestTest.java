@@ -29,10 +29,24 @@ public class AttemptRequestTest {
     }
 
     @Test
+    public void InteractorAskGatewayForCorrectCourse(){
+        interactor.handle(request);
+        verify(gateway).getCourse(request.courseID);
+    }
+
+
+    @Test
     public void CheckInvalidCourseErrorTest() {
         when(gateway.getCourse(request.courseID)).thenReturn(null);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidCourse(), response);
+    }
+
+    @Test
+    public void InteractorAskGatewayForCorrectStudent(){
+        when(gateway.getCourse(request.courseID)).thenReturn(course);
+        interactor.handle(request);
+        verify(gateway).getStudent(student);
     }
 
     @Test
