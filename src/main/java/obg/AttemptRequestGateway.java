@@ -5,9 +5,9 @@ import java.util.UUID;
 public interface AttemptRequestGateway {
     Course getCourse(UUID courseId);
 
-    Student getStudent(Student student);
+    Student getStudent(String userName);
 
-    boolean objectiveInCourse(String objective, Course course);
+    boolean objectiveInCourse(String objective, UUID courseID);
 
-    boolean getStudentIsEnrolled(Student student1, Course course);
+    boolean getStudentIsEnrolled(String userName, UUID courseID);
 }

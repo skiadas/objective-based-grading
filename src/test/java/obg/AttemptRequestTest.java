@@ -29,7 +29,7 @@ public class AttemptRequestTest {
     }
 
     @Test
-    public void InteractorAskGatewayForCorrectCourse(){
+    public void InteractorAskGatewayForCorrectCourse() {
         interactor.handle(request);
         verify(gateway).getCourse(request.courseID);
     }
@@ -43,25 +43,34 @@ public class AttemptRequestTest {
     }
 
     @Test
-    public void InteractorAskGatewayForCorrectStudent(){
+    public void InteractorAskGatewayForCorrectStudent() {
         when(gateway.getCourse(request.courseID)).thenReturn(course);
         interactor.handle(request);
-        verify(gateway).getStudent(student);
+        verify(gateway).getStudent(request.userName);
     }
 
     @Test
     public void checkInvalidStudentErrorTest() {
         when(gateway.getCourse(request.courseID)).thenReturn(course);
-        when(gateway.getStudent(student)).thenReturn(null);
+        when(gateway.getStudent(request.userName)).thenReturn(null);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidStudent(), response);
     }
 
     @Test
+    public void InteractorAskGatewayForCorrectObjective() {
+        when(gateway.getCourse(request.courseID)).thenReturn(course);
+        when(gateway.getStudent(request.userName)).thenReturn(student);
+        interactor.handle(request);
+        verify(gateway).objectiveInCourse(request.objective, request.courseID);
+
+    }
+
+    @Test
     public void InvalidObjectiveTest() {
         when(gateway.getCourse(request.courseID)).thenReturn(course);
-        when(gateway.getStudent(student)).thenReturn(student);
-        when(gateway.objectiveInCourse(request.objective, course)).thenReturn(false);
+        when(gateway.getStudent(request.userName)).thenReturn(student);
+        when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(false);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.invalidObjective(), response);
     }
@@ -69,9 +78,9 @@ public class AttemptRequestTest {
     @Test
     public void notEnrolledErrorTest() {
         when(gateway.getCourse(request.courseID)).thenReturn(course);
-        when(gateway.getStudent(student)).thenReturn(student);
-        when(gateway.objectiveInCourse(request.objective, course)).thenReturn(true);
-        when(gateway.getStudentIsEnrolled(student, course)).thenReturn(false);
+        when(gateway.getStudent(request.userName)).thenReturn(student);
+        when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(true);
+        when(gateway.getStudentIsEnrolled(request.userName, request.courseID)).thenReturn(false);
         Response response = interactor.handle(request);
         assertEquals(ErrorResponse.notEnrolled(), response);
     }
