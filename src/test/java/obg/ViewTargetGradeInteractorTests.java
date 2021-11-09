@@ -32,7 +32,6 @@ public class ViewTargetGradeInteractorTests {
 
     @Test
     public void errorResponseForInvalidLetterGrade() {
-        ViewTargetGradeRequest request = new ViewTargetGradeRequest(UUID.randomUUID(), "Z");
         when(gateway.getCourse(request.courseId))
                 .thenReturn(new Course(UUID.randomUUID(), "course"));
         Response response = interactor.handle(request);
@@ -41,26 +40,25 @@ public class ViewTargetGradeInteractorTests {
 
     @Test
     public void interactorGeneratesCorrectResponse() {
-        generateCorrectGradeResponse("A-", 4, 3,2);
+        assertGeneratesCorrectResponse("A-", 4, 3,2);
     }
 
     @Test
     public void interactorGeneratesCorrectResponseForDPlus() {
-        generateCorrectGradeResponse("D+", 1, 1, 0);
+        assertGeneratesCorrectResponse("D+", 1, 1, 0);
     }
 
     @Test
     public void interactorGeneratesCorrectResponseForF(){
-        generateCorrectGradeResponse("F", 0, 0, 0);
+        assertGeneratesCorrectResponse("F", 0, 0, 0);
     }
 
-    private void generateCorrectGradeResponse(String grade, int b, int c, int e) {
+    private void assertGeneratesCorrectResponse(String grade, int b, int c, int e) {
         ViewTargetGradeRequest request = new ViewTargetGradeRequest(UUID.randomUUID(), grade);
         when(gateway.getCourse(request.courseId)).thenReturn(new Course(UUID.randomUUID(), "course"));
         Response actualResponse = interactor.handle(request);
         TargetGradeRequirementsResponse expectedResponse = generateExpectedResponse(grade, b, c, e);
         assertEquals(expectedResponse, actualResponse);
-
     }
 
     private TargetGradeRequirementsResponse generateExpectedResponse(String grade, int b, int c, int e) {

@@ -12,6 +12,11 @@ public class TargetGradeRequirementsResponse implements Response{
         this.letterGrade = letterGrade;
     }
 
+    public TargetGradeRequirementsResponse(String letterGrade, EnumMap<ObjectiveGroup, Integer> objectiveRequirements) {
+        this.letterGrade = letterGrade;
+        this.objectiveRequirements = objectiveRequirements;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
