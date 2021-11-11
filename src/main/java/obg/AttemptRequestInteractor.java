@@ -1,7 +1,5 @@
 package obg;
 
-import java.util.UUID;
-
 public class AttemptRequestInteractor {
 
     private AttemptRequestResponse attemptResponse;

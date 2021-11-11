@@ -1,7 +1,6 @@
 package obg;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class AttemptRequestResponse implements Response {
 
