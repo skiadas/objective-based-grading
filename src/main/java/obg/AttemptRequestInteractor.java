@@ -13,7 +13,9 @@ public class AttemptRequestInteractor {
     }
 
     public Response handle(AttemptRequestRequest request) {
-        attemptResponse = new AttemptRequestResponse("", UUID.randomUUID(), "", "");
+        int attemptNumber = 1;
+        Attempt attempt = new Attempt(request.objective, attemptNumber, request.userName, request.courseID, AttemptStatus.PENDING);
+        attemptResponse = new AttemptRequestResponse(attempt);
         if (gateway.getCourse(request.courseID) == null) {
             return ErrorResponse.invalidCourse();
         } else if (gateway.getStudent(request.userName) == null) {

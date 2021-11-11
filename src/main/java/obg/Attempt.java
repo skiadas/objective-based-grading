@@ -1,6 +1,7 @@
 package obg;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Attempt {
     String objective;
@@ -10,11 +11,11 @@ public class Attempt {
     AttemptStatus status;
 
 
-    public Attempt(String objective, int attemptNumber, Student student, Course course, AttemptStatus status) {
+    public Attempt(String objective, int attemptNumber, String userName, UUID courseID, AttemptStatus status) {
         this.objective = objective;
         this.attemptNumber = attemptNumber;
-        this.student = student;
-        this.course = course;
+        this.student = new Student(null, userName, null);
+        this.course = new Course(courseID, null, null, null);
         this.status = status;
     }
 

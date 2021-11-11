@@ -5,16 +5,11 @@ import java.util.UUID;
 
 public class AttemptRequestResponse implements Response {
 
-    public final String userName;
-    public final UUID courseID;
-    public final String objective;
-    public final String attemptStatus;
+    private final Attempt attempt;
 
-    public AttemptRequestResponse(String userName, UUID courseID, String objective, String attemptStatus) {
-        this.userName = userName;
-        this.courseID = courseID;
-        this.objective = objective;
-        this.attemptStatus = attemptStatus;
+
+    public AttemptRequestResponse(Attempt attempt) {
+        this.attempt = attempt;
     }
 
     @Override
@@ -22,11 +17,11 @@ public class AttemptRequestResponse implements Response {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AttemptRequestResponse that = (AttemptRequestResponse) o;
-        return Objects.equals(userName, that.userName) && Objects.equals(courseID, that.courseID) && Objects.equals(objective, that.objective) && Objects.equals(attemptStatus, that.attemptStatus);
+        return Objects.equals(attempt, that.attempt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userName, courseID, objective, attemptStatus);
+        return Objects.hash(attempt);
     }
 }
