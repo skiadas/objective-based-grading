@@ -1,5 +1,6 @@
 package obg;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class AttemptRequestResponse implements Response {
@@ -14,5 +15,18 @@ public class AttemptRequestResponse implements Response {
         this.courseID = courseID;
         this.objective = objective;
         this.attemptStatus = attemptStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AttemptRequestResponse that = (AttemptRequestResponse) o;
+        return Objects.equals(userName, that.userName) && Objects.equals(courseID, that.courseID) && Objects.equals(objective, that.objective) && Objects.equals(attemptStatus, that.attemptStatus);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName, courseID, objective, attemptStatus);
     }
 }
