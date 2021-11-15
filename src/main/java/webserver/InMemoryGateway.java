@@ -1,18 +1,18 @@
 package webserver;
 
-import obg.Course;
-import obg.Gateway;
-import obg.Instructor;
-import obg.Student;
+import obg.core.entity.Course;
+import obg.gateway.Gateway;
+import obg.core.entity.Instructor;
+import obg.core.entity.Student;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class InMemoryGateway implements Gateway {
-    Map<UUID, Course> courses = new HashMap<>();
-    Map<String, Instructor> instructors = new HashMap<String, Instructor>();
-    List<CourseInstructorPair> courseInstructorPairs = new ArrayList<>();
-    Map<String, Student> students = new HashMap<>();
+    static Map<UUID, Course> courses = new HashMap<>();
+    static Map<String, Instructor> instructors = new HashMap<>();
+    static List<CourseInstructorPair> courseInstructorPairs = new ArrayList<>();
+    static Map<String, Student> students = new HashMap<>();
 
     public Course getCourse(UUID courseId) {
         return courses.get(courseId);
@@ -33,10 +33,6 @@ public class InMemoryGateway implements Gateway {
                 .collect(Collectors.toList());
     }
 
-    public boolean isValidCourse(Course course1) {
-        return false;
-    }
-
     public Student getStudent(Student student) {
         return student;
     }
@@ -51,16 +47,16 @@ public class InMemoryGateway implements Gateway {
         return false;
     }
 
-    public boolean isValidObjective(String objective) {
-        return false;
-    }
-
     public void assignCourseInstructor(Course c, Instructor i) {
         courseInstructorPairs.add(new CourseInstructorPair(c, i));
     }
 
     public Student getStudent(String username) {
         return students.get(username);
+    }
+
+    Course addCourse(Course course) {
+        return courses.put(course.courseID, course);
     }
 
     private static class CourseInstructorPair {

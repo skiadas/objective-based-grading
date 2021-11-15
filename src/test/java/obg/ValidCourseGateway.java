@@ -1,5 +1,6 @@
 package obg;
 
+import obg.core.entity.Course;
 import obg.mocks.GatewayTestDummy;
 
 import java.util.UUID;

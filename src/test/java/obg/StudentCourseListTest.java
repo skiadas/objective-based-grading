@@ -1,5 +1,10 @@
 package obg;
 
+import obg.core.Response;
+import obg.gateway.StudentCourseListGateway;
+import obg.interactor.StudentCourseListInteractor;
+import obg.request.StudentCourseListRequest;
+import obg.response.ErrorResponse;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

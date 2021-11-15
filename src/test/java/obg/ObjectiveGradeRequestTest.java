@@ -1,6 +1,7 @@
 package obg;
 
 import junit.framework.TestCase;
+import obg.request.ObjectiveGradeRequest;
 
 import java.util.UUID;
 

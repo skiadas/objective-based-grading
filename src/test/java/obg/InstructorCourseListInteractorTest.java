@@ -1,5 +1,13 @@
 package obg;
 
+import obg.core.Response;
+import obg.core.entity.Course;
+import obg.core.entity.Instructor;
+import obg.gateway.InstructorCourseListGateway;
+import obg.interactor.InstructorCourseListInteractor;
+import obg.request.InstructorCourseListRequest;
+import obg.response.CourseListResponse;
+import obg.response.ErrorResponse;
 import org.junit.Before;
 import org.junit.Test;
 

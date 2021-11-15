@@ -1,5 +1,7 @@
 package obg;
 
+import obg.core.entity.Course;
+import obg.core.entity.Instructor;
 import obg.mocks.GatewayTestDummy;
 
 import java.util.ArrayList;

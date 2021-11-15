@@ -1,6 +1,7 @@
 package obg;
 
 import junit.framework.TestCase;
+import obg.core.entity.ObjectiveMap;
 
 public class ObjectiveMapTest extends TestCase {
 

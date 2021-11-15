@@ -1,7 +1,6 @@
 package webserver.firewall;
 
 import spark.Spark;
-import webserver.User;
 
 import java.util.ArrayList;
 import java.util.List;

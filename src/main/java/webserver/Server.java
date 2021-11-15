@@ -1,14 +1,14 @@
 package webserver;
 
-import obg.Course;
-import obg.Gateway;
-import obg.Instructor;
+import obg.ConcreteAppContext;
+import obg.gateway.Gateway;
+import obg.GatewayFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import spark.Spark;
 import webserver.firewall.Firewall;
-
-import java.util.UUID;
+import webserver.user.User;
+import webserver.user.UserAdministrator;
 
 import static spark.Spark.*;
 
@@ -17,6 +17,8 @@ public class Server {
     private static Gateway gateway = makeAndPrepareGateway();
 
     private static UserAdministrator userAdmin = new UserAdministrator(gateway);
+    private static GatewayFactory gatewayFactory = new InMemoryGatewayFactory();
+    private static ConcreteAppContext context = new ConcreteAppContext(gatewayFactory);
 
     public static void main(String[] args) {
         startServer(3006);
@@ -27,15 +29,17 @@ public class Server {
         before("/*", (req, res) -> logger.info("Received call: " + req.pathInfo()));
         setupFirewall();
         // Normal routes
-        get("/", (req, res) -> new Handler(req, res, userAdmin).handleIndex());
-        get("/login", (req, res) -> new Handler(req, res, userAdmin).showLoginScreen());
-        post("/login", (req, res) -> new Handler(req, res, userAdmin).handleLoginRequest());
-        post("/logout", (req, res) -> new Handler(req, res, userAdmin).handleLogout());
+        get("/", (req, res) -> new Handler(req, res, userAdmin, context).handleIndex());
+        get("/login", (req, res) -> new Handler(req, res, userAdmin, context).showLoginScreen());
+        post("/login", (req, res) -> new Handler(req, res, userAdmin, context).handleLoginRequest());
+        post("/logout", (req, res) -> new Handler(req, res, userAdmin, context).handleLogout());
+        get("/instructor/:username", (req, res) -> new Handler(req, res, userAdmin, context).getInstructorIndexPage());
+
         logger.info("Server started, serving at localhost:" + Spark.port());
     }
 
     private static void setupFirewall() {
-        new Firewall<User>(userAdmin)
+        new Firewall<>(userAdmin)
                 .addRule("/login", (User u) -> true)
                 .addRule("/instructor", (User u) -> u.canActAs(User.Role.Instructor))
                 .addRule("/student", (User u) -> u.canActAs(User.Role.Student))
@@ -48,11 +52,8 @@ public class Server {
 
     private static InMemoryGateway makeAndPrepareGateway() {
         InMemoryGateway gateway = new InMemoryGateway();
-        Instructor instructor = new Instructor("skiadas", "Haris", "Skiadas");
-        Course course = new Course(UUID.randomUUID(), "course1");
-        gateway.instructors.put(instructor.getInstructorId(), instructor);
-        gateway.courses.put(course.courseID, course);
-        gateway.assignCourseInstructor(course, instructor);
+        new SampleDataGenerator(gateway).populateWithData();
         return gateway;
     }
+
 }

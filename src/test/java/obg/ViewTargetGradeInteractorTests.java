@@ -1,5 +1,13 @@
 package obg;
 
+import obg.core.Response;
+import obg.core.entity.Course;
+import obg.core.entity.ObjectiveGroup;
+import obg.gateway.ViewTargetGradeGateway;
+import obg.interactor.ViewTargetGradeInteractor;
+import obg.request.ViewTargetGradeRequest;
+import obg.response.ErrorResponse;
+import obg.response.TargetGradeRequirementsResponse;
 import org.junit.Before;
 import org.junit.Test;
 

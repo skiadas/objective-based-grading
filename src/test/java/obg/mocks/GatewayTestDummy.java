@@ -1,9 +1,9 @@
 package obg.mocks;
 
-import obg.Course;
-import obg.Gateway;
-import obg.Instructor;
-import obg.Student;
+import obg.core.entity.Course;
+import obg.gateway.Gateway;
+import obg.core.entity.Instructor;
+import obg.core.entity.Student;
 
 import java.util.List;
 import java.util.UUID;

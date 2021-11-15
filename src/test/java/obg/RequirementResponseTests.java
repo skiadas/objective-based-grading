@@ -1,5 +1,6 @@
 package obg;
 
+import obg.response.TargetGradeRequirementsResponse;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;

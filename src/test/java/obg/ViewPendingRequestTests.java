@@ -1,5 +1,8 @@
 package obg;
 
+import obg.core.entity.Course;
+import obg.request.ViewPendingAttemptsRequest;
+import obg.response.ViewPendingAttemptsResponse;
 import org.junit.Test;
 
 import java.util.UUID;

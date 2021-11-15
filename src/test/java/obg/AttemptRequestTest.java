@@ -1,5 +1,12 @@
 package obg;
 
+import obg.core.Response;
+import obg.core.entity.Course;
+import obg.core.entity.Student;
+import obg.gateway.AttemptRequestGateway;
+import obg.interactor.AttemptRequestInteractor;
+import obg.request.AttemptRequestRequest;
+import obg.response.ErrorResponse;
 import org.junit.Before;
 import org.junit.Test;
 

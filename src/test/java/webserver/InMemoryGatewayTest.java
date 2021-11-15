@@ -1,8 +1,8 @@
 package webserver;
 
-import obg.Course;
-import obg.Instructor;
-import obg.ViewTargetGradeGateway;
+import obg.core.entity.Course;
+import obg.core.entity.Instructor;
+import obg.gateway.ViewTargetGradeGateway;
 import org.junit.Before;
 import org.junit.Test;
 

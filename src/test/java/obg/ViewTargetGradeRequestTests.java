@@ -1,5 +1,6 @@
 package obg;
 
+import obg.request.ViewTargetGradeRequest;
 import org.junit.Test;
 
 import java.util.UUID;
