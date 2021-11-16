@@ -1,16 +1,37 @@
 package obg;
 
+import obg.core.ErrorResponse;
+import obg.core.Presenter;
 import obg.core.entity.Course;
+import obg.gateway.ViewPendingAttemptsGateway;
+import obg.interactor.ViewPendingAttemptsInteractor;
 import obg.request.ViewPendingAttemptsRequest;
 import obg.response.ViewPendingAttemptsResponse;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.mockito.Mockito.*;
 
 public class ViewPendingRequestTests {
+
+    private ViewPendingAttemptsRequest request;
+    private ViewPendingAttemptsGateway gateway;
+    private Presenter presenter;
+    private ViewPendingAttemptsInteractor interactor;
+
+    @Before
+    public void setUp(){
+        UUID courseId = UUID.randomUUID();
+        UUID instructorId = UUID.randomUUID();
+        request = new ViewPendingAttemptsRequest(courseId, instructorId);
+        gateway = mock(ViewPendingAttemptsGateway.class);
+        presenter = mock(Presenter.class);
+        interactor = new ViewPendingAttemptsInteractor(gateway);
+    }
 
     @Test
     public void canCreateRequest() {
@@ -29,5 +50,13 @@ public class ViewPendingRequestTests {
         assertEquals(course, response.course);
         assertTrue(response.objectiveStatuses.isEmpty());
         assertTrue(response.studentObjectives.isEmpty());
+    }
+
+    @Test
+    public void errorResponseForInvalidInstructor() {
+        when(gateway.getInstructor(request.courseId))
+                .thenReturn(null);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.invalidInstructor());
     }
 }
