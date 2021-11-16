@@ -3,6 +3,7 @@ package obg;
 import obg.core.ErrorResponse;
 import obg.core.Presenter;
 import obg.core.entity.Course;
+import obg.core.entity.Instructor;
 import obg.gateway.ViewPendingAttemptsGateway;
 import obg.interactor.ViewPendingAttemptsInteractor;
 import obg.request.ViewPendingAttemptsRequest;
@@ -54,9 +55,19 @@ public class ViewPendingRequestTests {
 
     @Test
     public void errorResponseForInvalidInstructor() {
-        when(gateway.getInstructor(request.courseId))
+        when(gateway.getInstructor(request.instructorId))
                 .thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.invalidInstructor());
+    }
+
+    @Test
+    public void errorResponseForInvalidCourse() {
+        Instructor instructor = new Instructor("Skiadas");
+        when(gateway.getInstructor(request.instructorId))
+                .thenReturn(instructor);
+        when(gateway.getCourse(request.courseId)).thenReturn(null);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.invalidCourse());
     }
 }

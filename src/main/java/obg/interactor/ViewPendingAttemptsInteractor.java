@@ -2,10 +2,8 @@ package obg.interactor;
 
 import obg.core.ErrorResponse;
 import obg.core.Presenter;
-import obg.gateway.Gateway;
 import obg.gateway.ViewPendingAttemptsGateway;
 import obg.request.ViewPendingAttemptsRequest;
-import org.eclipse.jetty.client.api.Response;
 
 public class ViewPendingAttemptsInteractor {
 
@@ -18,6 +16,9 @@ public class ViewPendingAttemptsInteractor {
     public void handle(ViewPendingAttemptsRequest request, Presenter presenter) {
         if (gateway.getInstructor(request.instructorId) == null) {
             presenter.reportError(ErrorResponse.invalidInstructor());
+        }
+        if (gateway.getCourse(request.courseId) == null){
+            presenter.reportError(ErrorResponse.invalidCourse());
         }
     }
 }
