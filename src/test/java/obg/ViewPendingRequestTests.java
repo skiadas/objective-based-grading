@@ -54,7 +54,7 @@ public class ViewPendingRequestTests {
     }
 
     @Test
-    public void errorResponseForInvalidInstructor() {
+    public void invalidInstructorErrorResponse() {
         when(gateway.getInstructor(request.instructorId))
                 .thenReturn(null);
         interactor.handle(request, presenter);
@@ -62,12 +62,23 @@ public class ViewPendingRequestTests {
     }
 
     @Test
-    public void errorResponseForInvalidCourse() {
+    public void invalidCourseErrorResponse() {
         Instructor instructor = new Instructor("Skiadas");
         when(gateway.getInstructor(request.instructorId))
                 .thenReturn(instructor);
         when(gateway.getCourse(request.courseId)).thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_COURSE);
+    }
+
+    @Test
+    public void invalidCourseInstructorErrorResponse() {
+        Instructor instructor = new Instructor("Skiadas");
+        Course course = new Course(UUID.randomUUID(), "CS 321");
+        when(gateway.getInstructor(request.instructorId))
+                .thenReturn(instructor);
+        when(gateway.getCourse(request.courseId)).thenReturn(course);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.INVALID_COURSE_INSTRUCTOR);
     }
 }

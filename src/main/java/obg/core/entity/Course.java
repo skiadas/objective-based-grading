@@ -8,6 +8,7 @@ import java.util.UUID;
 public class Course {
 
     public UUID courseID;
+    public Instructor instructor;
     public String courseName;
     public ArrayList<String> students;
     public ArrayList<String> objectives;
@@ -45,5 +46,9 @@ public class Course {
     public boolean isValidLetterGrade(String letterGrade) {
         List<String> letterGrades = new ArrayList<>(List.of("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"));
         return letterGrades.contains(letterGrade);
+    }
+
+    public boolean isCourseInstructor(Instructor instructor) {
+        return instructor == this.instructor;
     }
 }
