@@ -1,17 +1,15 @@
-package obg.response;
-
-import obg.core.Response;
+package obg.core;
 
 import java.util.Objects;
 
-public class ErrorResponse<T> implements Response<T> {
-    private String errMessage;
+public class ErrorResponse {
+    private final String errMessage;
 
-    public ErrorResponse(String errMessage) {
+    private ErrorResponse(String errMessage) {
         this.errMessage = errMessage;
     }
 
-    public static ErrorResponse createErrorResponse(String errorMessage) {
+    private static ErrorResponse createErrorResponse(String errorMessage) {
         return new ErrorResponse(errorMessage);
     }
 
@@ -44,10 +42,6 @@ public class ErrorResponse<T> implements Response<T> {
     @Override
     public int hashCode() {
         return Objects.hash(errMessage);
-    }
-
-    public T getValues() {
-        throw new RuntimeException("Should not have called getValues on an ErrorResponse");
     }
 
     public String getErrorMessage() {

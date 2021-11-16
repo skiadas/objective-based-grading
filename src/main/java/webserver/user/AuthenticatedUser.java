@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AuthenticatedUser extends User {
     private final String username;
-    private Role currentRole;
+    private final Role currentRole;
     private final List<Role> roles;
 
     public AuthenticatedUser(String username, Role currentRole, List<Role> roles) {

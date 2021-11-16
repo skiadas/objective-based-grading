@@ -1,9 +1,6 @@
 package obg;
 
-import obg.core.AppContext;
-import obg.core.Interactor;
-import obg.core.Request;
-import obg.core.Response;
+import obg.core.*;
 import obg.gateway.Gateway;
 import obg.interactor.AttemptRequestInteractor;
 import obg.interactor.InstructorCourseListInteractor;
@@ -19,37 +16,19 @@ public class ConcreteAppContext implements AppContext {
         this.gatewayFactory = gatewayFactory;
     }
 
-    public Request getInstructorCourseListRequest(String instructorId) {
-        return new InstructorCourseListRequest(instructorId);
+    public void instructorCourseListRequested(String instructorId, Presenter presenter) {
+        InstructorCourseListRequest request = new InstructorCourseListRequest(instructorId);
+        InstructorCourseListInteractor interactor = new InstructorCourseListInteractor(getGateway());
+        interactor.handle(request, presenter);
     }
 
-    public Request getRequestAttemptRequest(String studentId, String courseId, String objective) {
-        return new AttemptRequestRequest(studentId, UUID.fromString(courseId), objective);
+    public void attemptRequested(String studentId, String courseId, String objective, Presenter presenter) {
+        AttemptRequestRequest request = new AttemptRequestRequest(studentId, UUID.fromString(courseId), objective);
+        AttemptRequestInteractor interactor = new AttemptRequestInteractor(getGateway());
+        interactor.handle(request, presenter);
     }
 
-    public Interactor getInteractorFor(Request request) {
-        if (request instanceof InstructorCourseListRequest) {
-            return new InstructorCourseListInteractor(getGateway());
-        } else if (request instanceof AttemptRequestRequest){
-            return new AttemptRequestInteractor(getGateway());
-        } else {
-            throw new RuntimeException("No known interactor for: " + request.getClass());
-        }
-    }
-
-    public Response handle(Request request) {
-        if (request instanceof InstructorCourseListRequest) {
-            return new InstructorCourseListInteractor(getGateway())
-                    .handle((InstructorCourseListRequest) request);
-        } else if (request instanceof AttemptRequestRequest){
-            return new AttemptRequestInteractor(getGateway())
-                    .handle((AttemptRequestRequest) request);
-        } else {
-            throw new RuntimeException("No known interactor for: " + request.getClass());
-        }
-    }
-
-    public Gateway getGateway() {
+    private Gateway getGateway() {
         return gatewayFactory.acquireGateway();
     }
 }

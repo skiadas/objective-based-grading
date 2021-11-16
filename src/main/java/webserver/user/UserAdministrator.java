@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserAdministrator implements UserProvider<User> {
 
-    private Gateway gateway;
+    private final Gateway gateway;
 
     public UserAdministrator(Gateway gateway) {
         this.gateway = gateway;

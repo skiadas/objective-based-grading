@@ -1,8 +1,11 @@
 package webserver;
 
 import obg.core.AppContext;
+import obg.core.Presenter;
+import obg.core.entity.Attempt;
 import obg.core.entity.Course;
-import obg.response.CourseListResponse;
+import obg.core.ErrorResponse;
+import obg.response.TargetGradeRequirementsResponse;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -15,12 +18,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Handler {
+public class Handler implements Presenter {
     private static final ThymeleafTemplateEngine engine = new ThymeleafTemplateEngine();
     private final UserAdministrator userAdmin;
     private final Request req;
     private final Response res;
     private final AppContext context;
+    private final Map<String, Object> model = new HashMap<>();
+    private String result;
 
     public Handler(Request req, Response res, UserAdministrator userAdmin, AppContext context) {
         this.req = req;
@@ -58,17 +63,42 @@ public class Handler {
     }
 
     Object getInstructorIndexPage() {
-        Map<String, Object> model = new HashMap<>();
         String instructorId = req.params("username");
-        obg.core.Request request = context.getInstructorCourseListRequest(instructorId);
-        obg.core.Response response = context.handle(request);
-        List<Course> courses = ((CourseListResponse) response).courses;
-        // TODO: Add user here?
-        model.put("courses", courses);
-        return engine.render(new ModelAndView(model, "instructorIndex"));
+        context.instructorCourseListRequested(instructorId, this);
+        return result;
     }
 
     Object showLoginScreen() {
         return engine.render(new ModelAndView(new HashMap<>(), "login"));
+    }
+
+    public void reportError(ErrorResponse response) {
+        throw new ErrorResponseException(response.getErrorMessage());
+    }
+
+    public void presentInstructorCourseList(List<Course> courses) {
+        model.put("courses", courses);
+        // TODO
+        result = engine.render(new ModelAndView(model, "instructorIndex"));
+    }
+
+    public void presentStudentCourseList(List<Course> courses) {
+        // TODO
+    }
+
+    public void presentAttemptCreated(Attempt attempt) {
+        // TODO
+    }
+
+    public void presentTargetGradeRequirements(TargetGradeRequirementsResponse response) {
+        // TODO
+    }
+
+    static class ErrorResponseException extends RuntimeException {
+        final String errorMessage;
+
+        ErrorResponseException(String errorMessage) {
+            this.errorMessage = errorMessage;
+        }
     }
 }

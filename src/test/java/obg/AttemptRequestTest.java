@@ -1,19 +1,18 @@
 package obg;
 
-import obg.core.Response;
+import obg.core.Presenter;
 import obg.core.entity.Course;
 import obg.core.entity.Student;
 import obg.gateway.AttemptRequestGateway;
 import obg.interactor.AttemptRequestInteractor;
 import obg.request.AttemptRequestRequest;
-import obg.response.ErrorResponse;
+import obg.core.ErrorResponse;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class AttemptRequestTest {
@@ -24,9 +23,11 @@ public class AttemptRequestTest {
     private AttemptRequestInteractor interactor;
     private Course course;
     private Student student;
+    private Presenter presenter;
 
     @Before
     public void setUp() {
+        presenter = mock(Presenter.class);
         gateway = mock(AttemptRequestGateway.class);
         randID = randomUUID();
         request = new AttemptRequestRequest("DoeJ24", randID, "L1");
@@ -37,7 +38,7 @@ public class AttemptRequestTest {
 
     @Test
     public void InteractorAskGatewayForCorrectCourse() {
-        interactor.handle(request);
+        interactor.handle(request, presenter);
         verify(gateway).getCourse(request.courseID);
     }
 
@@ -45,14 +46,14 @@ public class AttemptRequestTest {
     @Test
     public void CheckInvalidCourseErrorTest() {
         when(gateway.getCourse(request.courseID)).thenReturn(null);
-        Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.invalidCourse(), response);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.invalidCourse());
     }
 
     @Test
     public void InteractorAskGatewayForCorrectStudent() {
         when(gateway.getCourse(request.courseID)).thenReturn(course);
-        interactor.handle(request);
+        interactor.handle(request, presenter);
         verify(gateway).getStudent(request.userName);
     }
 
@@ -60,17 +61,16 @@ public class AttemptRequestTest {
     public void checkInvalidStudentErrorTest() {
         when(gateway.getCourse(request.courseID)).thenReturn(course);
         when(gateway.getStudent(request.userName)).thenReturn(null);
-        Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.invalidStudent(), response);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.invalidStudent());
     }
 
     @Test
     public void InteractorAskGatewayForCorrectObjective() {
         when(gateway.getCourse(request.courseID)).thenReturn(course);
         when(gateway.getStudent(request.userName)).thenReturn(student);
-        interactor.handle(request);
+        interactor.handle(request, presenter);
         verify(gateway).objectiveInCourse(request.objective, request.courseID);
-
     }
 
     @Test
@@ -78,8 +78,8 @@ public class AttemptRequestTest {
         when(gateway.getCourse(request.courseID)).thenReturn(course);
         when(gateway.getStudent(request.userName)).thenReturn(student);
         when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(false);
-        Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.invalidObjective(), response);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.invalidObjective());
     }
 
     @Test
@@ -88,9 +88,9 @@ public class AttemptRequestTest {
         when(gateway.getStudent(request.userName)).thenReturn(student);
         when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(true);
         when(gateway.getStudentIsEnrolled(request.userName, request.courseID)).thenReturn(false);
-        Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.notEnrolled(), response);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.notEnrolled());
     }
 
-
+    // TODO: Should verify presenter method is called for created attempt
 }

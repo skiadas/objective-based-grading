@@ -1,11 +1,11 @@
 package obg.interactor;
 
-import obg.response.ErrorResponse;
-import obg.response.TargetGradeRequirementsResponse;
-import obg.core.Response;
+import obg.core.Presenter;
 import obg.core.entity.Course;
 import obg.gateway.ViewTargetGradeGateway;
 import obg.request.ViewTargetGradeRequest;
+import obg.core.ErrorResponse;
+import obg.response.TargetGradeRequirementsResponse;
 
 public class ViewTargetGradeInteractor {
     private final ViewTargetGradeGateway gateway;
@@ -14,13 +14,17 @@ public class ViewTargetGradeInteractor {
         this.gateway = gateway;
     }
 
-    public Response handle(ViewTargetGradeRequest request) {
+    public void handle(ViewTargetGradeRequest request, Presenter presenter) {
         Course course = gateway.getCourse(request.courseId);
         if (course == null) {
-            return ErrorResponse.invalidCourse();
+            presenter.reportError(ErrorResponse.invalidCourse());
         } else if (!course.isValidLetterGrade(request.letterGrade)) {
-            return ErrorResponse.invalidLetterGrade();
+            presenter.reportError(ErrorResponse.invalidLetterGrade());
+        } else {
+            presenter.presentTargetGradeRequirements(
+                    new TargetGradeRequirementsResponse(request.letterGrade,
+                                                        course.gradeBreaks.get(request.letterGrade))
+                                                    );
         }
-        return new TargetGradeRequirementsResponse(request.letterGrade, course.gradeBreaks.get(request.letterGrade));
     }
 }

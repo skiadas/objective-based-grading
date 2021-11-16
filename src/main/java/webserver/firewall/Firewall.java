@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 public class Firewall<U> {
     private final List<Rule<U>> rules = new ArrayList<>();
-    private UserProvider<U> userAdmin;
+    private final UserProvider<U> userAdmin;
 
     public Firewall(UserProvider<U> userAdmin) {
         this.userAdmin = userAdmin;

@@ -1,13 +1,12 @@
 package obg;
 
-import obg.core.Response;
+import obg.core.Presenter;
 import obg.gateway.StudentCourseListGateway;
 import obg.interactor.StudentCourseListInteractor;
 import obg.request.StudentCourseListRequest;
-import obg.response.ErrorResponse;
+import obg.core.ErrorResponse;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class StudentCourseListTest {
@@ -17,8 +16,9 @@ public class StudentCourseListTest {
         StudentCourseListGateway gateway = mock(StudentCourseListGateway.class);
         StudentCourseListInteractor interactor = new StudentCourseListInteractor(gateway);
         StudentCourseListRequest request = new StudentCourseListRequest("userName");
-        Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.invalidStudent(), response);
+        Presenter presenter = mock(Presenter.class);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.invalidStudent());
     }
 
 }

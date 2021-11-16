@@ -1,20 +1,18 @@
 package obg;
 
-import obg.core.Response;
+import obg.core.Presenter;
 import obg.core.entity.Course;
 import obg.core.entity.Instructor;
 import obg.gateway.InstructorCourseListGateway;
 import obg.interactor.InstructorCourseListInteractor;
 import obg.request.InstructorCourseListRequest;
-import obg.response.CourseListResponse;
-import obg.response.ErrorResponse;
+import obg.core.ErrorResponse;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class InstructorCourseListInteractorTest {
@@ -22,17 +20,19 @@ public class InstructorCourseListInteractorTest {
     private InstructorCourseListRequest request;
     private InstructorCourseListInteractor interactor;
     private InstructorCourseListGateway gateway;
+    private Presenter presenter;
 
     @Before
     public void setUp() {
         request = new InstructorCourseListRequest("instr");
         gateway = mock(InstructorCourseListGateway.class);
         interactor = new InstructorCourseListInteractor(gateway);
+        presenter = mock(Presenter.class);
     }
 
     @Test
     public void interactorAsksGatewayForCorrectInstructorIdMockito() {
-        interactor.handle(request);
+        interactor.handle(request, presenter);
         verify(gateway).getInstructor(request.instructorId);
     }
 
@@ -40,8 +40,8 @@ public class InstructorCourseListInteractorTest {
     public void returnErrorIfInvalidInstructorId() {
         when(gateway.getInstructor(request.instructorId))
                 .thenReturn(null);
-        Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.invalidInstructor(), response);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.invalidInstructor());
     }
 
     @Test
@@ -52,11 +52,10 @@ public class InstructorCourseListInteractorTest {
                 .thenReturn(instructor);
         when(gateway.getCoursesTaughtBy(instructor))
                 .thenReturn(courses);
-        Response response = interactor.handle(request);
+        interactor.handle(request, presenter);
         verify(gateway).getInstructor(request.instructorId);
         verify(gateway).getCoursesTaughtBy(instructor);
-        assertEquals(new CourseListResponse(courses), response);
-
+        verify(presenter).presentInstructorCourseList(courses);
     }
 
     private List<Course> makeCourses() {

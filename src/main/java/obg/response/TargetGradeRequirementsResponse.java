@@ -1,12 +1,11 @@
 package obg.response;
 
-import obg.core.Response;
 import obg.core.entity.ObjectiveGroup;
 
 import java.util.EnumMap;
 import java.util.Objects;
 
-public class TargetGradeRequirementsResponse implements Response {
+public class TargetGradeRequirementsResponse {
 
     public final String letterGrade;
     public EnumMap<ObjectiveGroup, Integer> objectiveRequirements = new EnumMap<>(ObjectiveGroup.class);

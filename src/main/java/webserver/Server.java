@@ -13,12 +13,12 @@ import webserver.user.UserAdministrator;
 import static spark.Spark.*;
 
 public class Server {
-    private static Logger logger = LogManager.getLogger();
-    private static Gateway gateway = makeAndPrepareGateway();
+    private static final Logger logger = LogManager.getLogger();
+    private static final Gateway gateway = makeAndPrepareGateway();
 
-    private static UserAdministrator userAdmin = new UserAdministrator(gateway);
-    private static GatewayFactory gatewayFactory = new InMemoryGatewayFactory();
-    private static ConcreteAppContext context = new ConcreteAppContext(gatewayFactory);
+    private static final UserAdministrator userAdmin = new UserAdministrator(gateway);
+    private static final GatewayFactory gatewayFactory = new InMemoryGatewayFactory();
+    private static final ConcreteAppContext context = new ConcreteAppContext(gatewayFactory);
 
     public static void main(String[] args) {
         startServer(3006);

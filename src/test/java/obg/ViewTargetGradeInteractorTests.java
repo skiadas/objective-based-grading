@@ -1,32 +1,32 @@
 package obg;
 
-import obg.core.Response;
+import obg.core.Presenter;
 import obg.core.entity.Course;
 import obg.core.entity.ObjectiveGroup;
 import obg.gateway.ViewTargetGradeGateway;
 import obg.interactor.ViewTargetGradeInteractor;
 import obg.request.ViewTargetGradeRequest;
-import obg.response.ErrorResponse;
+import obg.core.ErrorResponse;
 import obg.response.TargetGradeRequirementsResponse;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ViewTargetGradeInteractorTests {
     private ViewTargetGradeRequest request;
     private ViewTargetGradeGateway gateway;
     private ViewTargetGradeInteractor interactor;
+    private Presenter presenter;
 
     @Before
     public void setUp() {
         UUID courseId = UUID.randomUUID();
         request = new ViewTargetGradeRequest(courseId, "Z");
         gateway = mock(ViewTargetGradeGateway.class);
+        presenter = mock(Presenter.class);
         interactor = new ViewTargetGradeInteractor(gateway);
     }
 
@@ -34,16 +34,16 @@ public class ViewTargetGradeInteractorTests {
     public void errorResponseForInvalidCourse() {
         when(gateway.getCourse(request.courseId))
                 .thenReturn(null);
-        Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.invalidCourse(), response);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.invalidCourse());
     }
 
     @Test
     public void errorResponseForInvalidLetterGrade() {
         when(gateway.getCourse(request.courseId))
                 .thenReturn(new Course(UUID.randomUUID(), "course"));
-        Response response = interactor.handle(request);
-        assertEquals(ErrorResponse.invalidLetterGrade(), response);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.invalidLetterGrade());
     }
 
     @Test
@@ -64,9 +64,8 @@ public class ViewTargetGradeInteractorTests {
     private void assertGeneratesCorrectResponse(String grade, int b, int c, int e) {
         ViewTargetGradeRequest request = new ViewTargetGradeRequest(UUID.randomUUID(), grade);
         when(gateway.getCourse(request.courseId)).thenReturn(new Course(UUID.randomUUID(), "course"));
-        Response actualResponse = interactor.handle(request);
-        TargetGradeRequirementsResponse expectedResponse = generateExpectedResponse(grade, b, c, e);
-        assertEquals(expectedResponse, actualResponse);
+        interactor.handle(request, presenter);
+        verify(presenter).presentTargetGradeRequirements(generateExpectedResponse(grade, b, c, e));
     }
 
     private TargetGradeRequirementsResponse generateExpectedResponse(String grade, int b, int c, int e) {
