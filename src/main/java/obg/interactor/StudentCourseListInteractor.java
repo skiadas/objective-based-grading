@@ -18,8 +18,7 @@ public class StudentCourseListInteractor {
 
     public void handle(StudentCourseListRequest request, Presenter presenter){
         if (gateway.getStudent(request.userName) == null) {
-            final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_STUDENT);
-            presenter.reportError(response.getErrorMessage());
+            presenter.reportError(ErrorResponse.INVALID_STUDENT);
         } else {
             // TODO: You'll need to create the courses
             List<Course> courses = new ArrayList<>();

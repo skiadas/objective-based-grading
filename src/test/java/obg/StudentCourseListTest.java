@@ -18,8 +18,7 @@ public class StudentCourseListTest {
         StudentCourseListRequest request = new StudentCourseListRequest("userName");
         Presenter presenter = mock(Presenter.class);
         interactor.handle(request, presenter);
-        final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_STUDENT);
-        verify(presenter).reportError(response.getErrorMessage());
+        verify(presenter).reportError(ErrorResponse.INVALID_STUDENT);
     }
 
 }

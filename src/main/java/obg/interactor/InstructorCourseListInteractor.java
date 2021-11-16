@@ -22,8 +22,7 @@ public class InstructorCourseListInteractor implements Interactor {
         // TODO: Can we do this better?
         Instructor instr = gateway.getInstructor(request.instructorId);
         if (instr == null) {
-            final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_INSTRUCTOR);
-            presenter.reportError(response.getErrorMessage());
+            presenter.reportError(ErrorResponse.INVALID_INSTRUCTOR);
         } else {
             List<Course> courses = gateway.getCoursesTaughtBy(instr);
             presenter.presentInstructorCourseList(courses);

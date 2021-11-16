@@ -69,7 +69,6 @@ public class ViewPendingRequestTests {
                 .thenReturn(instructor);
         when(gateway.getCourse(request.courseId)).thenReturn(null);
         interactor.handle(request, presenter);
-        final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_COURSE);
-        verify(presenter).reportError(response.getErrorMessage());
+        verify(presenter).reportError(ErrorResponse.INVALID_COURSE);
     }
 }
