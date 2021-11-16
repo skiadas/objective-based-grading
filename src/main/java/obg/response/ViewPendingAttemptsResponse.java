@@ -1,20 +1,17 @@
 package obg.response;
 
+import obg.core.entity.Attempt;
 import obg.core.entity.Course;
-import obg.core.entity.Student;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class ViewPendingAttemptsResponse {
 
-
-    public Map<Student, HashMap<String, String>> studentObjectives = new HashMap<>();
-    public Map<String, String> objectiveStatuses = new HashMap<>();
     public Course course;
+    public ArrayList<Attempt> attempts;
 
-
-    public ViewPendingAttemptsResponse(Course course) {
+    public ViewPendingAttemptsResponse(Course course, ArrayList<Attempt> attempts) {
         this.course = course;
+        this.attempts = attempts;
     }
 }

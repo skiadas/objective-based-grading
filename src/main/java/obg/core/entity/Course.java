@@ -51,4 +51,8 @@ public class Course {
     public boolean isCourseInstructor(Instructor instructor) {
         return instructor == this.instructor;
     }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
 }

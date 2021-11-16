@@ -4,6 +4,7 @@ import obg.core.entity.Attempt;
 import obg.core.entity.Course;
 import obg.response.TargetGradeRequirementsResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Presenter {
@@ -16,4 +17,6 @@ public interface Presenter {
     void presentAttemptCreated(Attempt attempt);
 
     void presentTargetGradeRequirements(TargetGradeRequirementsResponse response);
+
+    void presentPendingAttempts();
 }

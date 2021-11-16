@@ -93,6 +93,11 @@ public class Handler implements Presenter {
         // TODO
     }
 
+    @Override
+    public void presentPendingAttempts() {
+        //TODO
+    }
+
     static class ErrorResponseException extends RuntimeException {
         final String errorMessage;
 
