@@ -45,6 +45,7 @@ public class AttemptRequestTest {
 
     @Test
     public void CheckInvalidCourseErrorTest() {
+        when(gateway.getAttemptNumber()).thenReturn(1);
         when(gateway.getCourse(request.courseID)).thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_COURSE);
@@ -59,6 +60,7 @@ public class AttemptRequestTest {
 
     @Test
     public void checkInvalidStudentErrorTest() {
+        when(gateway.getAttemptNumber()).thenReturn(1);
         when(gateway.getCourse(request.courseID)).thenReturn(course);
         when(gateway.getStudent(request.userName)).thenReturn(null);
         interactor.handle(request, presenter);
@@ -75,6 +77,7 @@ public class AttemptRequestTest {
 
     @Test
     public void InvalidObjectiveTest() {
+        when(gateway.getAttemptNumber()).thenReturn(1);
         when(gateway.getCourse(request.courseID)).thenReturn(course);
         when(gateway.getStudent(request.userName)).thenReturn(student);
         when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(false);
@@ -84,6 +87,7 @@ public class AttemptRequestTest {
 
     @Test
     public void notEnrolledErrorTest() {
+        when(gateway.getAttemptNumber()).thenReturn(1);
         when(gateway.getCourse(request.courseID)).thenReturn(course);
         when(gateway.getStudent(request.userName)).thenReturn(student);
         when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(true);
@@ -91,6 +95,9 @@ public class AttemptRequestTest {
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
     }
+
+
+
 
     // TODO: Should verify presenter method is called for created attempt
 }

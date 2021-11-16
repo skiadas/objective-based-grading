@@ -47,6 +47,11 @@ public class InMemoryGateway implements Gateway {
         return false;
     }
 
+    @Override
+    public int getAttemptNumber() {
+        return 0;
+    }
+
     public void assignCourseInstructor(Course c, Instructor i) {
         courseInstructorPairs.add(new CourseInstructorPair(c, i));
     }

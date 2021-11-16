@@ -21,7 +21,7 @@ public class StudentCourseListInteractor {
             presenter.reportError(ErrorResponse.INVALID_STUDENT);
         } else {
             // TODO: You'll need to create the courses
-            List<Course> courses = new ArrayList<>();
+            List<Course> courses = gateway.getStudentCourses(request.userName);
             presenter.presentStudentCourseList(courses);
         }
     }
