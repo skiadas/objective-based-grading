@@ -2,6 +2,8 @@ package obg.interactor;
 
 import obg.core.ErrorResponse;
 import obg.core.Presenter;
+import obg.core.entity.Course;
+import obg.core.entity.Instructor;
 import obg.gateway.ViewPendingAttemptsGateway;
 import obg.request.ViewPendingAttemptsRequest;
 
@@ -14,11 +16,16 @@ public class ViewPendingAttemptsInteractor {
     }
 
     public void handle(ViewPendingAttemptsRequest request, Presenter presenter) {
-        if (gateway.getInstructor(request.instructorId) == null) {
+        Instructor instructor = gateway.getInstructor(request.instructorId);
+        if (instructor == null) {
             presenter.reportError(ErrorResponse.INVALID_INSTRUCTOR);
         }
-        if (gateway.getCourse(request.courseId) == null){
+        Course course = gateway.getCourse(request.courseId);
+        if (course == null){
             presenter.reportError(ErrorResponse.INVALID_COURSE);
+        }
+        else if(!course.isCourseInstructor(instructor)){
+            presenter.reportError(ErrorResponse.INVALID_COURSE_INSTRUCTOR);
         }
     }
 }

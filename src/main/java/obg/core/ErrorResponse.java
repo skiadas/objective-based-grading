@@ -9,6 +9,7 @@ public class ErrorResponse {
     public static final String INVALID_INSTRUCTOR = "Invalid Instructor";
     public static final String INVALID_OBJECTIVE = "Invalid Objective";
     public static final String STUDENT_NOT_ENROLLED = "Student not enrolled";
+    public static String INVALID_COURSE_INSTRUCTOR = "Not course instructor";
     private final String errMessage;
 
     public ErrorResponse(String errMessage) {
