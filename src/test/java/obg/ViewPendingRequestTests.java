@@ -58,7 +58,8 @@ public class ViewPendingRequestTests {
         when(gateway.getInstructor(request.instructorId))
                 .thenReturn(null);
         interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.invalidInstructor());
+        final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_INSTRUCTOR);
+        verify(presenter).reportError(response.getErrorMessage());
     }
 
     @Test
@@ -68,6 +69,7 @@ public class ViewPendingRequestTests {
                 .thenReturn(instructor);
         when(gateway.getCourse(request.courseId)).thenReturn(null);
         interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.invalidCourse());
+        final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_COURSE);
+        verify(presenter).reportError(response.getErrorMessage());
     }
 }

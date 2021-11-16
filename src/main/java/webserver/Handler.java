@@ -4,7 +4,6 @@ import obg.core.AppContext;
 import obg.core.Presenter;
 import obg.core.entity.Attempt;
 import obg.core.entity.Course;
-import obg.core.ErrorResponse;
 import obg.response.TargetGradeRequirementsResponse;
 import spark.ModelAndView;
 import spark.Request;
@@ -72,8 +71,8 @@ public class Handler implements Presenter {
         return engine.render(new ModelAndView(new HashMap<>(), "login"));
     }
 
-    public void reportError(ErrorResponse response) {
-        throw new ErrorResponseException(response.getErrorMessage());
+    public void reportError(String errorMessage) {
+        throw new ErrorResponseException(errorMessage);
     }
 
     public void presentInstructorCourseList(List<Course> courses) {

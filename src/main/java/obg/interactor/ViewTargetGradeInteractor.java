@@ -17,9 +17,11 @@ public class ViewTargetGradeInteractor {
     public void handle(ViewTargetGradeRequest request, Presenter presenter) {
         Course course = gateway.getCourse(request.courseId);
         if (course == null) {
-            presenter.reportError(ErrorResponse.invalidCourse());
+            final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_COURSE);
+            presenter.reportError(response.getErrorMessage());
         } else if (!course.isValidLetterGrade(request.letterGrade)) {
-            presenter.reportError(ErrorResponse.invalidLetterGrade());
+            final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_LETTER_GRADE);
+            presenter.reportError(response.getErrorMessage());
         } else {
             presenter.presentTargetGradeRequirements(
                     new TargetGradeRequirementsResponse(request.letterGrade,

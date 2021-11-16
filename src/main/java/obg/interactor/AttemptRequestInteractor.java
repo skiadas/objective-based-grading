@@ -22,14 +22,15 @@ public class AttemptRequestInteractor implements Interactor {
         int attemptNumber = 1;
         Attempt attempt = new Attempt(request.objective, attemptNumber, request.userName, request.courseID, AttemptStatus.PENDING);
         if (gateway.getCourse(request.courseID) == null) {
-            presenter.reportError(ErrorResponse.invalidCourse());
+            presenter.reportError(ErrorResponse.INVALID_COURSE);
         } else if (gateway.getStudent(request.userName) == null) {
-            presenter.reportError(ErrorResponse.invalidStudent());
+            presenter.reportError(ErrorResponse.INVALID_STUDENT);
         } else if (!gateway.objectiveInCourse(request.objective, request.courseID)) {
-            presenter.reportError(ErrorResponse.invalidObjective());
+            presenter.reportError(ErrorResponse.INVALID_OBJECTIVE);
         } else if (!gateway.getStudentIsEnrolled(request.userName, request.courseID)) {
-            presenter.reportError(ErrorResponse.notEnrolled());
+            presenter.reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
         }
         presenter.presentAttemptCreated(attempt);
     }
+
 }

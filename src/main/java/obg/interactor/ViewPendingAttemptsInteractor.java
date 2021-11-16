@@ -15,10 +15,12 @@ public class ViewPendingAttemptsInteractor {
 
     public void handle(ViewPendingAttemptsRequest request, Presenter presenter) {
         if (gateway.getInstructor(request.instructorId) == null) {
-            presenter.reportError(ErrorResponse.invalidInstructor());
+            final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_INSTRUCTOR);
+            presenter.reportError(response.getErrorMessage());
         }
         if (gateway.getCourse(request.courseId) == null){
-            presenter.reportError(ErrorResponse.invalidCourse());
+            final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_COURSE);
+            presenter.reportError(response.getErrorMessage());
         }
     }
 }

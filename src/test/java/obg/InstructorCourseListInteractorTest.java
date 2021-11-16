@@ -41,7 +41,8 @@ public class InstructorCourseListInteractorTest {
         when(gateway.getInstructor(request.instructorId))
                 .thenReturn(null);
         interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.invalidInstructor());
+        final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_INSTRUCTOR);
+        verify(presenter).reportError(response.getErrorMessage());
     }
 
     @Test

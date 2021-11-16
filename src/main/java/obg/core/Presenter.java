@@ -7,7 +7,7 @@ import obg.response.TargetGradeRequirementsResponse;
 import java.util.List;
 
 public interface Presenter {
-    void reportError(ErrorResponse response);
+    void reportError(String errorMessage);
 
     void presentInstructorCourseList(List<Course> courses);
 

@@ -35,7 +35,8 @@ public class ViewTargetGradeInteractorTests {
         when(gateway.getCourse(request.courseId))
                 .thenReturn(null);
         interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.invalidCourse());
+        String errorMessage = ErrorResponse.INVALID_COURSE;
+        verify(presenter).reportError(errorMessage);
     }
 
     @Test
@@ -43,7 +44,7 @@ public class ViewTargetGradeInteractorTests {
         when(gateway.getCourse(request.courseId))
                 .thenReturn(new Course(UUID.randomUUID(), "course"));
         interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.invalidLetterGrade());
+        verify(presenter).reportError(ErrorResponse.INVALID_LETTER_GRADE);
     }
 
     @Test

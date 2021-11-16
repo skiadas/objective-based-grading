@@ -3,33 +3,17 @@ package obg.core;
 import java.util.Objects;
 
 public class ErrorResponse {
+    public static final String INVALID_STUDENT = "Invalid Student";
+    public static final String INVALID_COURSE = "Invalid Course";
+    public static final String INVALID_LETTER_GRADE = "Invalid letter grade";
+    public static final String INVALID_INSTRUCTOR = "Invalid Instructor";
+    public static final String INVALID_OBJECTIVE = "Invalid Objective";
+    public static final String STUDENT_NOT_ENROLLED = "Student not enrolled";
     private final String errMessage;
 
-    private ErrorResponse(String errMessage) {
+    public ErrorResponse(String errMessage) {
         this.errMessage = errMessage;
     }
-
-    private static ErrorResponse createErrorResponse(String errorMessage) {
-        return new ErrorResponse(errorMessage);
-    }
-
-    public static ErrorResponse invalidStudent() {
-        return createErrorResponse("Invalid Student");
-    }
-
-    public static ErrorResponse invalidCourse() {
-        return createErrorResponse("Invalid Course");
-    }
-
-    public static ErrorResponse invalidLetterGrade() { return createErrorResponse("Invalid lettergrade"); }
-
-    public static ErrorResponse invalidInstructor() {
-        return createErrorResponse("Invalid Instructor");
-    }
-
-    public static ErrorResponse invalidObjective() { return createErrorResponse("Invalid Objective"); }
-
-    public static ErrorResponse notEnrolled() { return createErrorResponse("Student not enrolled"); }
 
     @Override
     public boolean equals(Object o) {
