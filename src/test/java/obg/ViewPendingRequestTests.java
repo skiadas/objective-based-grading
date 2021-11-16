@@ -58,8 +58,7 @@ public class ViewPendingRequestTests {
         when(gateway.getInstructor(request.instructorId))
                 .thenReturn(null);
         interactor.handle(request, presenter);
-        final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_INSTRUCTOR);
-        verify(presenter).reportError(response.getErrorMessage());
+        verify(presenter).reportError(ErrorResponse.INVALID_INSTRUCTOR);
     }
 
     @Test

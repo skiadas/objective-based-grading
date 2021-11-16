@@ -18,8 +18,7 @@ public class ViewPendingAttemptsInteractor {
             presenter.reportError(ErrorResponse.INVALID_INSTRUCTOR);
         }
         if (gateway.getCourse(request.courseId) == null){
-            final ErrorResponse response = new ErrorResponse(ErrorResponse.INVALID_COURSE);
-            presenter.reportError(response.getErrorMessage());
+            presenter.reportError(ErrorResponse.INVALID_COURSE);
         }
     }
 }
