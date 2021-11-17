@@ -1,8 +1,6 @@
 package webserver;
 
-import obg.ConcreteAppContext;
-import obg.gateway.Gateway;
-import obg.GatewayFactory;
+import obg.core.AppContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import spark.Spark;
@@ -14,20 +12,11 @@ import static spark.Spark.*;
 
 public class Server {
     private static final Logger logger = LogManager.getLogger();
-    private static final Gateway gateway = makeAndPrepareGateway();
 
-    private static final UserAdministrator userAdmin = new UserAdministrator(gateway);
-    private static final GatewayFactory gatewayFactory = new InMemoryGatewayFactory();
-    private static final ConcreteAppContext context = new ConcreteAppContext(gatewayFactory);
-
-    public static void main(String[] args) {
-        startServer(3006);
-    }
-
-    public static void startServer(int port) {
+    public Server(int port, UserAdministrator userAdmin, AppContext context) {
         Spark.port(port);
         before("/*", (req, res) -> logger.info("Received call: " + req.pathInfo()));
-        setupFirewall();
+        setupFirewall(userAdmin);
         // Normal routes
         get("/", (req, res) -> new Handler(req, res, userAdmin, context).handleIndex());
         get("/login", (req, res) -> new Handler(req, res, userAdmin, context).showLoginScreen());
@@ -38,7 +27,7 @@ public class Server {
         logger.info("Server started, serving at localhost:" + Spark.port());
     }
 
-    private static void setupFirewall() {
+    private static void setupFirewall(UserAdministrator userAdmin) {
         new Firewall<>(userAdmin)
                 .addRule("/login", (User u) -> true)
                 .addRule("/instructor", (User u) -> u.canActAs(User.Role.Instructor))
@@ -48,12 +37,6 @@ public class Server {
                 .setup();
         exception(Firewall.UnauthorizedAccess.class,
                   (e, req, res) -> res.redirect("/login"));
-    }
-
-    private static InMemoryGateway makeAndPrepareGateway() {
-        InMemoryGateway gateway = new InMemoryGateway();
-        new SampleDataGenerator(gateway).populateWithData();
-        return gateway;
     }
 
 }

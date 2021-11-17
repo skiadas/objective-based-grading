@@ -1,4 +1,4 @@
-package webserver;
+package main;
 
 import obg.gateway.Gateway;
 import obg.GatewayFactory;

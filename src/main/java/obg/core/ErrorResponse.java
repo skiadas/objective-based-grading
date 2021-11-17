@@ -29,11 +29,4 @@ public class ErrorResponse {
         return Objects.hash(errMessage);
     }
 
-    public String getErrorMessage() {
-        return errMessage;
-    }
-
-    public boolean isSuccessful() {
-        return false;
-    }
 }

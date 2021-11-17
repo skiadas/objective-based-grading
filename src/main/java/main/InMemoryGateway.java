@@ -1,4 +1,4 @@
-package webserver;
+package main;
 
 import obg.core.entity.Course;
 import obg.gateway.Gateway;
@@ -9,10 +9,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class InMemoryGateway implements Gateway {
-    static Map<UUID, Course> courses = new HashMap<>();
-    static Map<String, Instructor> instructors = new HashMap<>();
-    static List<CourseInstructorPair> courseInstructorPairs = new ArrayList<>();
-    static Map<String, Student> students = new HashMap<>();
+    public static Map<UUID, Course> courses = new HashMap<>();
+    public static Map<String, Instructor> instructors = new HashMap<>();
+    public static List<CourseInstructorPair> courseInstructorPairs = new ArrayList<>();
+    public static Map<String, Student> students = new HashMap<>();
 
     public Course getCourse(UUID courseId) {
         return courses.get(courseId);
