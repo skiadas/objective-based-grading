@@ -9,11 +9,7 @@ import obg.request.StudentCourseListRequest;
 import obg.core.ErrorResponse;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class StudentCourseListTest {
@@ -24,7 +20,7 @@ public class StudentCourseListTest {
     private Presenter presenter;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         gateway = mock(StudentCourseListGateway.class);
         interactor = new StudentCourseListInteractor(gateway);
         request = new StudentCourseListRequest("userName");

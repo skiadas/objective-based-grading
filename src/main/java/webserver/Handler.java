@@ -98,6 +98,11 @@ public class Handler implements Presenter {
         //TODO
     }
 
+    @Override
+    public void presentUnattemptedObjectives(List<String> objectives) {
+
+    }
+
     static class ErrorResponseException extends RuntimeException {
         final String errorMessage;
 
