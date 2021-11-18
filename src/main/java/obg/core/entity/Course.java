@@ -10,12 +10,12 @@ public class Course {
     public UUID courseID;
     public Instructor instructor;
     public String courseName;
-    public ArrayList<String> students;
+    public List<Student> students;
     public ArrayList<String> objectives;
     public GradeBreakPoints gradeBreaks = new GradeBreakPoints();
 
 
-    public Course(UUID courseID, String courseName, ArrayList<String> students, ArrayList<String> objectives) {
+    public Course(UUID courseID, String courseName, List<Student> students, ArrayList<String> objectives) {
         this.students = students;
         this.objectives = objectives;
         this.courseID = courseID;
@@ -49,7 +49,7 @@ public class Course {
     }
 
     public boolean isCourseInstructor(Instructor instructor) {
-        return instructor == this.instructor;
+        return this.instructor == instructor;
     }
 
     public void setInstructor(Instructor instructor) {

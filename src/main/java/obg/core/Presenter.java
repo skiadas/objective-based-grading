@@ -2,10 +2,8 @@ package obg.core;
 
 import obg.core.entity.Attempt;
 import obg.core.entity.Course;
-import obg.core.entity.Student;
 import obg.response.TargetGradeRequirementsResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface Presenter {
@@ -19,7 +17,7 @@ public interface Presenter {
 
     void presentTargetGradeRequirements(TargetGradeRequirementsResponse response);
 
-    void presentPendingAttempts();
+    void presentPendingAttempts(List<Attempt> pendingAttempts);
 
     void presentUnattemptedObjectives(List<String> objectives);
 }

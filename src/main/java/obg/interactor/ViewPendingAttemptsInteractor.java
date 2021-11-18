@@ -21,11 +21,13 @@ public class ViewPendingAttemptsInteractor {
             presenter.reportError(ErrorResponse.INVALID_INSTRUCTOR);
         }
         Course course = gateway.getCourse(request.courseId);
-        if (course == null){
+        if (course == null) {
             presenter.reportError(ErrorResponse.INVALID_COURSE);
-        }
-        else if(!course.isCourseInstructor(instructor)){
+        } else if (!course.isCourseInstructor(instructor)) {
             presenter.reportError(ErrorResponse.INVALID_COURSE_INSTRUCTOR);
+        }
+        else {
+            presenter.presentPendingAttempts(gateway.getAttempts(course));
         }
     }
 }

@@ -1,6 +1,5 @@
 package obg;
 
-import obg.core.ErrorResponse;
 import obg.core.Presenter;
 import obg.core.entity.Attempt;
 import obg.core.entity.Course;
@@ -8,7 +7,6 @@ import obg.core.entity.Instructor;
 import obg.gateway.ViewPendingAttemptsGateway;
 import obg.interactor.ViewPendingAttemptsInteractor;
 import obg.request.ViewPendingAttemptsRequest;
-import obg.response.ViewPendingAttemptsResponse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +15,9 @@ import java.util.List;
 import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static obg.core.ErrorResponse.*;
+import static obg.core.entity.AttemptStatus.COMPLETED;
+import static obg.core.entity.AttemptStatus.PENDING;
 import static org.mockito.Mockito.*;
 
 public class ViewPendingRequestTests {
@@ -26,6 +26,8 @@ public class ViewPendingRequestTests {
     private ViewPendingAttemptsGateway gateway;
     private Presenter presenter;
     private ViewPendingAttemptsInteractor interactor;
+    private Instructor instructor;
+    private Course course;
 
     @Before
     public void setUp(){
@@ -35,6 +37,8 @@ public class ViewPendingRequestTests {
         gateway = mock(ViewPendingAttemptsGateway.class);
         presenter = mock(Presenter.class);
         interactor = new ViewPendingAttemptsInteractor(gateway);
+        instructor = new Instructor("instructor");
+        course = new Course(UUID.randomUUID(), "course1");
     }
 
     @Test
@@ -47,57 +51,47 @@ public class ViewPendingRequestTests {
     }
 
     @Test
-    public void canCreateResponse() {
-        UUID courseId = UUID.randomUUID();
-        Course course = new Course(courseId, "course");
-        ArrayList<Attempt> attempts = new ArrayList<>();
-        ViewPendingAttemptsResponse response = new ViewPendingAttemptsResponse(course, attempts);
-        assertEquals(course, response.course);
-        assertEquals(attempts, response.attempts);
-    }
-
-    @Test
     public void invalidInstructorErrorResponse() {
-        when(gateway.getInstructor(request.instructorId))
-                .thenReturn(null);
+        whenInstructor(null);
         interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.INVALID_INSTRUCTOR);
+        verify(presenter).reportError(INVALID_INSTRUCTOR);
     }
 
     @Test
     public void invalidCourseErrorResponse() {
-        whenValidInstructor();
-        when(gateway.getCourse(request.courseId)).thenReturn(null);
+        whenInstructor(instructor);
+        whenCourse(null);
         interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.INVALID_COURSE);
+        verify(presenter).reportError(INVALID_COURSE);
     }
 
     @Test
     public void invalidCourseInstructorErrorResponse() {
-        whenValidInstructor();
-        whenValidCourse();
-        verify(presenter).reportError(ErrorResponse.INVALID_COURSE_INSTRUCTOR);
+        whenInstructor(instructor);
+        whenCourse(course);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(INVALID_COURSE_INSTRUCTOR);
     }
 
     @Test
     public void generatePendingAttemptsList() {
-        whenValidInstructor();
-        whenValidCourse();
-        Course course = new Course(UUID.randomUUID(), "Skiadas");
-        course.setInstructor(new Instructor("HSkiadas", "Harris", "Skiadas"));
+        whenInstructor(instructor);
+        whenCourse(course);
+        course.setInstructor(instructor);
+        Attempt attempt1 = new Attempt("obj1", 1, "student1", UUID.randomUUID(), PENDING);
+        Attempt attempt2 = new Attempt("obj2", 2, "student2", UUID.randomUUID(), PENDING);
+        Attempt attempt3 = new Attempt("obj3", 3, "student3", UUID.randomUUID(), COMPLETED);
+        List<Attempt> expectedList = new ArrayList<>(List.of(attempt1, attempt2, attempt3));
+        when(gateway.getAttempts(course)).thenReturn(expectedList);
         interactor.handle(request, presenter);
-        //TODO: verify(presenter).presentPendingAttempts();
+        verify(presenter).presentPendingAttempts(expectedList);
     }
 
-    private void whenValidCourse() {
-        Course course = new Course(UUID.randomUUID(), "CS 321");
+    private void whenCourse(Course course) {
         when(gateway.getCourse(request.courseId)).thenReturn(course);
-        interactor.handle(request, presenter);
     }
 
-    private void whenValidInstructor() {
-        Instructor instructor = new Instructor("Skiadas");
-        when(gateway.getInstructor(request.instructorId))
-                .thenReturn(instructor);
+    private void whenInstructor(Instructor instructor) {
+        when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
     }
 }

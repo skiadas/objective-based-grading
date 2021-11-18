@@ -13,6 +13,7 @@ import webserver.user.AuthenticatedUser;
 import webserver.user.User;
 import webserver.user.UserAdministrator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +95,7 @@ public class Handler implements Presenter {
     }
 
     @Override
-    public void presentPendingAttempts() {
+    public void presentPendingAttempts(List<Attempt> pendingAttempts) {
         //TODO
     }
 

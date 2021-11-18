@@ -8,7 +8,7 @@ public class Attempt {
     int attemptNumber;
     Student student;
     Course course;
-    AttemptStatus status;
+    public AttemptStatus status;
 
 
     public Attempt(String objective, int attemptNumber, String userName, UUID courseID, AttemptStatus status) {

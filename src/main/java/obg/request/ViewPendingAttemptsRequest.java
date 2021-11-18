@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public class ViewPendingAttemptsRequest {
 
-    public UUID courseId;
-    public UUID instructorId;
+    public final UUID courseId;
+    public final UUID instructorId;
 
     public ViewPendingAttemptsRequest(UUID courseId, UUID instructorId) {
         this.courseId = courseId;
