@@ -1,6 +1,6 @@
 package obg;
 
-import junit.framework.TestCase;
+import obg.core.Presenter;
 import obg.core.entity.Course;
 import obg.core.entity.GradedObjectiveMap;
 import obg.core.entity.Student;
@@ -12,13 +12,14 @@ import static org.mockito.Mockito.*;
 
 import java.util.UUID;
 
-public class GradedObjectiveMapTest extends TestCase {
+public class GradedObjectiveMapTest {
     public UUID randId;
     private Course course;
     private Student student;
     private ObjectiveGradeInteractor interactor;
     private AttemptRequestGateway gateway;
     private ObjectiveGradeRequest request;
+    private Presenter presenter;
 
     @Before
     public void setUp() {

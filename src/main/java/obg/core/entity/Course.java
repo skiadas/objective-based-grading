@@ -55,4 +55,10 @@ public class Course {
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
+    
+    public boolean isValidObjective(String objective) {
+        List<String> objectiveList = new ArrayList<>(List.of("L1", "L2", "S1", "S2", "C1", "C2"));
+        return objectiveList.contains(objective);
+    }
+    
 }
