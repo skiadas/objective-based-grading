@@ -7,7 +7,7 @@ public class Attempt {
     String objective;
     int attemptNumber;
     Student student;
-    Course course;
+    public Course course;
     public AttemptStatus status;
 
 
@@ -18,6 +18,16 @@ public class Attempt {
         this.course = new Course(courseID, null, null, null);
         this.status = status;
     }
+
+    public Attempt(String objective, int attemptNumber, Student student, Course course, AttemptStatus status) {
+        this.objective = objective;
+        this.attemptNumber = attemptNumber;
+        this.student = student;
+        this.course = course;
+        this.status = status;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

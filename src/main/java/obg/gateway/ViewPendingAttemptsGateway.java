@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface ViewPendingAttemptsGateway {
 
-    Instructor getInstructor(UUID instructorId);
+    Instructor getInstructor(String instructorId);
 
     Course getCourse(UUID courseId);
 

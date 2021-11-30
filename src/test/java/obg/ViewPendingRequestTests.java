@@ -1,9 +1,7 @@
 package obg;
 
 import obg.core.Presenter;
-import obg.core.entity.Attempt;
-import obg.core.entity.Course;
-import obg.core.entity.Instructor;
+import obg.core.entity.*;
 import obg.gateway.ViewPendingAttemptsGateway;
 import obg.interactor.ViewPendingAttemptsInteractor;
 import obg.request.ViewPendingAttemptsRequest;
@@ -32,7 +30,7 @@ public class ViewPendingRequestTests {
     @Before
     public void setUp(){
         UUID courseId = UUID.randomUUID();
-        UUID instructorId = UUID.randomUUID();
+        String instructorId = "instructor";
         request = new ViewPendingAttemptsRequest(courseId, instructorId);
         gateway = mock(ViewPendingAttemptsGateway.class);
         presenter = mock(Presenter.class);
@@ -44,7 +42,7 @@ public class ViewPendingRequestTests {
     @Test
     public void canCreateRequest() {
         UUID courseId = UUID.randomUUID();
-        UUID instructorId = UUID.randomUUID();
+        String instructorId = "instructor";
         ViewPendingAttemptsRequest request = new ViewPendingAttemptsRequest(courseId, instructorId);
         assertEquals(courseId, request.courseId);
         assertEquals(instructorId, request.instructorId);
@@ -78,13 +76,26 @@ public class ViewPendingRequestTests {
         whenInstructor(instructor);
         whenCourse(course);
         course.setInstructor(instructor);
-        Attempt attempt1 = new Attempt("obj1", 1, "student1", UUID.randomUUID(), PENDING);
-        Attempt attempt2 = new Attempt("obj2", 2, "student2", UUID.randomUUID(), PENDING);
-        Attempt attempt3 = new Attempt("obj3", 3, "student3", UUID.randomUUID(), COMPLETED);
-        List<Attempt> expectedList = new ArrayList<>(List.of(attempt1, attempt2, attempt3));
+        List<Attempt> expectedList = generateListOfAttempts();
         when(gateway.getAttempts(course)).thenReturn(expectedList);
         interactor.handle(request, presenter);
         verify(presenter).presentPendingAttempts(expectedList);
+    }
+
+    private List<Attempt> generateListOfAttempts() {
+        Attempt attempt1 = createAttempt("obj1", 1, makeStudent("student1"), course, PENDING);
+        Attempt attempt2 = createAttempt("obj2", 2, makeStudent("student2"), course, PENDING);
+        Attempt attempt3 = createAttempt("obj3", 3, makeStudent("student3"), course, COMPLETED);
+        List<Attempt> expectedList = new ArrayList<>(List.of(attempt1, attempt2, attempt3));
+        return expectedList;
+    }
+
+    private Student makeStudent(String name) {
+        return new Student(UUID.randomUUID(), name);
+    }
+
+    private Attempt createAttempt(String objective, int attemptNum, Student student, Course course, AttemptStatus status) {
+        return new Attempt(objective, attemptNum, student, course, status);
     }
 
     private void whenCourse(Course course) {

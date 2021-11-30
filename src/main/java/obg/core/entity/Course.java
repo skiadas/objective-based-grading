@@ -29,6 +29,10 @@ public class Course {
         objectives = new ArrayList<>();
     }
 
+    public UUID getCourseId() {
+        return courseID;
+    }
+
 
     @Override
     public boolean equals(Object o) {

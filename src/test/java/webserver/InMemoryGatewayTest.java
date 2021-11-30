@@ -1,6 +1,7 @@
 package webserver;
 
 import main.InMemoryGateway;
+import obg.core.entity.*;
 import obg.core.entity.Course;
 import obg.core.entity.Instructor;
 import obg.core.entity.Student;
@@ -11,15 +12,26 @@ import org.junit.Test;
 import java.util.List;
 import java.util.UUID;
 
+import static junit.framework.TestCase.assertTrue;
+import static obg.core.entity.AttemptStatus.ASSIGNED;
+import static obg.core.entity.AttemptStatus.PENDING;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.*;
 
 public class InMemoryGatewayTest {
 
     private InMemoryGateway g;
+    private Course course;
+    private Student student;
+    private Attempt attempt;
 
     @Before
     public void setUp() {
         g = new InMemoryGateway();
+        course = makeCourse("course");
+        student = makeStudent("student1");
+        attempt = makeAttempt(course, "obj1", 1, student, PENDING);
     }
 
     @Test
@@ -56,6 +68,34 @@ public class InMemoryGatewayTest {
     }
 
     @Test
+    public void canAddAttemptToGateway() {
+        g.addAttempt(attempt);
+        assertEquals(List.of(attempt), InMemoryGateway.attempts);
+        g.clearAttempts();
+        assertTrue(InMemoryGateway.attempts.isEmpty());
+    }
+
+    @Test
+    public void canGetAttemptsFromCourse() {
+        g.addAttempt(attempt);
+        Student student2 = makeStudent("student2");
+        Attempt attempt2 = makeAttempt(course, "obj2", 2, student2, ASSIGNED);
+        g.addAttempt(attempt2);
+        List<Attempt> expected = List.of(attempt, attempt2);
+        assertEquals(expected, g.getAttempts(course));
+        g.clearAttempts();
+        assertTrue(InMemoryGateway.attempts.isEmpty());
+    }
+
+    private Student makeStudent(String name) {
+        return new Student(UUID.randomUUID(), name);
+    }
+
+    private Attempt makeAttempt(Course course, String objective, int attemptNum, Student student, AttemptStatus status) {
+        return new Attempt(objective, attemptNum, student, course, status);
+    }
+
+    @Test
     public void canFindStudent() {
         Student s = makeStudent("s");
         InMemoryGateway.students.put(s.userName, s);
@@ -83,5 +123,4 @@ public class InMemoryGatewayTest {
         return new Instructor(username);
     }
 
-    private Student makeStudent(String username) {return new Student(null, username);}
 }

@@ -17,10 +17,10 @@ public class ViewPendingAttemptsInteractor {
 
     public void handle(ViewPendingAttemptsRequest request, Presenter presenter) {
         Instructor instructor = gateway.getInstructor(request.instructorId);
+        Course course = gateway.getCourse(request.courseId);
         if (instructor == null) {
             presenter.reportError(ErrorResponse.INVALID_INSTRUCTOR);
         }
-        Course course = gateway.getCourse(request.courseId);
         if (course == null) {
             presenter.reportError(ErrorResponse.INVALID_COURSE);
         } else if (!course.isCourseInstructor(instructor)) {

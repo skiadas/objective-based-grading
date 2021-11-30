@@ -1,9 +1,10 @@
 package main;
 
+import obg.core.entity.Attempt;
 import obg.core.entity.Course;
-import obg.gateway.Gateway;
 import obg.core.entity.Instructor;
 import obg.core.entity.Student;
+import obg.gateway.Gateway;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,9 +15,21 @@ public class InMemoryGateway implements Gateway {
     public static List<Pair<Course, Instructor>> courseInstructorPairs = new ArrayList<>();
     public static List<Pair<Course, Student>> courseStudentPairs = new ArrayList<>();
     public static Map<String, Student> students = new HashMap<>();
+    public static List<Attempt> attempts = new ArrayList<>();
 
     public Course getCourse(UUID courseId) {
         return courses.get(courseId);
+    }
+
+    @Override
+    public List<Attempt> getAttempts(Course course) {
+        List<Attempt> attempts = new ArrayList<>();
+        for (Attempt attempt : InMemoryGateway.attempts) {
+            if (attempt.course == course) {
+                attempts.add(attempt);
+            }
+        }
+        return attempts;
     }
 
     public Instructor getInstructor(String instructorId) {
@@ -25,6 +38,21 @@ public class InMemoryGateway implements Gateway {
 
     public void addInstructor(Instructor instructor) {
         instructors.put(instructor.getInstructorId(), instructor);
+    }
+
+    @Override
+    public void addAttempt(Attempt attempt) {
+        attempts.add(attempt);
+    }
+
+    @Override
+    public void removeAttempt(Attempt attempt) {
+        attempts.remove(attempt);
+    }
+
+    @Override
+    public void clearAttempts() {
+        attempts.clear();
     }
 
     public void addStudent(Student student) { students.put(student.userName, student); }
