@@ -3,6 +3,7 @@ package webserver;
 import main.InMemoryGateway;
 import obg.core.entity.Course;
 import obg.core.entity.Instructor;
+import obg.core.entity.Student;
 import obg.gateway.ViewTargetGradeGateway;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +11,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class InMemoryGatewayTest {
 
@@ -55,6 +55,14 @@ public class InMemoryGatewayTest {
         assertEquals(List.of(c1), g.getCoursesTaughtBy(i));
     }
 
+    @Test
+    public void canFindStudent() {
+        Student s = makeStudent("s");
+        InMemoryGateway.students.put(s.userName, s);
+        assertEquals(s, g.getStudent(s.userName));
+        assertNull(g.getStudent(""));
+    }
+
     private Course makeCourse(String name) {
         return new Course(UUID.randomUUID(), name);
     }
@@ -62,4 +70,6 @@ public class InMemoryGatewayTest {
     private Instructor makeInstructor(String username) {
         return new Instructor(username);
     }
+
+    private Student makeStudent(String username) {return new Student(null, username);}
 }

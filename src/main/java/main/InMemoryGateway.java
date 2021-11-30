@@ -55,6 +55,7 @@ public class InMemoryGateway implements Gateway {
         courseInstructorPairs.add(new Pair<>(c, i));
     }
 
+
     public Student getStudent(String username) {
         return students.get(username);
     }

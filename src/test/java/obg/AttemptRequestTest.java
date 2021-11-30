@@ -1,6 +1,8 @@
 package obg;
 
 import obg.core.Presenter;
+import obg.core.entity.Attempt;
+import obg.core.entity.AttemptStatus;
 import obg.core.entity.Course;
 import obg.core.entity.Student;
 import obg.gateway.AttemptRequestGateway;
@@ -96,8 +98,15 @@ public class AttemptRequestTest {
         verify(presenter).reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
     }
 
-
-
-
-    // TODO: Should verify presenter method is called for created attempt
+    @Test
+    public void VerifyPresenterIsCalledForNewAttempt(){
+        when(gateway.getAttemptNumber()).thenReturn(1);
+        when(gateway.getCourse(request.courseID)).thenReturn(course);
+        when(gateway.getStudent(request.userName)).thenReturn(student);
+        when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(true);
+        when(gateway.getStudentIsEnrolled(request.userName, request.courseID)).thenReturn(true);
+        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), request.userName, request.courseID, AttemptStatus.PENDING);
+        interactor.handle(request, presenter);
+        verify(presenter).presentAttemptCreated(attempt);
+    }
 }

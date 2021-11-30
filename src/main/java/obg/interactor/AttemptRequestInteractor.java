@@ -4,7 +4,6 @@ import obg.core.Interactor;
 import obg.core.Presenter;
 import obg.core.entity.Attempt;
 import obg.core.entity.AttemptStatus;
-import obg.core.entity.Course;
 import obg.gateway.AttemptRequestGateway;
 import obg.request.AttemptRequestRequest;
 import obg.core.ErrorResponse;

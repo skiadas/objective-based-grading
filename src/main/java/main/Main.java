@@ -14,7 +14,7 @@ public class Main implements Observer<Integer> {
     private ConcreteAppContext context;
     private LoggingContext loggingContext;
     private AppContextWrapper contextWrapper;
-    private Clock clock = Clock.getInstance();
+    private final Clock clock = Clock.getInstance();
 
     public static void main(String[] args) {
         new Main().start();

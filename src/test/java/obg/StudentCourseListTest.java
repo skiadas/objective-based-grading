@@ -57,8 +57,7 @@ public class StudentCourseListTest {
         Course course1 = new Course(null, null);
         Course course2 = new Course(null, null);
         Course course3 = new Course(null, null);
-        List<Course> courseList = List.of(course1, course2, course3);
-        return courseList;
+        return List.of(course1, course2, course3);
     }
 
 }
