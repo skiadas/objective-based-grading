@@ -37,7 +37,6 @@ public class GradedObjectiveMapTest {
         GradedObjectiveMap map = new GradedObjectiveMap();
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(student.userName)).thenReturn(student);
-        when(gateway.objectiveInCourse("L1", UUID.randomUUID()));
-
+        when(gateway.getObjMap("Name", randId));
     }
 }
