@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 public class InMemoryGateway implements Gateway {
     public static Map<UUID, Course> courses = new HashMap<>();
     public static Map<String, Instructor> instructors = new HashMap<>();
-    public static List<CourseInstructorPair> courseInstructorPairs = new ArrayList<>();
+    public static List<Pair<Course, Instructor>> courseInstructorPairs = new ArrayList<>();
+    public static List<Pair<Course, Student>> courseStudentPairs = new ArrayList<>();
     public static Map<String, Student> students = new HashMap<>();
 
     public Course getCourse(UUID courseId) {
@@ -26,15 +27,13 @@ public class InMemoryGateway implements Gateway {
         instructors.put(instructor.getInstructorId(), instructor);
     }
 
+    public void addStudent(Student student) { students.put(student.userName, student); }
+
     public List<Course> getCoursesTaughtBy(Instructor instructor) {
         return courseInstructorPairs.stream()
-                .filter(pair->pair.instructor.equals(instructor))
-                .map(pair->pair.course)
+                .filter(pair->pair.second.equals(instructor))
+                .map(pair->pair.first)
                 .collect(Collectors.toList());
-    }
-
-    public Student getStudent(Student student) {
-        return student;
     }
 
     @Override
@@ -53,24 +52,33 @@ public class InMemoryGateway implements Gateway {
     }
 
     public void assignCourseInstructor(Course c, Instructor i) {
-        courseInstructorPairs.add(new CourseInstructorPair(c, i));
+        courseInstructorPairs.add(new Pair<>(c, i));
     }
 
     public Student getStudent(String username) {
         return students.get(username);
     }
 
+    public List<Course> getStudentCourses(String userName) {
+        Student student = getStudent(userName);
+        return courseStudentPairs.stream()
+                .filter(p -> p.second.equals(student))
+                .map(p->p.first)
+                .collect(Collectors.toList());
+    }
+
     Course addCourse(Course course) {
         return courses.put(course.courseID, course);
     }
 
-    private static class CourseInstructorPair {
-        private final Course course;
-        private final Instructor instructor;
+    private static class Pair<T, S> {
+        private final T first;
+        private final S second;
 
-        public CourseInstructorPair(Course c, Instructor i) {
-            this.course = c;
-            this.instructor = i;
+        public Pair(T c, S i) {
+            this.first = c;
+            this.second = i;
         }
+
     }
 }

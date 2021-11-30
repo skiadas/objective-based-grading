@@ -9,11 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Main {
+public class Main implements Observer<Integer> {
     private boolean debug = false;
     private ConcreteAppContext context;
     private LoggingContext loggingContext;
     private AppContextWrapper contextWrapper;
+    private Clock clock = Clock.getInstance();
 
     public static void main(String[] args) {
         new Main().start();
@@ -28,20 +29,18 @@ public class Main {
         loggingContext = new LoggingContext(context);
         contextWrapper = new AppContextWrapper(context);
         new Server(3006, new UserAdministrator(gateway), contextWrapper);
-        scheduleLoggingSettingMonitor();
+        clock.addObserver(this);
     }
 
-    private void scheduleLoggingSettingMonitor() {
-        new Thread(this::monitor).start();
-    }
-
-    private void monitorLoggingSetting() {
-        Map<String, String> settings = getSettings();
-        boolean newDebug = settings.getOrDefault("DEBUG", "0").equals("1");
-        if (debug != newDebug) {
-            debug = newDebug;
-            System.out.println("Changing debug setting");
-            contextWrapper.setContext(this.debug ? loggingContext : context);
+    public void update(Integer times) {
+        if (times % 3 == 0) {
+            Map<String, String> settings = getSettings();
+            boolean newDebug = settings.getOrDefault("DEBUG", "0").equals("1");
+            if (debug != newDebug) {
+                debug = newDebug;
+                System.out.println("Changing debug setting");
+                contextWrapper.setContext(this.debug ? loggingContext : context);
+            }
         }
     }
 
@@ -59,14 +58,4 @@ public class Main {
         return settings;
     }
 
-    private void monitor() {
-        while (true) {
-            monitorLoggingSetting();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                return;
-            }
-        }
-    }
 }

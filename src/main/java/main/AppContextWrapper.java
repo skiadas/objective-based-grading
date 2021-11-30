@@ -19,6 +19,10 @@ public class AppContextWrapper implements AppContext {
         context.instructorCourseListRequested(instructorId, presenter);
     }
 
+    public void studentCourseListRequested(String studentId, Presenter presenter) {
+        context.studentCourseListRequested(studentId, presenter);
+    }
+
     public void attemptRequested(String studentId, String courseId, String objective, Presenter presenter) {
         context.attemptRequested(studentId, courseId, objective, presenter);
     }

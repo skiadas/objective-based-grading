@@ -10,6 +10,8 @@ import obg.core.ErrorResponse;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
+import java.util.UUID;
+
 import static org.mockito.Mockito.*;
 
 public class StudentCourseListTest {
@@ -42,7 +44,7 @@ public class StudentCourseListTest {
     @Test
     public void ReturnListOfStudentCourses(){
         List<Course> courseList = MakeCourses();
-        Student newStudent = new Student(null, request.userName, null);
+        Student newStudent = new Student(UUID.randomUUID(), request.userName);
         when(gateway.getStudent(request.userName)).thenReturn(newStudent);
         when(gateway.getStudentCourses(request.userName)).thenReturn(courseList);
         interactor.handle(request, presenter);

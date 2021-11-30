@@ -14,7 +14,7 @@ public class Attempt {
     public Attempt(String objective, int attemptNumber, String userName, UUID courseID, AttemptStatus status) {
         this.objective = objective;
         this.attemptNumber = attemptNumber;
-        this.student = new Student(null, userName, null);
+        this.student = new Student(null, userName);
         this.course = new Course(courseID, null, null, null);
         this.status = status;
     }

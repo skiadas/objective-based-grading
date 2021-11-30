@@ -32,7 +32,7 @@ public class AttemptRequestTest {
         randID = randomUUID();
         request = new AttemptRequestRequest("DoeJ24", randID, "L1");
         course = new Course(randID, null, null, null);
-        student = new Student(null, request.userName, null);
+        student = new Student(null, request.userName);
         interactor = new AttemptRequestInteractor(gateway);
     }
 

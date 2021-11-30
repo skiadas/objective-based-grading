@@ -1,31 +1,18 @@
 package webserver;
 
 import obg.core.AppContext;
-import obg.core.Presenter;
-import obg.core.entity.Attempt;
-import obg.core.entity.Course;
-import obg.response.TargetGradeRequirementsResponse;
-import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import webserver.user.AuthenticatedUser;
 import webserver.user.User;
 import webserver.user.UserAdministrator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class Handler implements Presenter {
-    private static final ThymeleafTemplateEngine engine = new ThymeleafTemplateEngine();
+public class Handler {
     private final UserAdministrator userAdmin;
     private final Request req;
     private final Response res;
     private final AppContext context;
-    private final Map<String, Object> model = new HashMap<>();
-    private String result;
+    private final ResultProducer resultProducer = new ResultProducer();
 
     public Handler(Request req, Response res, UserAdministrator userAdmin, AppContext context) {
         this.req = req;
@@ -36,14 +23,17 @@ public class Handler implements Presenter {
 
     Object handleLogout() {
         userAdmin.logoutCurrentUser(req);
-        res.redirect("/");
-        return null;
+        return redirect("/");
     }
 
     Object handleLoginRequest() {
         String username = req.queryParams("username");
         userAdmin.loginUser(username, req);
-        res.redirect("/");
+        return redirect("/");
+    }
+
+    private Object redirect(String path) {
+        res.redirect(path);
         return null;
     }
 
@@ -52,63 +42,32 @@ public class Handler implements Presenter {
         AuthenticatedUser user = (AuthenticatedUser) userAdmin.retrieveUser(req);
         User.Role currentRole = user.getCurrentRole();
         if (currentRole.equals(User.Role.Instructor)) {
-            res.redirect("/instructor/" + user.getUsername());
-            return null;
+            return redirect("/instructor/" + user.getUsername());
+        } else if (currentRole.equals(User.Role.Student)) {
+            return redirect("/student" + user.getUsername());
         } else {
-            Map<String, Object> model = new HashMap<>();
-            model.put("user", user);
-            model.put("message", "Hi!");
-            return engine.render(new ModelAndView(model, "index"));
+            resultProducer.addToModel("user", user);
+            resultProducer.addToModel("message", "Hi!");
+            resultProducer.presentIndexPage();
+            return resultProducer.result;
         }
     }
 
     Object getInstructorIndexPage() {
         String instructorId = req.params("username");
-        context.instructorCourseListRequested(instructorId, this);
-        return result;
+        context.instructorCourseListRequested(instructorId, resultProducer);
+        return resultProducer.result;
+    }
+
+    Object getStudentIndexPage() {
+        String studentId = req.params("username");
+        context.studentCourseListRequested(studentId, resultProducer);
+        return resultProducer.result;
     }
 
     Object showLoginScreen() {
-        return engine.render(new ModelAndView(new HashMap<>(), "login"));
+        resultProducer.presentLoginScreen();
+        return resultProducer.result;
     }
 
-    public void reportError(String errorMessage) {
-        throw new ErrorResponseException(errorMessage);
-    }
-
-    public void presentInstructorCourseList(List<Course> courses) {
-        model.put("courses", courses);
-        // TODO
-        result = engine.render(new ModelAndView(model, "instructorIndex"));
-    }
-
-    public void presentStudentCourseList(List<Course> courses) {
-        // TODO
-    }
-
-    public void presentAttemptCreated(Attempt attempt) {
-        // TODO
-    }
-
-    public void presentTargetGradeRequirements(TargetGradeRequirementsResponse response) {
-        // TODO
-    }
-
-    @Override
-    public void presentPendingAttempts(List<Attempt> pendingAttempts) {
-        //TODO
-    }
-
-    @Override
-    public void presentUnattemptedObjectives(List<String> objectives) {
-
-    }
-
-    static class ErrorResponseException extends RuntimeException {
-        final String errorMessage;
-
-        ErrorResponseException(String errorMessage) {
-            this.errorMessage = errorMessage;
-        }
-    }
 }

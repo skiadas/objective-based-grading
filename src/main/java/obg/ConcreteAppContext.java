@@ -4,8 +4,10 @@ import obg.core.*;
 import obg.gateway.Gateway;
 import obg.interactor.AttemptRequestInteractor;
 import obg.interactor.InstructorCourseListInteractor;
+import obg.interactor.StudentCourseListInteractor;
 import obg.request.AttemptRequestRequest;
 import obg.request.InstructorCourseListRequest;
+import obg.request.StudentCourseListRequest;
 
 import java.util.UUID;
 
@@ -20,6 +22,11 @@ public class ConcreteAppContext implements AppContext {
         InstructorCourseListRequest request = new InstructorCourseListRequest(instructorId);
         InstructorCourseListInteractor interactor = new InstructorCourseListInteractor(getGateway());
         interactor.handle(request, presenter);
+    }
+
+    public void studentCourseListRequested(String studentId, Presenter presenter) {
+        StudentCourseListRequest request = new StudentCourseListRequest(studentId);
+        StudentCourseListInteractor interactor = new StudentCourseListInteractor(getGateway());
     }
 
     public void attemptRequested(String studentId, String courseId, String objective, Presenter presenter) {

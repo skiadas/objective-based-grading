@@ -12,8 +12,13 @@ public class LoggingContext implements AppContext {
     }
 
     public void instructorCourseListRequested(String instructorId, Presenter presenter) {
-        System.out.println("Requesting course list: " + instructorId);
+        System.out.println("Requesting instructor course list: " + instructorId);
         context.instructorCourseListRequested(instructorId, presenter);
+    }
+
+    public void studentCourseListRequested(String studentId, Presenter presenter) {
+        System.out.println("Requesting student course list: " + studentId);
+        context.studentCourseListRequested(studentId, presenter);
     }
 
     public void attemptRequested(String studentId, String courseId, String objective, Presenter presenter) {

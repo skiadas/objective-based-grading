@@ -7,18 +7,15 @@ import java.util.UUID;
 public class Student {
     public UUID studentId;
     public String userName;
-    public List<Course> courses;
 
-    public Student(UUID studentId, String userName, List<Course> courses) {
+    public Student(UUID studentId, String userName) {
         this.studentId = studentId;
         this.userName = userName;
-        this.courses = courses;
     }
 
     public Student(Student givenStudent) {
         this.studentId = givenStudent.studentId;
         this.userName = givenStudent.userName;
-        this.courses = givenStudent.courses;
     }
 
     @Override

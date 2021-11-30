@@ -30,7 +30,7 @@ public class UnattemptedObjectivesTest {
         request = new UnattemptedObjectiveRequest("Dave", UUID.randomUUID());
         interactor = new UnattemptedObjectiveInteractor(gateway);
         presenter = mock(Presenter.class);
-        student = new Student(null, request.userName, null);
+        student = new Student(UUID.randomUUID(), request.userName);
         course = new Course(null, null, null, null);
     }
 

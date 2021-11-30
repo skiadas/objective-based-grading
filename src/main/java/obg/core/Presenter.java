@@ -20,4 +20,9 @@ public interface Presenter {
     void presentPendingAttempts(List<Attempt> pendingAttempts);
 
     void presentUnattemptedObjectives(List<String> objectives);
+    void presentPendingAttempts();
+
+    void presentIndexPage();
+
+    void presentLoginScreen();
 }

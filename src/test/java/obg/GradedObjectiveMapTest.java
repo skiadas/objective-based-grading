@@ -25,9 +25,9 @@ public class GradedObjectiveMapTest {
     public void setUp() {
         randId = UUID.randomUUID();
         course = new Course(randId, null, null, null);
-        student = new Student(null, request.userName, null);
-        interactor = new ObjectiveGradeInteractor(gateway);
         request = new ObjectiveGradeRequest("Name", randId);
+        student = new Student(UUID.randomUUID(), request.userName);
+        interactor = new ObjectiveGradeInteractor(gateway);
         gateway = mock(AttemptRequestGateway.class);
     }
 
