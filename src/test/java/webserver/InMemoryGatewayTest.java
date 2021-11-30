@@ -63,6 +63,18 @@ public class InMemoryGatewayTest {
         assertNull(g.getStudent(""));
     }
 
+    @Test
+    public void canVerifyStudentEnrollment() {
+        Course c1 = makeCourse("course1");
+        Course c2 = makeCourse("course2");
+        InMemoryGateway.courses.put(c1.courseID, c1);
+        InMemoryGateway.courses.put(c2.courseID, c2);
+        Student s = makeStudent("s");
+        InMemoryGateway.students.put(s.userName, s);
+        g.assignCoursesToStudent(c1, s);
+        assertTrue(g.getStudentIsEnrolled(s.userName, c1.courseID));
+    }
+
     private Course makeCourse(String name) {
         return new Course(UUID.randomUUID(), name);
     }

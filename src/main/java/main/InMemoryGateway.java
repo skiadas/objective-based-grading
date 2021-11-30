@@ -43,7 +43,13 @@ public class InMemoryGateway implements Gateway {
 
     @Override
     public boolean getStudentIsEnrolled(String userName, UUID courseID) {
+        for(Pair<Course, Student> p : courseStudentPairs ){
+            if(p.first.courseID == courseID && p.second.userName == userName) {
+                return true;
+            }
+        }
         return false;
+
     }
 
     @Override
@@ -53,6 +59,10 @@ public class InMemoryGateway implements Gateway {
 
     public void assignCourseInstructor(Course c, Instructor i) {
         courseInstructorPairs.add(new Pair<>(c, i));
+    }
+
+    public void assignCoursesToStudent(Course c, Student s) {
+        courseStudentPairs.add(new Pair<>(c, s));
     }
 
 
