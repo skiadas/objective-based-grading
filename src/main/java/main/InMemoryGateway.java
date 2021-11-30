@@ -51,6 +51,12 @@ public class InMemoryGateway implements Gateway {
         return 0;
     }
 
+    @Override
+    public HashMap getObjMap(String studentName, UUID courseID) {
+        //TODO
+        return null;
+    }
+
     public void assignCourseInstructor(Course c, Instructor i) {
         courseInstructorPairs.add(new Pair<>(c, i));
     }
