@@ -3,6 +3,7 @@ package obg;
 import obg.core.Presenter;
 import obg.core.entity.Course;
 import obg.core.entity.GradedObjectiveMap;
+import obg.core.entity.ObjectiveAttemptList;
 import obg.core.entity.Student;
 import obg.gateway.AttemptRequestGateway;
 import obg.request.ObjectiveGradeRequest;
@@ -36,5 +37,7 @@ public class GradedObjectiveMapTest {
         GradedObjectiveMap map = new GradedObjectiveMap();
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(student.userName)).thenReturn(student);
+        when(gateway.objectiveInCourse("L1", UUID.randomUUID()));
+
     }
 }
