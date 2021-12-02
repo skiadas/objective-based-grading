@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface AttemptRequestGateway {
-    Course getCourse(UUID courseId);
+    Course getCourse(UUID courseID);
 
     Student getStudent(String userName);
 

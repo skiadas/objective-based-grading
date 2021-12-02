@@ -33,13 +33,15 @@ public class AttemptRequestTest {
         gateway = mock(AttemptRequestGateway.class);
         randID = randomUUID();
         request = new AttemptRequestRequest("DoeJ24", randID, "L1");
-        course = new Course(randID, null, null, null);
-        student = new Student(null, request.userName);
+
+        course = new Course(randID, "courseName");
+        student = new Student(randomUUID(), request.userName);
         interactor = new AttemptRequestInteractor(gateway);
     }
 
     @Test
     public void InteractorAskGatewayForCorrectCourse() {
+        when(gateway.getCourse(request.courseID)).thenReturn(course);
         interactor.handle(request, presenter);
         verify(gateway).getCourse(request.courseID);
     }
@@ -105,7 +107,7 @@ public class AttemptRequestTest {
         when(gateway.getStudent(request.userName)).thenReturn(student);
         when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(true);
         when(gateway.getStudentIsEnrolled(request.userName, request.courseID)).thenReturn(true);
-        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), request.userName, request.courseID, AttemptStatus.PENDING);
+        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course, AttemptStatus.PENDING);
         interactor.handle(request, presenter);
         verify(presenter).presentAttemptCreated(attempt);
     }
