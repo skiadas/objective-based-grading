@@ -1,7 +1,6 @@
 package obg.core.entity;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class Attempt {
     String objective;

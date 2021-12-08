@@ -86,8 +86,7 @@ public class ViewPendingRequestTests {
         Attempt attempt1 = createAttempt("obj1", 1, makeStudent("student1"), course, PENDING);
         Attempt attempt2 = createAttempt("obj2", 2, makeStudent("student2"), course, PENDING);
         Attempt attempt3 = createAttempt("obj3", 3, makeStudent("student3"), course, COMPLETED);
-        List<Attempt> expectedList = new ArrayList<>(List.of(attempt1, attempt2, attempt3));
-        return expectedList;
+        return new ArrayList<>(List.of(attempt1, attempt2, attempt3));
     }
 
     private Student makeStudent(String name) {
