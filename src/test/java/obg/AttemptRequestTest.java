@@ -1,10 +1,7 @@
 package obg;
 
 import obg.core.Presenter;
-import obg.core.entity.Attempt;
-import obg.core.entity.AttemptStatus;
-import obg.core.entity.Course;
-import obg.core.entity.Student;
+import obg.core.entity.*;
 import obg.gateway.AttemptRequestGateway;
 import obg.interactor.AttemptRequestInteractor;
 import obg.request.AttemptRequestRequest;
@@ -15,6 +12,7 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class AttemptRequestTest {
@@ -26,6 +24,7 @@ public class AttemptRequestTest {
     private Course course;
     private Student student;
     private Presenter presenter;
+    private Enrollment enrollment;
 
     @Before
     public void setUp() {
@@ -35,8 +34,10 @@ public class AttemptRequestTest {
         request = new AttemptRequestRequest("DoeJ24", randID, "L1");
 
         course = new Course(randID, "courseName");
-        student = new Student(randomUUID(), request.userName);
+        student = new Student(randomUUID(), request.studentID);
         interactor = new AttemptRequestInteractor(gateway);
+        enrollment = new Enrollment(course, student);
+
     }
 
     @Test
@@ -46,6 +47,14 @@ public class AttemptRequestTest {
         verify(gateway).getCourse(request.courseID);
     }
 
+    @Test
+    public void usingEnrollment_CheckingIfCourses_StudentAreTheSame() {
+        when(gateway.getEnrollment(request.courseID, request.studentID)).thenReturn(enrollment);
+        interactor.handle(request, presenter);
+        assertEquals(course, enrollment.course);
+        assertEquals(student, enrollment.student);
+        verify(gateway).getEnrollment(request.courseID, request.studentID);
+    }
 
     @Test
     public void CheckInvalidCourseErrorTest() {
@@ -59,14 +68,14 @@ public class AttemptRequestTest {
     public void InteractorAskGatewayForCorrectStudent() {
         when(gateway.getCourse(request.courseID)).thenReturn(course);
         interactor.handle(request, presenter);
-        verify(gateway).getStudent(request.userName);
+        verify(gateway).getStudent(request.studentID);
     }
 
     @Test
     public void checkInvalidStudentErrorTest() {
         when(gateway.getAttemptNumber()).thenReturn(1);
         when(gateway.getCourse(request.courseID)).thenReturn(course);
-        when(gateway.getStudent(request.userName)).thenReturn(null);
+        when(gateway.getStudent(request.studentID)).thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_STUDENT);
     }
@@ -74,7 +83,7 @@ public class AttemptRequestTest {
     @Test
     public void InteractorAskGatewayForCorrectObjective() {
         when(gateway.getCourse(request.courseID)).thenReturn(course);
-        when(gateway.getStudent(request.userName)).thenReturn(student);
+        when(gateway.getStudent(request.studentID)).thenReturn(student);
         interactor.handle(request, presenter);
         verify(gateway).objectiveInCourse(request.objective, request.courseID);
     }
@@ -83,7 +92,7 @@ public class AttemptRequestTest {
     public void InvalidObjectiveTest() {
         when(gateway.getAttemptNumber()).thenReturn(1);
         when(gateway.getCourse(request.courseID)).thenReturn(course);
-        when(gateway.getStudent(request.userName)).thenReturn(student);
+        when(gateway.getStudent(request.studentID)).thenReturn(student);
         when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(false);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_OBJECTIVE);
@@ -93,9 +102,9 @@ public class AttemptRequestTest {
     public void notEnrolledErrorTest() {
         when(gateway.getAttemptNumber()).thenReturn(1);
         when(gateway.getCourse(request.courseID)).thenReturn(course);
-        when(gateway.getStudent(request.userName)).thenReturn(student);
+        when(gateway.getStudent(request.studentID)).thenReturn(student);
         when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(true);
-        when(gateway.getStudentIsEnrolled(request.userName, request.courseID)).thenReturn(false);
+        when(gateway.getStudentIsEnrolled(request.studentID, request.courseID)).thenReturn(false);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
     }
@@ -104,9 +113,9 @@ public class AttemptRequestTest {
     public void VerifyPresenterIsCalledForNewAttempt(){
         when(gateway.getAttemptNumber()).thenReturn(1);
         when(gateway.getCourse(request.courseID)).thenReturn(course);
-        when(gateway.getStudent(request.userName)).thenReturn(student);
+        when(gateway.getStudent(request.studentID)).thenReturn(student);
         when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(true);
-        when(gateway.getStudentIsEnrolled(request.userName, request.courseID)).thenReturn(true);
+        when(gateway.getStudentIsEnrolled(request.studentID, request.courseID)).thenReturn(true);
         Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course, AttemptStatus.PENDING);
         interactor.handle(request, presenter);
         verify(presenter).presentAttemptCreated(attempt);

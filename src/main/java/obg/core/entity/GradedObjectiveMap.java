@@ -25,4 +25,8 @@ public class GradedObjectiveMap {
     public String getObjective(String objective) {
         return objective;
     }
+
+    public boolean isEmpty(){
+        return objectiveMap.isEmpty();
+    }
 }

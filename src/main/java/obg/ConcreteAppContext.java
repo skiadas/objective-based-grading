@@ -1,6 +1,7 @@
 package obg;
 
 import obg.core.*;
+import obg.core.entity.Enrollment;
 import obg.gateway.Gateway;
 import obg.interactor.AttemptRequestInteractor;
 import obg.interactor.InstructorCourseListInteractor;

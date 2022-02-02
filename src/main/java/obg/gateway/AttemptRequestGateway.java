@@ -1,6 +1,7 @@
 package obg.gateway;
 
 import obg.core.entity.Course;
+import obg.core.entity.Enrollment;
 import obg.core.entity.Student;
 
 import java.util.HashMap;
@@ -19,4 +20,6 @@ public interface AttemptRequestGateway {
     int getAttemptNumber();
 
     HashMap getObjMap(String studentName, UUID courseID);
+
+    Enrollment getEnrollment(UUID courseID, String studentID);
 }

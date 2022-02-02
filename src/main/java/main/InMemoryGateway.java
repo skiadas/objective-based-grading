@@ -1,9 +1,6 @@
 package main;
 
-import obg.core.entity.Attempt;
-import obg.core.entity.Course;
-import obg.core.entity.Instructor;
-import obg.core.entity.Student;
+import obg.core.entity.*;
 import obg.gateway.Gateway;
 
 import java.util.*;
@@ -88,6 +85,11 @@ public class InMemoryGateway implements Gateway {
     @Override
     public HashMap getObjMap(String studentName, UUID courseID) {
         //TODO
+        return null;
+    }
+
+    @Override
+    public Enrollment getEnrollment(UUID courseID, String studentID) {
         return null;
     }
 
