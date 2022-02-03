@@ -28,7 +28,7 @@ public class EnrollmentTests {
 
         assertEquals(courseID, course.courseID);
         assertEquals(studentID, student.studentId);
-        assertTrue(enroll.gradedObjectiveMap.isEmpty());
+        assertTrue(enroll.attemptMap.isEmpty());
     }
 
 }

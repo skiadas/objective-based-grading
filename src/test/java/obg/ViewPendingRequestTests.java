@@ -14,8 +14,8 @@ import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
 import static obg.core.ErrorResponse.*;
-import static obg.core.entity.AttemptStatus.COMPLETED;
-import static obg.core.entity.AttemptStatus.PENDING;
+import static obg.core.entity.Attempt.AttemptStatus.COMPLETED;
+import static obg.core.entity.Attempt.AttemptStatus.PENDING;
 import static org.mockito.Mockito.*;
 
 public class ViewPendingRequestTests {
@@ -93,7 +93,7 @@ public class ViewPendingRequestTests {
         return new Student(UUID.randomUUID(), name);
     }
 
-    private Attempt createAttempt(String objective, int attemptNum, Student student, Course course, AttemptStatus status) {
+    private Attempt createAttempt(String objective, int attemptNum, Student student, Course course, Attempt.AttemptStatus status) {
         return new Attempt(objective, attemptNum, student, course, status);
     }
 

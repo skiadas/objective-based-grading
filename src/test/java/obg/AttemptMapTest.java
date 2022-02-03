@@ -2,8 +2,7 @@ package obg;
 
 import obg.core.Presenter;
 import obg.core.entity.Course;
-import obg.core.entity.GradedObjectiveMap;
-import obg.core.entity.ObjectiveAttemptList;
+import obg.core.entity.AttemptMap;
 import obg.core.entity.Student;
 import obg.gateway.AttemptRequestGateway;
 import obg.request.ObjectiveGradeRequest;
@@ -11,10 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 
-import java.util.HashMap;
 import java.util.UUID;
 
-public class GradedObjectiveMapTest {
+public class AttemptMapTest {
     public UUID randId;
     private Course course;
     private Student student;
@@ -35,7 +33,7 @@ public class GradedObjectiveMapTest {
 
     @Test
     public void ValidMapDisplay() {
-        GradedObjectiveMap map = new GradedObjectiveMap();
+        AttemptMap map = new AttemptMap();
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(student.userName)).thenReturn(student);
     }

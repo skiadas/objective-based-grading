@@ -8,6 +8,7 @@ public class Attempt {
     Student student;
     public Course course;
     public AttemptStatus status;
+    public int score = 0;
 
     public Attempt(String objective, int attemptNumber, Student student, Course course, AttemptStatus status) {
         this.objective = objective;
@@ -30,5 +31,11 @@ public class Attempt {
     @Override
     public int hashCode() {
         return Objects.hash(objective, attemptNumber, student, course, status);
+    }
+
+    public enum AttemptStatus {
+        PENDING,
+        ASSIGNED,
+        COMPLETED
     }
 }

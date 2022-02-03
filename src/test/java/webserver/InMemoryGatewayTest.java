@@ -13,11 +13,10 @@ import java.util.List;
 import java.util.UUID;
 
 import static junit.framework.TestCase.assertTrue;
-import static obg.core.entity.AttemptStatus.ASSIGNED;
-import static obg.core.entity.AttemptStatus.PENDING;
+import static obg.core.entity.Attempt.AttemptStatus.ASSIGNED;
+import static obg.core.entity.Attempt.AttemptStatus.PENDING;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.*;
 
 public class InMemoryGatewayTest {
 
@@ -91,7 +90,7 @@ public class InMemoryGatewayTest {
         return new Student(UUID.randomUUID(), name);
     }
 
-    private Attempt makeAttempt(Course course, String objective, int attemptNum, Student student, AttemptStatus status) {
+    private Attempt makeAttempt(Course course, String objective, int attemptNum, Student student, Attempt.AttemptStatus status) {
         return new Attempt(objective, attemptNum, student, course, status);
     }
 
