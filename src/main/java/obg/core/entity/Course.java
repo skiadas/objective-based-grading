@@ -1,9 +1,6 @@
 package obg.core.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class Course {
 
@@ -13,6 +10,7 @@ public class Course {
     public List<Student> students;
     public ArrayList<String> objectives;
     public GradeBreakPoints gradeBreaks = new GradeBreakPoints();
+    public EnumMap<ObjectiveGroup, String> objectiveByGroups = new EnumMap<>(ObjectiveGroup.class);
 
 
     public Course(UUID courseID, String courseName, List<Student> students, ArrayList<String> objectives) {
@@ -27,6 +25,10 @@ public class Course {
         this.courseName = courseName;
         students = new ArrayList<>();
         objectives = new ArrayList<>();
+    }
+
+    public Course() {
+
     }
 
     public UUID getCourseId() {
@@ -64,5 +66,13 @@ public class Course {
         List<String> objectiveList = new ArrayList<>(List.of("L1", "L2", "S1", "S2", "C1", "C2"));
         return objectiveList.contains(objective);
     }
-    
+
+    public String getObjectivesFor(ObjectiveGroup group) {
+        return objectiveByGroups.get(group);
+    }
+
+    public void addObjective(ObjectiveGroup group, String obj) {
+        objectiveByGroups.put(group, obj);
+    }
+
 }
