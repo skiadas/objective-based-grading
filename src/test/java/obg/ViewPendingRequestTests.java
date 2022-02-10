@@ -94,7 +94,9 @@ public class ViewPendingRequestTests {
     }
 
     private Attempt createAttempt(String objective, int attemptNum, Student student, Course course, Attempt.AttemptStatus status) {
-        return new Attempt(objective, attemptNum, student, course, status);
+        Attempt attempt = new Attempt(objective, attemptNum, student, course);
+        attempt.setStatus(status);
+        return attempt;
     }
 
     private void whenCourse(Course course) {

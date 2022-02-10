@@ -28,7 +28,7 @@ public class AttemptRequestInteractor implements Interactor {
             presenter.reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
         }
 
-        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course, Attempt.AttemptStatus.PENDING);
+        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course);
         presenter.presentAttemptCreated(attempt);
     }
 

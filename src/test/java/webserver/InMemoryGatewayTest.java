@@ -30,7 +30,7 @@ public class InMemoryGatewayTest {
         g = new InMemoryGateway();
         course = makeCourse("course");
         student = makeStudent("student1");
-        attempt = makeAttempt(course, "obj1", 1, student, PENDING);
+        attempt = makeAttempt(course, "obj1", 1, student);
     }
 
     @Test
@@ -78,7 +78,8 @@ public class InMemoryGatewayTest {
     public void canGetAttemptsFromCourse() {
         g.addAttempt(attempt);
         Student student2 = makeStudent("student2");
-        Attempt attempt2 = makeAttempt(course, "obj2", 2, student2, ASSIGNED);
+        Attempt attempt2 = makeAttempt(course, "obj2", 2, student2);
+        attempt2.setStatus(ASSIGNED);
         g.addAttempt(attempt2);
         List<Attempt> expected = List.of(attempt, attempt2);
         assertEquals(expected, g.getAttempts(course));
@@ -90,8 +91,8 @@ public class InMemoryGatewayTest {
         return new Student(UUID.randomUUID(), name);
     }
 
-    private Attempt makeAttempt(Course course, String objective, int attemptNum, Student student, Attempt.AttemptStatus status) {
-        return new Attempt(objective, attemptNum, student, course, status);
+    private Attempt makeAttempt(Course course, String objective, int attemptNum, Student student) {
+        return new Attempt(objective, attemptNum, student, course);
     }
 
     @Test

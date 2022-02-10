@@ -10,15 +10,23 @@ public class Attempt {
     public AttemptStatus status;
     public int score = 0;
 
-    public Attempt(String objective, int attemptNumber, Student student, Course course, AttemptStatus status) {
+
+    public Attempt(String objective, int attemptNumber, Student student, Course course){
         this.objective = objective;
         this.attemptNumber = attemptNumber;
         this.student = student;
         this.course = course;
-        this.status = status;
+        this.status = AttemptStatus.PENDING;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(objective, attemptNumber, student, course, status);
+    }
 
+    public void setStatus(AttemptStatus status) {
+        this.status = status;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -26,11 +34,6 @@ public class Attempt {
         if (o == null || getClass() != o.getClass()) return false;
         Attempt attempt = (Attempt) o;
         return attemptNumber == attempt.attemptNumber && Objects.equals(objective, attempt.objective) && Objects.equals(student, attempt.student) && Objects.equals(course, attempt.course) && status == attempt.status;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(objective, attemptNumber, student, course, status);
     }
 
     public enum AttemptStatus {

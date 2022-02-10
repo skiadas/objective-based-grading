@@ -37,23 +37,29 @@ public class AttemptListTest extends TestCase {
         AttemptRequestRequest request2 = new AttemptRequestRequest("DoeJ24", randID, "L1");
         Course course2 = new Course(randID, "courseName");
         Student student2 = new Student(randomUUID(), request.studentID);
-        return new Attempt(request2.objective, gateway2.getAttemptNumber(), student2, course2, Attempt.AttemptStatus.PENDING);
+        return new Attempt(request2.objective, gateway2.getAttemptNumber(), student2, course2);
     }
 
     public void testAddAll() {
         AttemptList attemptList = new AttemptList();
-        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course, Attempt.AttemptStatus.PENDING);
+        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course);
         Attempt attempt2 = getAttempt2();
-        List<Attempt> list = new ArrayList<>();
-        list.add(attempt);
-        list.add(attempt2);
-        attemptList.addAll(list);
-        assertEquals(list, attemptList.list);
+        attemptList.add(attempt);
+        attemptList.add(attempt2);
+
+        AttemptList attemptListForAddAll = new AttemptList();
+        attemptListForAddAll.addAll(attemptList);
+
+        List<Attempt> listOfAttempt = new ArrayList<>();
+        listOfAttempt.add(attempt);
+        listOfAttempt.add(attempt2);
+
+        assertEquals(listOfAttempt, attemptListForAddAll.list);
     }
 
     public void testAdd() {
         AttemptList attemptList = new AttemptList();
-        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course, Attempt.AttemptStatus.PENDING);
+        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course);
         attemptList.add(attempt);
         List<Attempt> list = new ArrayList<>();
         list.add(attempt);
