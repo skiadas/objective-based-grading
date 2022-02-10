@@ -26,7 +26,7 @@ public class AttemptMapTest {
     public void setUp() {
         gateway = mock(AttemptRequestGateway.class);
         randId = UUID.randomUUID();
-        course = new Course(randId, null, null, null);
+        course = new Course(randId, null, null);
         request = new ObjectiveGradeRequest("Name", randId);
         student = new Student(UUID.randomUUID(), request.userName);
         interactor = new ObjectiveGradeInteractor(gateway);

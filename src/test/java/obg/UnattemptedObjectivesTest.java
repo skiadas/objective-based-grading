@@ -31,7 +31,7 @@ public class UnattemptedObjectivesTest {
         interactor = new UnattemptedObjectiveInteractor(gateway);
         presenter = mock(Presenter.class);
         student = new Student(UUID.randomUUID(), request.userName);
-        course = new Course(null, null, null, null);
+        course = new Course(null, null, null);
     }
 
     @Test

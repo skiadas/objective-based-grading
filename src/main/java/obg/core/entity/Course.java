@@ -8,14 +8,12 @@ public class Course {
     public Instructor instructor;
     public String courseName;
     public List<Student> students;
-    public ArrayList<String> objectives;
     public GradeBreakPoints gradeBreaks = new GradeBreakPoints();
     public EnumMap<ObjectiveGroup, String> objectiveByGroups = new EnumMap<>(ObjectiveGroup.class);
 
 
-    public Course(UUID courseID, String courseName, List<Student> students, ArrayList<String> objectives) {
+    public Course(UUID courseID, String courseName, List<Student> students) {
         this.students = students;
-        this.objectives = objectives;
         this.courseID = courseID;
         this.courseName = courseName;
     }
@@ -24,7 +22,6 @@ public class Course {
         this.courseID = courseID;
         this.courseName = courseName;
         students = new ArrayList<>();
-        objectives = new ArrayList<>();
     }
 
 
@@ -43,7 +40,7 @@ public class Course {
 
     @Override
     public int hashCode() {
-        return Objects.hash(courseID, courseName, students, objectives);
+        return Objects.hash(courseID, courseName, students);
     }
 
     public boolean isValidLetterGrade(String letterGrade) {
