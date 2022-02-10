@@ -27,9 +27,6 @@ public class Course {
         objectives = new ArrayList<>();
     }
 
-    public Course() {
-
-    }
 
     public UUID getCourseId() {
         return courseID;
@@ -75,4 +72,9 @@ public class Course {
         objectiveByGroups.put(group, obj);
     }
 
+    public void removeObjective(ObjectiveGroup obj) {
+        if (objectiveByGroups.containsKey(obj)) {
+            objectiveByGroups.remove(obj);
+        }
+    }
 }

@@ -6,13 +6,13 @@ import org.junit.Test;
 
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.UUID;
 
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CourseTest {
 
-    private Course course = new Course();
+    private Course course = new Course(UUID.randomUUID(), "");
 
     @Test
     public void addObjectiveTest() {
@@ -25,6 +25,13 @@ public class CourseTest {
         course.addObjective(ObjectiveGroup.BASIC, "S1");
         String obj = course.getObjectivesFor(ObjectiveGroup.BASIC);
         assertSame("S1", obj);
+    }
+
+    @Test
+    public void removeObjectiveTest() {
+        course.addObjective(ObjectiveGroup.BASIC, "S1");
+        course.removeObjective(ObjectiveGroup.BASIC);
+        assertFalse(course.objectiveByGroups.containsKey(ObjectiveGroup.BASIC));
     }
 
 }
