@@ -52,6 +52,10 @@ public class InMemoryGateway implements Gateway {
         attempts.clear();
     }
 
+    public <E> void save(E o) {
+        // TODO
+    }
+
     public void addStudent(Student student) { students.put(student.userName, student); }
 
     public List<Course> getCoursesTaughtBy(Instructor instructor) {

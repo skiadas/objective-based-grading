@@ -1,13 +1,26 @@
 package obg.core.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Enrollment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @ManyToOne
     public Course course;
+    @ManyToOne
     public Student student;
+    @Basic
     public String date;
+    @Basic
     public Boolean withdrawn;
+    // TODO: Need to eventually fix
+    @Transient
     public AttemptMap attemptMap = new AttemptMap();
+
+    protected Enrollment() {}
 
     public Enrollment(Course course, Student student, String date, Boolean withdrawn) {
         this.course = course;
@@ -37,5 +50,16 @@ public class Enrollment {
 
     public String getEnrollmentDate() {
         return date;
+    }
+
+    public String toString() {
+        return "Enrollment{" +
+                "id=" + id +
+                ", course=" + course +
+                ", student=" + student +
+                ", date='" + date + '\'' +
+                ", withdrawn=" + withdrawn +
+                ", attemptMap=" + attemptMap +
+                '}';
     }
 }

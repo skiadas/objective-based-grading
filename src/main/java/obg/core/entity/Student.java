@@ -1,12 +1,27 @@
 package obg.core.entity;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public long id;
+
+    @Basic
+    @Column(columnDefinition = "uuid", unique = true)
     public UUID studentId;
+
+    @Basic
     public String userName;
+
+    @OneToMany(mappedBy = "student", cascade =CascadeType.ALL)
+    public List<Enrollment> enrollments;
+
+    protected Student() {}
 
     public Student(UUID studentId, String userName) {
         this.studentId = studentId;

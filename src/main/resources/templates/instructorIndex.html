@@ -5,8 +5,13 @@
   <title>Instructor Index Page</title>
 </head>
 <body>
-<ul th:each="course : ${courses}">
-  <li th:text="${course.courseName}">Course</li>
+<h2 th:object="${instructor}">Courses for <span th:text="*{first}">Joe</span> <span th:text="*{last}">Banks</span></h2>
+<ul th:each="course : ${courses}" th:remove="all-but-first">
+  <li><a href="instructorCourseView.html"
+         th:href="@{/instructor/${instructor.instructorId}/course/${course.courseID}}"
+         th:text="${course.courseName}">Course name here</a></li>
+  <li>Another course here</li>
+  <li>And another one</li>
 </ul>
 </body>
 </html>

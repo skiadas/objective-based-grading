@@ -1,16 +1,44 @@
 package obg.core.entity;
 
+import javax.persistence.*;
 import java.util.*;
 
+@Entity
 public class Course {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Basic
+    @Column(columnDefinition = "uuid", unique = true)
     public UUID courseID;
-    public Instructor instructor;
+
+    @Basic
     public String courseName;
+
+    @ManyToOne
+    public Instructor instructor;
+
+    @ManyToMany
     public List<Student> students;
+
+    @OneToMany(mappedBy = "course")
+    public List<Enrollment> enrollments;
+
+
+    // TODO: Fix it
+    @Transient
+    public ArrayList<String> objectives = new ArrayList<>();
+
+    @Transient
     public GradeBreakPoints gradeBreaks = new GradeBreakPoints();
+
+    @Transient
     public EnumMap<ObjectiveGroup, String> objectiveByGroups = new EnumMap<>(ObjectiveGroup.class);
 
+    private Course() {
+    }
 
     public Course(UUID courseID, String courseName, List<Student> students) {
         this.students = students;
@@ -35,7 +63,7 @@ public class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course that = (Course) o;
-        return courseID == that.courseID;
+        return courseID.equals(that.courseID);
     }
 
     @Override
@@ -55,7 +83,7 @@ public class Course {
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
-    
+
     public boolean isValidObjective(String objective) {
         List<String> objectiveList = new ArrayList<>(List.of("L1", "L2", "S1", "S2", "C1", "C2"));
         return objectiveList.contains(objective);

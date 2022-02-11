@@ -24,6 +24,7 @@ public class Server {
         post("/logout", (req, res) -> new Handler(req, res, userAdmin, context).handleLogout());
         get("/instructor/:username", (req, res) -> new Handler(req, res, userAdmin, context).getInstructorIndexPage());
         get("/student/:username", (req, res) -> new Handler(req, res, userAdmin, context).getStudentIndexPage());
+        get("/instructor/:username/course/:courseid", (req, res) -> "Hello");
         logger.info("Server started, serving at localhost:" + Spark.port());
     }
 

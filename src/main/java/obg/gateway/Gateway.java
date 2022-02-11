@@ -16,4 +16,6 @@ public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, 
     void removeAttempt(Attempt attempt);
 
     void clearAttempts();
+
+    <E> void save(E o);
 }

@@ -1,11 +1,25 @@
 package obg.core.entity;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Instructor {
-    private final String instructorId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Basic
+    private String instructorId;
+    @Basic
     private String first;
+    @Basic
     private String last;
+
+    @OneToMany(mappedBy = "instructor")
+    public List<Course> courses;
+
+    protected Instructor() {}
 
     public Instructor(String instructorId) {
         this.instructorId = instructorId;
@@ -32,5 +46,17 @@ public class Instructor {
     @Override
     public int hashCode() {
         return Objects.hash(instructorId, first, last);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getFirst() {
+        return first;
+    }
+
+    public String getLast() {
+        return last;
     }
 }

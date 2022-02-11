@@ -3,6 +3,7 @@ package webserver;
 import obg.core.Presenter;
 import obg.core.entity.Attempt;
 import obg.core.entity.Course;
+import obg.core.entity.Instructor;
 import obg.response.TargetGradeRequirementsResponse;
 import spark.ModelAndView;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ResultProducer implements Presenter {
-     static final ThymeleafTemplateEngine engine = new ThymeleafTemplateEngine();
+    static final ThymeleafTemplateEngine engine = new ThymeleafTemplateEngine();
     final Map<String, Object> model = new HashMap<>();
     String result;
 
@@ -25,6 +26,7 @@ public class ResultProducer implements Presenter {
 
     public void presentInstructorCourseList(List<Course> courses) {
         addToModel("courses", courses);
+        addToModel("instructor", new Instructor("skiadas", "Haris", "Skiadas"));
         // TODO
         result = engine.render(new ModelAndView(model, "instructorIndex"));
     }
