@@ -62,7 +62,13 @@ public class Course {
     }
 
     public String getObjectivesFor(ObjectiveGroup group) {
-        return objectiveByGroups.get(group);
+
+        if (objectiveByGroups.containsKey(group)) {
+            return objectiveByGroups.get(group);
+        }
+        else {
+            throw new RuntimeException(group.toString() + ": Not Found");
+        }
     }
 
     public void addObjective(ObjectiveGroup group, String obj) {

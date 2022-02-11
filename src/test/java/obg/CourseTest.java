@@ -34,4 +34,9 @@ public class CourseTest {
         assertFalse(course.objectiveByGroups.containsKey(ObjectiveGroup.BASIC));
     }
 
+    @Test(expected = RuntimeException.class)
+    public void getObjectivesForExceptionTest() {
+        course.getObjectivesFor(ObjectiveGroup.BASIC);
+    }
+
 }
