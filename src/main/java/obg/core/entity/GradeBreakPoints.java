@@ -1,5 +1,6 @@
 package obg.core.entity;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import static obg.core.entity.ObjectiveGroup.BASIC;
 
 public class GradeBreakPoints {
     private final HashMap<String, EnumMap<ObjectiveGroup, Integer>> gradeBreaks = new HashMap<>();
+    private ArrayList<BreakpointEntry> breakpointEntries = new ArrayList<>();
 
     public GradeBreakPoints() {
         this.populateGradeBreaks();
@@ -34,6 +36,24 @@ public class GradeBreakPoints {
 
     public EnumMap<ObjectiveGroup, Integer> get(String letterGrade) {
         return gradeBreaks.get(letterGrade);
+    }
+
+    public class BreakpointEntry {
+        private String letterGrade;
+        private EnumMap<ObjectiveGroup, Integer> targetScores;
+
+        public BreakpointEntry(String letterGrade, EnumMap<ObjectiveGroup, Integer> targetScores) {
+
+        }
+
+        public void addEntry(BreakpointEntry entry) {
+            breakpointEntries.add(entry);
+        }
+
+        public void add(String letterGrade, int b, int c, int e) {
+//            BreakpointEntry entry = new BreakpointEntry();
+//            addEntry(entry);
+        }
     }
 }
 
