@@ -22,7 +22,7 @@ public class InMemoryGateway implements Gateway {
     public List<Attempt> getAttempts(Course course) {
         List<Attempt> attempts = new ArrayList<>();
         for (Attempt attempt : InMemoryGateway.attempts) {
-            if (attempt.course == course) {
+            if (attempt.getCourse() == course) {
                 attempts.add(attempt);
             }
         }

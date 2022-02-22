@@ -1,5 +1,7 @@
 package obg.core.entity;
 
+import java.util.Date;
+
 public class Enrollment {
     public Course course;
     public Student student;
@@ -12,6 +14,13 @@ public class Enrollment {
         this.student = student;
         this.date = date;
         this.withdrawn = withdrawn;
+    }
+
+    public Enrollment(Course course, Student student) {
+        this.course = course;
+        this.student = student;
+        withdrawn = false;
+        date = new Date().toString();
     }
 
     public Student getEnrolledStudent() {
