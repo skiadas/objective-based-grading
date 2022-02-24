@@ -20,6 +20,8 @@ public class AssignAttemptScoreInteractor {
         Attempt attempt = gateway.getAttempt(request.attemptId);
         if (attempt == null) {
             presenter.reportError(ErrorResponse.INVALID_ATTEMPT);
+        }else if (gateway.getInstructor(request.instructorId) == null){
+            presenter.reportError(ErrorResponse.INVALID_INSTRUCTOR);
         }
     }
 }
