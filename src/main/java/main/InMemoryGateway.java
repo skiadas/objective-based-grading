@@ -103,6 +103,11 @@ public class InMemoryGateway implements Gateway {
         return null;
     }
 
+    @Override
+    public Attempt getAttempt(String id) {
+        return null;
+    }
+
     public void assignCourseInstructor(Course c, Instructor i) {
         courseInstructorPairs.add(new Pair<>(c, i));
     }

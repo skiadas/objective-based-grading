@@ -7,12 +7,12 @@ import static obg.core.entity.Attempt.AttemptStatus.PENDING;
 
 public class Attempt {
 
-    private UUID attemptId;
+    private final UUID attemptId;
     String objective;
     int attemptNumber;
-    private Enrollment enrollment;
+    private final Enrollment enrollment;
     public AttemptStatus status;
-    public int score = 0;
+    private int score = 0;
 
 
     public Attempt(String objective, int attemptNumber, Student student, Course course){
@@ -34,6 +34,8 @@ public class Attempt {
     public Student getStudent() {
         return enrollment.getEnrolledStudent();
     }
+
+    public UUID getAttemptId() { return attemptId; }
 
     public Course getCourse() {
         return enrollment.getEnrolledCourse();
