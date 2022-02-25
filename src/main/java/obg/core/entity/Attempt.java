@@ -73,6 +73,7 @@ public class Attempt {
     public enum AttemptStatus {
         PENDING,
         ASSIGNED,
-        COMPLETED
+        COMPLETED,
+        SCORED
     }
 }

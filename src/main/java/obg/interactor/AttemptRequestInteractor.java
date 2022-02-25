@@ -15,21 +15,7 @@ public class AttemptRequestInteractor implements Interactor {
     }
 
     public void handle(AttemptRequestRequest request, Presenter presenter) {
-//        Course course = gateway.getCourse(request.courseID);
-//        Student student = gateway.getStudent(request.studentID);
         Enrollment enroll = gateway.getEnrollment(request.courseID, request.studentID);
-//        if (course == null) {
-//            presenter.reportError(ErrorResponse.INVALID_COURSE);
-//        } else if (student == null) {
-//            presenter.reportError(ErrorResponse.INVALID_STUDENT);
-//        } else if (!gateway.objectiveInCourse(request.objective, request.courseID)) {
-//            presenter.reportError(ErrorResponse.INVALID_OBJECTIVE);
-//        } else if (!gateway.getStudentIsEnrolled(request.studentID, request.courseID)) {
-//            presenter.reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
-//        }
-//        if (enroll == null) {
-//            presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
-//        } else
         if (gateway.getEnrolledStudent() == null){
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
         } else if  (gateway.getEnrolledCourse() == null){
@@ -39,7 +25,7 @@ public class AttemptRequestInteractor implements Interactor {
         }
 
         Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enroll.student, enroll.course);
-        presenter.presentAttemptCreated(attempt);
+        presenter.presentAttempt(attempt);
     }
 
 }

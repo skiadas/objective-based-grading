@@ -12,6 +12,7 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static junit.framework.TestCase.*;
+import static obg.core.entity.Attempt.AttemptStatus.*;
 import static org.mockito.Mockito.*;
 
 public class AssignAttemptScoreTest {
@@ -35,6 +36,7 @@ public class AssignAttemptScoreTest {
                 new Enrollment(new Course(UUID.randomUUID(), "test"), new Student(UUID.randomUUID(), "John")));
         UUID uuidInstructorId = UUID.randomUUID();
         stringInstructorId = uuidInstructorId.toString();
+        attempt.setStatus(COMPLETED);
         request = new AssignAttemptScoreRequest(stringAttemptId, 4, stringInstructorId);
         gateway = mock(AssignAttemptScoreGateway.class);
         presenter = mock(Presenter.class);
@@ -60,6 +62,15 @@ public class AssignAttemptScoreTest {
         interactor.handle(request);
         verify(gateway).getAttempt(request.attemptId);
         verify(presenter).reportError(ErrorResponse.INVALID_ATTEMPT);
+    }
+
+    @Test
+    public void checkStatusAttepmScoreIsPending() {
+        attempt.setStatus(PENDING);
+        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
+        when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
+        interactor.handle(request);
+        verify(presenter).reportError(ErrorResponse.INVALID_ATTEMPT_STATUS);
     }
 
     @Test
@@ -96,5 +107,23 @@ public class AssignAttemptScoreTest {
         when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
         interactor.handle(request);
         assertEquals(4, attempt.getScore());
+    }
+
+    @Test
+    public void interactorUpdatesAttemptStatusWhenAllChecksAreSuccessful() {
+        attempt.getEnrollment().getEnrolledCourse().setInstructor(instructor);
+        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
+        when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
+        interactor.handle(request);
+        assertEquals(SCORED, attempt.getStatus());
+    }
+
+    @Test
+    public void allChecksAreSuccessfulUpdatedAttemptIsSentToPresenter() {
+        attempt.getEnrollment().getEnrolledCourse().setInstructor(instructor);
+        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
+        when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
+        interactor.handle(request);
+        verify(presenter).presentAttempt(attempt);
     }
 }

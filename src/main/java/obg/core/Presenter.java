@@ -13,7 +13,7 @@ public interface Presenter {
 
     void presentStudentCourseList(List<Course> courses);
 
-    void presentAttemptCreated(Attempt attempt);
+    void presentAttempt(Attempt attempt);
 
     void presentTargetGradeRequirements(TargetGradeRequirementsResponse response);
 

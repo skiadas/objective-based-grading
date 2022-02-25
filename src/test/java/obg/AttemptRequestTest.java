@@ -115,6 +115,6 @@ public class AttemptRequestTest {
         when(gateway.getStudentIsEnrolled(request.studentID, request.courseID)).thenReturn(true);
         Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course);
         interactor.handle(request, presenter);
-        verify(presenter).presentAttemptCreated(attempt);
+        verify(presenter).presentAttempt(attempt);
     }
 }

@@ -37,7 +37,7 @@ public class ResultProducer implements Presenter {
         // TODO
     }
 
-    public void presentAttemptCreated(Attempt attempt) {
+    public void presentAttempt(Attempt attempt) {
         // TODO
     }
 
