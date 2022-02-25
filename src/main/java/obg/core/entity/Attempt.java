@@ -41,6 +41,10 @@ public class Attempt {
         return enrollment.getEnrolledCourse();
     }
 
+    public Enrollment getEnrollment() {
+        return enrollment;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(objective, attemptNumber, getStudent(), getCourse(), status);
@@ -52,6 +56,18 @@ public class Attempt {
         if (o == null || getClass() != o.getClass()) return false;
         Attempt attempt = (Attempt) o;
         return attemptNumber == attempt.attemptNumber && Objects.equals(objective, attempt.objective) && Objects.equals(getStudent(), attempt.getStudent()) && Objects.equals(getCourse(), attempt.getCourse()) && status == attempt.status;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public AttemptStatus getStatus() {
+        return status;
     }
 
     public enum AttemptStatus {

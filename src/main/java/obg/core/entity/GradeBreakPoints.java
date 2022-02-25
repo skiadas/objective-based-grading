@@ -38,6 +38,10 @@ public class GradeBreakPoints {
         return gradeBreaks.get(letterGrade);
     }
 
+    public boolean isValidScore(int score) {
+        return score >= 0;
+    }
+
     public class BreakpointEntry {
         private String letterGrade;
         private EnumMap<ObjectiveGroup, Integer> targetScores;
