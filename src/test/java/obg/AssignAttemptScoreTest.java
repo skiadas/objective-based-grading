@@ -57,19 +57,18 @@ public class AssignAttemptScoreTest {
 
     @Test
     public void interactorThrowsErrorForInvalidAttempt() {
-        interactor.handle(request);
         when(gateway.getAttempt(request.attemptId)).thenReturn(null);
+        interactor.handle(request);
         verify(gateway).getAttempt(request.attemptId);
         verify(presenter).reportError(ErrorResponse.INVALID_ATTEMPT);
     }
 
-//    @Test
-//    public void interactorThrowsErrorForInvalidInstructor() {
-//        interactor.handle(request);
-//        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
-//        when(gateway.getInstructor(request.instructorId)).thenReturn(null);
-//        verify(gateway).getAttempt(request.attemptId);
-//        verify(gateway).getInstructor(request.instructorId);
-//        verify(presenter).reportError(ErrorResponse.INVALID_INSTRUCTOR);
-//    }
+    @Test
+    public void interactorThrowsErrorForInvalidInstructor() {
+        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
+        when(gateway.getInstructor(request.instructorId)).thenReturn(null);
+        interactor.handle(request);
+        verify(gateway).getInstructor(request.instructorId);
+        verify(presenter).reportError(ErrorResponse.INVALID_INSTRUCTOR);
+    }
 }
