@@ -19,7 +19,6 @@ public class AssignAttemptScoreTest {
 
 
     private String stringAttemptId;
-    private UUID uuidAttemptId;
     private Attempt attempt;
     private String stringInstructorId;
     private AssignAttemptScoreRequest request;
@@ -30,18 +29,18 @@ public class AssignAttemptScoreTest {
 
     @Before
     public void setUp() {
-        uuidAttemptId = UUID.randomUUID();
+        UUID uuidAttemptId = UUID.randomUUID();
         stringAttemptId = uuidAttemptId.toString();
         attempt = new Attempt(uuidAttemptId, "S1", 0,
                 new Enrollment(new Course(UUID.randomUUID(), "test"), new Student(UUID.randomUUID(), "John")));
         UUID uuidInstructorId = UUID.randomUUID();
         stringInstructorId = uuidInstructorId.toString();
+        instructor = new Instructor(stringInstructorId, "Professor", "Professorson");
         attempt.setStatus(COMPLETED);
         request = new AssignAttemptScoreRequest(stringAttemptId, 4, stringInstructorId);
         gateway = mock(AssignAttemptScoreGateway.class);
         presenter = mock(Presenter.class);
         interactor = new AssignAttemptScoreInteractor(gateway, presenter);
-        instructor = new Instructor(stringInstructorId, "Professor", "Professorson");
     }
 
     @Test
@@ -49,11 +48,6 @@ public class AssignAttemptScoreTest {
         assertEquals(stringAttemptId, request.attemptId);
         assertEquals(4, request.score);
         assertEquals(stringInstructorId, request.instructorId);
-    }
-
-    @Test
-    public void canCreateAssignAttemptScoreInteractor() {
-        assertNotNull(interactor);
     }
 
     @Test
@@ -65,17 +59,17 @@ public class AssignAttemptScoreTest {
     }
 
     @Test
-    public void checkStatusAttepmScoreIsPending() {
+    public void interactorThrowsErrorForInvalidAttemptStatus() {
         attempt.setStatus(PENDING);
-        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
-        when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
+        returnValidAttempt();
+        returnValidInstructor();
         interactor.handle(request);
         verify(presenter).reportError(ErrorResponse.INVALID_ATTEMPT_STATUS);
     }
 
     @Test
     public void interactorThrowsErrorForInvalidInstructor() {
-        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
+        returnValidAttempt();
         when(gateway.getInstructor(request.instructorId)).thenReturn(null);
         interactor.handle(request);
         verify(gateway).getInstructor(request.instructorId);
@@ -84,8 +78,8 @@ public class AssignAttemptScoreTest {
 
     @Test
     public void interactorThrowsErrorForInvalidCourseInstructor() {
-        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
-        when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
+        returnValidAttempt();
+        returnValidInstructor();
         interactor.handle(request);
         verify(presenter).reportError(ErrorResponse.INVALID_COURSE_INSTRUCTOR);
     }
@@ -93,7 +87,7 @@ public class AssignAttemptScoreTest {
     @Test
     public void interactorThrowsErrorForInvalidScore() {
         AssignAttemptScoreRequest badScoreRequest = new AssignAttemptScoreRequest(stringAttemptId, -1, stringInstructorId);
-        attempt.getEnrollment().getEnrolledCourse().setInstructor(instructor);
+        setAttemptEnrollmentCourseInstructor();
         when(gateway.getAttempt(badScoreRequest.attemptId)).thenReturn(attempt);
         when(gateway.getInstructor(badScoreRequest.instructorId)).thenReturn(instructor);
         interactor.handle(badScoreRequest);
@@ -102,28 +96,40 @@ public class AssignAttemptScoreTest {
 
     @Test
     public void interactorUpdatesAttemptScoreWhenAllChecksAreSuccessful() {
-        attempt.getEnrollment().getEnrolledCourse().setInstructor(instructor);
-        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
-        when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
+        setAttemptEnrollmentCourseInstructor();
+        returnValidAttempt();
+        returnValidInstructor();
         interactor.handle(request);
         assertEquals(4, attempt.getScore());
     }
 
     @Test
     public void interactorUpdatesAttemptStatusWhenAllChecksAreSuccessful() {
-        attempt.getEnrollment().getEnrolledCourse().setInstructor(instructor);
-        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
-        when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
+        setAttemptEnrollmentCourseInstructor();
+        returnValidAttempt();
+        returnValidInstructor();
         interactor.handle(request);
         assertEquals(SCORED, attempt.getStatus());
     }
 
     @Test
-    public void allChecksAreSuccessfulUpdatedAttemptIsSentToPresenter() {
-        attempt.getEnrollment().getEnrolledCourse().setInstructor(instructor);
-        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
-        when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
+    public void interactorPresentsAttemptWhenAllChecksAreSuccessfulAfterUpdates() {
+        setAttemptEnrollmentCourseInstructor();
+        returnValidAttempt();
+        returnValidInstructor();
         interactor.handle(request);
         verify(presenter).presentAttempt(attempt);
+    }
+
+    private void returnValidInstructor() {
+        when(gateway.getInstructor(request.instructorId)).thenReturn(instructor);
+    }
+
+    private void returnValidAttempt() {
+        when(gateway.getAttempt(request.attemptId)).thenReturn(attempt);
+    }
+
+    private void setAttemptEnrollmentCourseInstructor() {
+        attempt.getEnrollment().getEnrolledCourse().setInstructor(instructor);
     }
 }

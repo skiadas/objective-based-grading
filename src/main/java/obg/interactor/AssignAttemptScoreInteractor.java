@@ -24,13 +24,13 @@ public class AssignAttemptScoreInteractor {
             presenter.reportError(ErrorResponse.INVALID_ATTEMPT);
         } else if (attempt.status == Attempt.AttemptStatus.PENDING) {
             presenter.reportError(ErrorResponse.INVALID_ATTEMPT_STATUS);
-        }else if (instructor == null){
+        } else if (instructor == null){
                 presenter.reportError(ErrorResponse.INVALID_INSTRUCTOR);
-        }else if (!isCourseInstructor(attempt, instructor)) {
+        } else if (!isCourseInstructor(attempt, instructor)) {
             presenter.reportError(ErrorResponse.INVALID_COURSE_INSTRUCTOR);
-        }else if (!isValidScore(request, attempt)) {
+        } else if (!isValidScore(request, attempt)) {
             presenter.reportError(ErrorResponse.INVALID_SCORE);
-        }else {
+        } else {
             attempt.setScore(request.score);
             attempt.setStatus(Attempt.AttemptStatus.SCORED);
             presenter.presentAttempt(attempt);
