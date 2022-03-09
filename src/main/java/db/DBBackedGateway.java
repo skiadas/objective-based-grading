@@ -72,7 +72,9 @@ public class DBBackedGateway implements Gateway {
 
     @Override
     public Attempt getAttempt(UUID id) {
-        return null;
+        TypedQuery<Attempt> q = em.createQuery("SELECT a FROM Attempt a WHERE a.attemptId = :attemptId", Attempt.class);
+        q.setParameter("attemptId", id);
+        return q.getSingleResult();
     }
 
     public Instructor getInstructor(String instructorId) {

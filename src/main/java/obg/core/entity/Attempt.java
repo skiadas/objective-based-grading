@@ -1,19 +1,39 @@
 package obg.core.entity;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
 import static obg.core.entity.Attempt.AttemptStatus.PENDING;
 
+@Entity
 public class Attempt {
 
-    private final UUID attemptId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Basic
+    @Column(columnDefinition = "uuid", unique = true)
+    private UUID attemptId;
+
+    @Basic
     String objective;
+
+    @Basic
     int attemptNumber;
-    private final Enrollment enrollment;
+
+    @ManyToOne
+    private Enrollment enrollment;
+
+    @Basic
     public AttemptStatus status;
+
+    @Basic
     private int score = 0;
 
+
+    protected Attempt() {}
 
     public Attempt(String objective, int attemptNumber, Enrollment enrollment) {
         this(UUID.randomUUID(), objective, attemptNumber, enrollment);
