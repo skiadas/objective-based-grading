@@ -47,10 +47,6 @@ public class Attempt {
         status = PENDING;
     }
 
-    public void setStatus(AttemptStatus status) {
-        this.status = status;
-    }
-
     public Student getStudent() {
         return enrollment.getEnrolledStudent();
     }
@@ -65,6 +61,39 @@ public class Attempt {
         return enrollment;
     }
 
+    public AttemptStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AttemptStatus status) {
+        this.status = status;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    private void setScore(int score) {
+        this.score = score;
+    }
+
+    public void assignScore(int score) {
+        setScore(score);
+        setStatus(AttemptStatus.SCORED);
+    }
+
+    public boolean isInGradableStatus() {
+        return status == PENDING;
+    }
+
+    public boolean canBeGradedBy(Instructor instructor) {
+        return enrollment.getEnrolledCourse().isCourseInstructor(instructor);
+    }
+
+    public boolean isValidScore(int score) {
+        return enrollment.getEnrolledCourse().gradeBreaks.isValidScore(score);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(objective, attemptNumber, getStudent(), getCourse(), status);
@@ -76,18 +105,6 @@ public class Attempt {
         if (o == null || getClass() != o.getClass()) return false;
         Attempt attempt = (Attempt) o;
         return attemptNumber == attempt.attemptNumber && Objects.equals(objective, attempt.objective) && Objects.equals(getStudent(), attempt.getStudent()) && Objects.equals(getCourse(), attempt.getCourse()) && status == attempt.status;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public AttemptStatus getStatus() {
-        return status;
     }
 
     public enum AttemptStatus {
