@@ -15,8 +15,8 @@ public class Attempt {
     private int score = 0;
 
 
-    public Attempt(String objective, int attemptNumber, Student student, Course course){
-        this(UUID.randomUUID(), objective, attemptNumber, new Enrollment(course, student));
+    public Attempt(String objective, int attemptNumber, Enrollment enrollment) {
+        this(UUID.randomUUID(), objective, attemptNumber, enrollment);
     }
 
     public Attempt(UUID attemptId, String objective, int attemptNumber, Enrollment enrollment) {

@@ -113,7 +113,7 @@ public class AttemptRequestTest {
         when(gateway.getEnrollment(request.courseID, request.studentID)).thenReturn(enrollment);
         when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(true);
         when(gateway.getStudentIsEnrolled(request.studentID, request.courseID)).thenReturn(true);
-        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course);
+        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enrollment);
         interactor.handle(request, presenter);
         verify(presenter).presentAttempt(attempt);
     }

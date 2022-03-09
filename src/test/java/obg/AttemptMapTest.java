@@ -21,6 +21,7 @@ public class AttemptMapTest {
     private AttemptRequestGateway gateway;
     private ObjectiveGradeRequest request;
     private Presenter presenter;
+    private Enrollment enrollment;
 
     @Before
     public void setUp() {
@@ -30,6 +31,7 @@ public class AttemptMapTest {
         request = new ObjectiveGradeRequest("Name", randId);
         student = new Student(UUID.randomUUID(), request.userName);
         interactor = new ObjectiveGradeInteractor(gateway);
+        enrollment = new Enrollment(course, student);
     }
 
     @Test
@@ -42,7 +44,7 @@ public class AttemptMapTest {
     @Test
     public void AddFirstAttemptToMap(){
         String obj1 = "obj1";
-        Attempt obj1Attempt = new Attempt(obj1, 1, student, course);
+        Attempt obj1Attempt = getAttempt(obj1);
         AttemptList attemptList = new AttemptList();
         attemptList.add(obj1Attempt);
         AttemptMap map = new AttemptMap();
@@ -54,8 +56,8 @@ public class AttemptMapTest {
     public void AddDifferentAttemptsToMap(){
         String obj1 = "obj1";
         String obj2 = "obj2";
-        Attempt obj1Attempt = new Attempt(obj1, 1, student, course);
-        Attempt obj2Attempt = new Attempt(obj2, 1, student, course);
+        Attempt obj1Attempt = getAttempt(obj1);
+        Attempt obj2Attempt = getAttempt(obj2);
         AttemptList attemptListObj1 = new AttemptList();
         attemptListObj1.add(obj1Attempt);
         AttemptList attemptListObj2 = new AttemptList();
@@ -65,6 +67,10 @@ public class AttemptMapTest {
         map.add(obj2, obj2Attempt);
         assertEquals(attemptListObj1, map.getAttemptList(obj1));
         assertEquals(attemptListObj2, map.getAttemptList(obj2));
+    }
+
+    private Attempt getAttempt(String obj1) {
+        return new Attempt(obj1, 1, enrollment);
     }
 
 }

@@ -21,6 +21,7 @@ public class AttemptListTest extends TestCase {
     private Course course;
     private Student student;
     private UUID randID;
+    private Attempt attempt;
 
     @Before
     public void setUp() {
@@ -29,6 +30,7 @@ public class AttemptListTest extends TestCase {
         request = new AttemptRequestRequest("DoeJ24", randID, "L1");
         course = new Course(randID, "courseName");
         student = new Student(randomUUID(), request.studentID);
+        attempt = new Attempt(request.objective, gateway.getAttemptNumber(), new Enrollment(course, student));
     }
 
     private Attempt getAttempt2() {
@@ -37,12 +39,11 @@ public class AttemptListTest extends TestCase {
         AttemptRequestRequest request2 = new AttemptRequestRequest("DoeJ24", randID, "L1");
         Course course2 = new Course(randID, "courseName");
         Student student2 = new Student(randomUUID(), request.studentID);
-        return new Attempt(request2.objective, gateway2.getAttemptNumber(), student2, course2);
+        return new Attempt(request2.objective, gateway2.getAttemptNumber(), new Enrollment(course2, student2));
     }
 
     public void testAddAll() {
         AttemptList attemptList = new AttemptList();
-        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course);
         Attempt attempt2 = getAttempt2();
         attemptList.add(attempt);
         attemptList.add(attempt2);
@@ -59,7 +60,6 @@ public class AttemptListTest extends TestCase {
 
     public void testAdd() {
         AttemptList attemptList = new AttemptList();
-        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), student, course);
         attemptList.add(attempt);
         List<Attempt> list = new ArrayList<>();
         list.add(attempt);

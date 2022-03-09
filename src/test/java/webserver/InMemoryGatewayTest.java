@@ -92,7 +92,7 @@ public class InMemoryGatewayTest {
     }
 
     private Attempt makeAttempt(Course course, String objective, int attemptNum, Student student) {
-        return new Attempt(objective, attemptNum, student, course);
+        return new Attempt(objective, attemptNum, new Enrollment(course, student));
     }
 
     @Test
