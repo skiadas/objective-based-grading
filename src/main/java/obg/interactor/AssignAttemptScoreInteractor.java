@@ -7,6 +7,8 @@ import obg.core.entity.Instructor;
 import obg.gateway.AssignAttemptScoreGateway;
 import obg.request.AssignAttemptScoreRequest;
 
+import java.util.UUID;
+
 public class AssignAttemptScoreInteractor {
 
     private final AssignAttemptScoreGateway gateway;
@@ -18,7 +20,7 @@ public class AssignAttemptScoreInteractor {
     }
 
     public void handle(AssignAttemptScoreRequest request) {
-        Attempt attempt = gateway.getAttempt(request.attemptId);
+        Attempt attempt = gateway.getAttempt(UUID.fromString(request.attemptId));
         Instructor instructor = gateway.getInstructor(request.instructorId);
         if (attempt == null) {
             presenter.reportError(ErrorResponse.INVALID_ATTEMPT);

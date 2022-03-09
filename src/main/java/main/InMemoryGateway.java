@@ -108,7 +108,7 @@ public class InMemoryGateway implements Gateway {
     }
 
     @Override
-    public Attempt getAttempt(String id) {
+    public Attempt getAttempt(UUID id) {
         return null;
     }
 

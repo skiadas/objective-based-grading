@@ -70,7 +70,8 @@ public class DBBackedGateway implements Gateway {
 
     }
 
-    public Attempt getAttempt(String id) {
+    @Override
+    public Attempt getAttempt(UUID id) {
         return null;
     }
 
