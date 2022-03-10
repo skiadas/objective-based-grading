@@ -77,9 +77,7 @@
                 <version>2.7</version>
                 <reportSets>
                     <reportSet>
-                        <reports>
-<!--                            disabling reports from this plugin  -->
-                        </reports>
+                        <reports><!-- disabling reports from this plugin  --></reports>
                     </reportSet>
                 </reportSets>
             </plugin>
