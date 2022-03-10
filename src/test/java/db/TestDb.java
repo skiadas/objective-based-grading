@@ -1,9 +1,7 @@
 package db;
 
-import obg.core.entity.Course;
-import obg.core.entity.Enrollment;
-import obg.core.entity.Instructor;
-import obg.core.entity.Student;
+import obg.core.entity.*;
+import obg.request.AttemptRequestRequest;
 import org.junit.Test;
 
 import javax.persistence.*;
@@ -14,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.UUID.randomUUID;
 import static org.junit.Assert.assertEquals;
 
 public class TestDb {
@@ -108,6 +107,34 @@ public class TestDb {
         });
     }
 
+    @Test
+    public void canGetStudentCourses(){
+        Student student1 = new Student(UUID.randomUUID(), "joe23");
+        Student student2 = new Student(UUID.randomUUID(), "jane24");
+        Course course1 = new Course(UUID.randomUUID(), "course1");
+        Course course2 = new Course(UUID.randomUUID(), "course2");
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.save(student1);
+            gateway.save(student2);
+            gateway.save(course1);
+            gateway.save(course2);
+        });
+        Enrollment enrollment1 = new Enrollment(course1, student1, "today", false);
+        Enrollment enrollment2 = new Enrollment(course1, student2, "today", false);
+        Enrollment enrollment3 = new Enrollment(course2, student2, "today", false);
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.save(enrollment1);
+            gateway.save(enrollment2);
+            gateway.save(enrollment3);
+        });
+
+        gatewayFactory.doWithGateway(gateway -> {
+            List<Course> retrievedStudentCourses = gateway.getStudentCourses("jane24");
+            List<Course> retrievedStudentCourses_2 = gateway.getStudentCourses("joe23");
+            assertEquals(List.of(course1, course2), retrievedStudentCourses);
+            assertEquals(List.of(course1), retrievedStudentCourses_2);
+        });
+    }
     @Test
     public void CanFindInstructorById(){
         Instructor instructor = new Instructor("newId", "Joe", "Brown");

@@ -51,7 +51,9 @@ public class DBBackedGateway implements Gateway {
     }
 
     public List<Course> getStudentCourses(String userName) {
-        return null;
+        return em.createQuery("SELECT c.course FROM Enrollment c WHERE c.student.userName = :student", Course.class)
+                .setParameter("student", userName)
+                .getResultList();
     }
 
     public void addInstructor(Instructor instructor) {
