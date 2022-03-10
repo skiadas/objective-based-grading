@@ -40,27 +40,19 @@ public class AttemptRequestTest {
 
     }
 
-//    @Test
-//    public void InteractorAskGatewayForCorrectCourse() {
-//        when(gateway.getEnrollment(request.courseID, request.studentID)).thenReturn(enrollment);
-//        when(gateway.getEnrolledCourse()).thenReturn(enrollment.course);
-//        interactor.handle(request, presenter);
-//        verify(gateway).getEnrolledCourse();
-//    }
-
     @Test
     public void usingEnrollment_CheckingIfCourses_StudentAreTheSame() {
         when(gateway.getEnrollment(request.courseID, request.studentID)).thenReturn(enrollment);
         interactor.handle(request, presenter);
         assertEquals(course, enrollment.course);
         assertEquals(student, enrollment.student);
-        verify(gateway).getEnrollment(request.courseID, request.studentID);
     }
 
     @Test
     public void checkInvalidStudentErrorTest() {
+        Enrollment enrollment_2 = new Enrollment(course, null, "12-15-2020", false);
         when(gateway.getAttemptNumber()).thenReturn(1);
-        when(gateway.getEnrollment(request.courseID,request.studentID)).thenReturn(enrollment);
+        when(gateway.getEnrollment(request.courseID,request.studentID)).thenReturn(enrollment_2);
         when(gateway.getEnrolledStudent()).thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
@@ -68,41 +60,13 @@ public class AttemptRequestTest {
 
     @Test
     public void CheckInvalidCourseErrorTest() {
+        Enrollment enrollment_2 = new Enrollment(null, student, "12-15-2020", false);
         when(gateway.getAttemptNumber()).thenReturn(1);
-        when(gateway.getEnrollment(request.courseID,request.studentID)).thenReturn(enrollment);
+        when(gateway.getEnrollment(request.courseID,request.studentID)).thenReturn(enrollment_2);
         when(gateway.getEnrolledCourse()).thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
     }
-
-//    @Test
-//    public void InteractorAskGatewayForCorrectStudent() {
-//        when(gateway.getCourse(request.courseID)).thenReturn(course);
-//        interactor.handle(request, presenter);
-//        verify(gateway).getStudent(request.studentID);
-//    }
-
-//    @Test
-//    public void InteractorAskGatewayForCorrectObjective() {
-//        when(gateway.getEnrollment(request.courseID, request.studentID)).thenReturn(enrollment);
-//
-//        when(gateway.getCourse(request.courseID)).thenReturn(course);
-//        when(gateway.getStudent(request.studentID)).thenReturn(student);
-//        when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(true);
-//        interactor.handle(request, presenter);
-//        verify(gateway).objectiveInCourse(request.objective, enrollment.course.courseID);
-//    }
-
-//    @Test
-//    public void InvalidObjectiveTest() {
-//        when(gateway.getAttemptNumber()).thenReturn(1);
-//        when(gateway.getEnrollment(request.courseID, request.studentID)).thenReturn(enrollment);
-//        when(gateway.getCourse(request.courseID)).thenReturn(course);
-//        when(gateway.getStudent(request.studentID)).thenReturn(student);
-//        when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(false);
-//        interactor.handle(request, presenter);
-//        verify(presenter).reportError(ErrorResponse.INVALID_OBJECTIVE);
-//    }
 
 
     @Test

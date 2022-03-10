@@ -125,25 +125,33 @@ public class TestDb {
         });
     }
 
+
     @Test
-    public void canGetCoursesTaughtByInstructor(){
-        Instructor instructor = new Instructor("newId", "Joe", "Brown");
-        Course course1 = new Course(UUID.randomUUID(), "course1", new ArrayList<>());
-        Course course2 = new Course(UUID.randomUUID(), "course2", new ArrayList<>());
-        Course course3 = new Course(UUID.randomUUID(), "course3", new ArrayList<>());
-        course1.setInstructor(instructor);
-        course2.setInstructor(instructor);
-        course3.setInstructor(instructor);
+    public void canGetDifferentCoursesForDifferentInstructors(){
+        Instructor instructor1 = new Instructor("newId_1", "new1", "name1");
+        Instructor instructor2 = new Instructor("newId_2", "new2", "name2");
+        Course course1 = new Course(UUID.randomUUID(), "course_1", new ArrayList<>());
+        Course course2 = new Course(UUID.randomUUID(), "course_2", new ArrayList<>());
+        Course course3 = new Course(UUID.randomUUID(), "course_3", new ArrayList<>());
+        Course course4 = new Course(UUID.randomUUID(), "course_4", new ArrayList<>());
+        course1.setInstructor(instructor1);
+        course2.setInstructor(instructor2);
+        course3.setInstructor(instructor1);
+        course4.setInstructor(instructor2);
         gatewayFactory.doWithGateway(gateway -> {
-            gateway.save(instructor);
+            gateway.save(instructor1);
+            gateway.save(instructor2);
             gateway.save(course1);
             gateway.save(course2);
             gateway.save(course3);
+            gateway.save(course4);
         });
 
         gatewayFactory.doWithGateway(gateway -> {
-            List retrievedCourseList = gateway.getCoursesTaughtBy(instructor);
-            assertEquals(List.of(course1, course2, course3), retrievedCourseList);
+            List retrievedCourseList_1 = gateway.getCoursesTaughtBy(instructor1);
+            List retrievedCourseList_2 = gateway.getCoursesTaughtBy(instructor2);
+            assertEquals(List.of(course1, course3), retrievedCourseList_1);
+            assertEquals(List.of(course2, course4), retrievedCourseList_2);
         });
     }
 
