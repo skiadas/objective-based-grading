@@ -95,6 +95,7 @@
                 <version>3.1.2</version>
                 <configuration>
                     <configLocation>google_checks.xml</configLocation>
+                    <indentSize>4</indentSize>
                 </configuration>
             </plugin>
         </plugins>
