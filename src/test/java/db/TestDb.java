@@ -2,6 +2,7 @@ package db;
 
 import obg.core.entity.Course;
 import obg.core.entity.Enrollment;
+import obg.core.entity.Instructor;
 import obg.core.entity.Student;
 import org.junit.Test;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -103,6 +105,45 @@ public class TestDb {
             TypedQuery<Enrollment> query = em.createQuery(cq);
             List<Enrollment> enrollments = query.getResultList();
             System.out.println(enrollments);
+        });
+    }
+
+    @Test
+    public void CanFindInstructorById(){
+        Instructor instructor = new Instructor("newId", "Joe", "Brown");
+
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.save(instructor);
+            gateway.save(new Instructor("new1", "new", "1"));
+            gateway.save(new Instructor("new2", "new", "2"));
+
+                });
+
+        gatewayFactory.doWithGateway(gateway -> {
+        Instructor retrievedInstructor = gateway.getInstructor(instructor.getInstructorId());
+        assertEquals(instructor.getInstructorId(), retrievedInstructor.getInstructorId());
+        });
+    }
+
+    @Test
+    public void canGetCoursesTaughtByInstructor(){
+        Instructor instructor = new Instructor("newId", "Joe", "Brown");
+        Course course1 = new Course(UUID.randomUUID(), "course1", new ArrayList<>());
+        Course course2 = new Course(UUID.randomUUID(), "course2", new ArrayList<>());
+        Course course3 = new Course(UUID.randomUUID(), "course3", new ArrayList<>());
+        course1.setInstructor(instructor);
+        course2.setInstructor(instructor);
+        course3.setInstructor(instructor);
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.save(instructor);
+            gateway.save(course1);
+            gateway.save(course2);
+            gateway.save(course3);
+        });
+
+        gatewayFactory.doWithGateway(gateway -> {
+            List retrievedCourseList = gateway.getCoursesTaughtBy(instructor);
+            assertEquals(List.of(course1, course2, course3), retrievedCourseList);
         });
     }
 

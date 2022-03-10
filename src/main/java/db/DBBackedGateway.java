@@ -78,7 +78,9 @@ public class DBBackedGateway implements Gateway {
     }
 
     public Instructor getInstructor(String instructorId) {
-        return null;
+        TypedQuery<Instructor> q = em.createQuery("SELECT e FROM Instructor e WHERE e.instructorId = :instructorId", Instructor.class);
+        q.setParameter("instructorId", instructorId);
+        return q.getSingleResult();
     }
 
     public List<Attempt> getAttempts(Course course) {
@@ -86,7 +88,9 @@ public class DBBackedGateway implements Gateway {
     }
 
     public List<Course> getCoursesTaughtBy(Instructor instructor) {
-        return null;
+        return em.createQuery("SELECT e FROM Course e WHERE e.instructor = :instructor", Course.class)
+                .setParameter("instructor", instructor)
+                .getResultList();
     }
 
     public Course getCourse(UUID courseId) {
