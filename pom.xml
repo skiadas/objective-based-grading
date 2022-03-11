@@ -27,6 +27,9 @@
                             <goal>mutationCoverage</goal>
                         </goals>
                         <phase>test</phase>
+                        <configuration>
+                            <outputFormats>HTML,XML</outputFormats>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
