@@ -12,6 +12,10 @@ public class GradeBreakPoints {
     private final HashMap<String, EnumMap<ObjectiveGroup, Integer>> gradeBreaks = new HashMap<>();
     private ArrayList<BreakpointEntry> breakpointEntries = new ArrayList<>();
 
+    public ArrayList<BreakpointEntry> getBreakpointEntries() {
+        return breakpointEntries;
+    }
+
     public GradeBreakPoints() {
         this.populateGradeBreaks();
     }
@@ -42,22 +46,32 @@ public class GradeBreakPoints {
         return score >= 0;
     }
 
-    public class BreakpointEntry {
+    public void addEntry(BreakpointEntry entry) {
+        breakpointEntries.add(entry);
+    }
+
+    public void add(String letterGrade, EnumMap<ObjectiveGroup, Integer> targetScores){
+        BreakpointEntry entry = new BreakpointEntry(letterGrade, targetScores );
+        addEntry(entry);
+    }
+
+    public static class BreakpointEntry {
         private String letterGrade;
         private EnumMap<ObjectiveGroup, Integer> targetScores;
 
         public BreakpointEntry(String letterGrade, EnumMap<ObjectiveGroup, Integer> targetScores) {
-
+            this.letterGrade = letterGrade;
+            this.targetScores = targetScores;
         }
 
-        public void addEntry(BreakpointEntry entry) {
-            breakpointEntries.add(entry);
-        }
+//        public void addEntry(BreakpointEntry entry) {
+//            breakpointEntries.add(entry);
+//        }
 
-        public void add(String letterGrade, int b, int c, int e) {
+//        public void add(String letterGrade, int b, int c, int e) {
 //            BreakpointEntry entry = new BreakpointEntry();
 //            addEntry(entry);
-        }
+//        }
     }
 }
 
