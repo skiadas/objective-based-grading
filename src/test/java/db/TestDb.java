@@ -109,10 +109,14 @@ public class TestDb {
 
     @Test
     public void canGetStudentCourses(){
-        Student student1 = new Student(UUID.randomUUID(), "joe23");
-        Student student2 = new Student(UUID.randomUUID(), "jane24");
-        Course course1 = new Course(UUID.randomUUID(), "course1");
-        Course course2 = new Course(UUID.randomUUID(), "course2");
+        UUID student1Id = randomUUID();
+        Student student1 = new Student(student1Id, "joe23" + student1Id);
+        UUID student2Id = randomUUID();
+        Student student2 = new Student(student2Id, "jane24" + student2Id);
+        UUID course1ID = randomUUID();
+        Course course1 = new Course(course1ID, "course1" + course1ID);
+        UUID course2ID = randomUUID();
+        Course course2 = new Course(course2ID, "course2" + course2ID);
         gatewayFactory.doWithGateway(gateway -> {
             gateway.save(student1);
             gateway.save(student2);
@@ -129,8 +133,8 @@ public class TestDb {
         });
 
         gatewayFactory.doWithGateway(gateway -> {
-            List<Course> retrievedStudentCourses = gateway.getStudentCourses("jane24");
-            List<Course> retrievedStudentCourses_2 = gateway.getStudentCourses("joe23");
+            List<Course> retrievedStudentCourses = gateway.getStudentCourses(student2.userName);
+            List<Course> retrievedStudentCourses_2 = gateway.getStudentCourses(student1.userName);
             assertEquals(List.of(course1, course2), retrievedStudentCourses);
             assertEquals(List.of(course1), retrievedStudentCourses_2);
         });
