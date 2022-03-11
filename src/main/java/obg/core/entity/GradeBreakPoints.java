@@ -55,6 +55,10 @@ public class GradeBreakPoints {
         addEntry(entry);
     }
 
+    public void remove(BreakpointEntry entry, String letterGrade){
+        breakpointEntries.removeIf(i -> i.letterGrade.equals(letterGrade) && i.equals(entry));
+    }
+
     public static class BreakpointEntry {
         private String letterGrade;
         private EnumMap<ObjectiveGroup, Integer> targetScores;
