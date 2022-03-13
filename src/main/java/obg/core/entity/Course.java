@@ -52,6 +52,9 @@ public class Course {
         students = new ArrayList<>();
     }
 
+    public Course(String courseName) {
+        this(UUID.randomUUID(), courseName);
+    }
 
     public UUID getCourseId() {
         return courseID;
