@@ -1,9 +1,7 @@
 package obg.core.entity;
 
 import junit.framework.TestCase;
-import obg.core.Presenter;
 import obg.gateway.AttemptRequestGateway;
-import obg.interactor.AttemptRequestInteractor;
 import obg.request.AttemptRequestRequest;
 import org.junit.Before;
 
@@ -29,7 +27,7 @@ public class AttemptListTest extends TestCase {
         randID = randomUUID();
         request = new AttemptRequestRequest("DoeJ24", randID, "L1");
         course = new Course(randID, "courseName");
-        student = new Student(randomUUID(), request.studentID);
+        student = new Student(randomUUID(), request.studentId);
         attempt = new Attempt(request.objective, gateway.getAttemptNumber(), new Enrollment(course, student));
     }
 
@@ -38,7 +36,7 @@ public class AttemptListTest extends TestCase {
         UUID randID2 = randomUUID();
         AttemptRequestRequest request2 = new AttemptRequestRequest("DoeJ24", randID, "L1");
         Course course2 = new Course(randID, "courseName");
-        Student student2 = new Student(randomUUID(), request.studentID);
+        Student student2 = new Student(randomUUID(), request.studentId);
         return new Attempt(request2.objective, gateway2.getAttemptNumber(), new Enrollment(course2, student2));
     }
 

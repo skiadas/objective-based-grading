@@ -12,7 +12,7 @@ public class Course {
 
     @Basic
     @Column(columnDefinition = "uuid", unique = true)
-    public UUID courseID;
+    public UUID courseId;
 
     @Basic
     public String courseName;
@@ -40,14 +40,14 @@ public class Course {
     private Course() {
     }
 
-    public Course(UUID courseID, String courseName, List<Student> students) {
+    public Course(UUID courseId, String courseName, List<Student> students) {
         this.students = students;
-        this.courseID = courseID;
+        this.courseId = courseId;
         this.courseName = courseName;
     }
 
-    public Course(UUID courseID, String courseName) {
-        this.courseID = courseID;
+    public Course(UUID courseId, String courseName) {
+        this.courseId = courseId;
         this.courseName = courseName;
         students = new ArrayList<>();
     }
@@ -57,7 +57,7 @@ public class Course {
     }
 
     public UUID getCourseId() {
-        return courseID;
+        return courseId;
     }
 
 
@@ -66,12 +66,12 @@ public class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course that = (Course) o;
-        return courseID.equals(that.courseID);
+        return courseId.equals(that.courseId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(courseID, courseName, students);
+        return Objects.hash(courseId, courseName, students);
     }
 
     public boolean isValidLetterGrade(String letterGrade) {

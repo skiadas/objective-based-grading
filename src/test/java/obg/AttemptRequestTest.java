@@ -34,7 +34,7 @@ public class AttemptRequestTest {
         request = new AttemptRequestRequest("DoeJ24", randID, "L1");
 
         course = new Course(randID, "courseName");
-        student = new Student(randomUUID(), request.studentID);
+        student = new Student(randomUUID(), request.studentId);
         interactor = new AttemptRequestInteractor(gateway);
         enrollment = new Enrollment(course, student, "12-15-2020", false);
 
@@ -42,7 +42,7 @@ public class AttemptRequestTest {
 
     @Test
     public void usingEnrollment_CheckingIfCourses_StudentAreTheSame() {
-        when(gateway.getEnrollment(request.courseID, request.studentID)).thenReturn(enrollment);
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment);
         interactor.handle(request, presenter);
         assertEquals(course, enrollment.course);
         assertEquals(student, enrollment.student);
@@ -52,7 +52,7 @@ public class AttemptRequestTest {
     public void checkInvalidStudentErrorTest() {
         Enrollment enrollment_2 = new Enrollment(course, null, "12-15-2020", false);
         when(gateway.getAttemptNumber()).thenReturn(1);
-        when(gateway.getEnrollment(request.courseID,request.studentID)).thenReturn(enrollment_2);
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment_2);
         when(gateway.getEnrolledStudent()).thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
@@ -62,7 +62,7 @@ public class AttemptRequestTest {
     public void CheckInvalidCourseErrorTest() {
         Enrollment enrollment_2 = new Enrollment(null, student, "12-15-2020", false);
         when(gateway.getAttemptNumber()).thenReturn(1);
-        when(gateway.getEnrollment(request.courseID,request.studentID)).thenReturn(enrollment_2);
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment_2);
         when(gateway.getEnrolledCourse()).thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
@@ -72,11 +72,11 @@ public class AttemptRequestTest {
     @Test
     public void VerifyPresenterIsCalledForNewAttempt(){
         when(gateway.getAttemptNumber()).thenReturn(1);
-        when(gateway.getCourse(request.courseID)).thenReturn(course);
-        when(gateway.getStudent(request.studentID)).thenReturn(student);
-        when(gateway.getEnrollment(request.courseID, request.studentID)).thenReturn(enrollment);
-        when(gateway.objectiveInCourse(request.objective, request.courseID)).thenReturn(true);
-        when(gateway.getStudentIsEnrolled(request.studentID, request.courseID)).thenReturn(true);
+        when(gateway.getCourse(request.courseId)).thenReturn(course);
+        when(gateway.getStudent(request.studentId)).thenReturn(student);
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment);
+        when(gateway.objectiveInCourse(request.objective, request.courseId)).thenReturn(true);
+        when(gateway.getStudentIsEnrolled(request.studentId, request.courseId)).thenReturn(true);
         Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enrollment);
         interactor.handle(request, presenter);
         verify(presenter).presentAttempt(attempt);

@@ -4,7 +4,6 @@ import obg.core.entity.Attempt;
 import obg.core.entity.Course;
 import obg.core.entity.Enrollment;
 import obg.core.entity.Student;
-import obg.gateway.Gateway;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -13,7 +12,7 @@ import static junit.framework.TestCase.assertEquals;
 
 public class AttemptPersistenceTest {
 
-    private DBBackedGatewayFactory gatewayFactory = DBBackedGatewayFactory.getInstance();
+    private SqlBackedGatewayFactory gatewayFactory = SqlBackedGatewayFactory.getInstance();
 
     @Test
     public void canWriteAndReadAttempt() {

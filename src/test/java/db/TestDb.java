@@ -1,7 +1,6 @@
 package db;
 
 import obg.core.entity.*;
-import obg.request.AttemptRequestRequest;
 import org.junit.Test;
 
 import javax.persistence.*;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TestDb {
 
-    private DBBackedGatewayFactory gatewayFactory = DBBackedGatewayFactory.getInstance();
+    private SqlBackedGatewayFactory gatewayFactory = SqlBackedGatewayFactory.getInstance();
 
     @Test(expected = javax.persistence.PersistenceException.class)
     public void testCannotAddTwoStudentsWithSameUUID() {
@@ -90,7 +89,7 @@ public class TestDb {
             gateway.save(enrollment3);
         });
         gatewayFactory.doWithGateway(gateway -> {
-            EntityManager em = ((DBBackedGateway) gateway).getEntityManager();
+            EntityManager em = ((SqlBackedGateway) gateway).getEntityManager();
             String name = student1.userName;
             Boolean getAllEnrollments = false;
             CriteriaBuilder cb = em.getCriteriaBuilder();

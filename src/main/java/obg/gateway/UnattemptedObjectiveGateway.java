@@ -10,12 +10,12 @@ public interface UnattemptedObjectiveGateway {
 
     Student getStudent(String username);
 
-    Course getCourse(UUID courseID);
+    Course getCourse(UUID courseId);
 
     List<String> getUnattemptedObjectives(String student, UUID course);
 
 
-    Boolean getStudentIsEnrolled(String userName, UUID courseID);
+    Boolean getStudentIsEnrolled(String userName, UUID courseId);
 }
 
 

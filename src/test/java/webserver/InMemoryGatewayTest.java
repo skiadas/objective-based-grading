@@ -14,7 +14,6 @@ import java.util.UUID;
 
 import static junit.framework.TestCase.assertTrue;
 import static obg.core.entity.Attempt.AttemptStatus.ASSIGNED;
-import static obg.core.entity.Attempt.AttemptStatus.PENDING;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -41,8 +40,8 @@ public class InMemoryGatewayTest {
     @Test
     public void canFindCourse() {
         Course c = makeCourse("course1");
-        InMemoryGateway.courses.put(c.courseID, c);
-        assertEquals(c, g.getCourse(c.courseID));
+        InMemoryGateway.courses.put(c.courseId, c);
+        assertEquals(c, g.getCourse(c.courseId));
         assertNull(g.getCourse(UUID.randomUUID()));
     }
 
@@ -59,8 +58,8 @@ public class InMemoryGatewayTest {
         Course c1 = makeCourse("course1");
         Course c2 = makeCourse("course2");
         Instructor i = makeInstructor("instr");
-        InMemoryGateway.courses.put(c1.courseID, c1);
-        InMemoryGateway.courses.put(c2.courseID, c2);
+        InMemoryGateway.courses.put(c1.courseId, c1);
+        InMemoryGateway.courses.put(c2.courseId, c2);
         InMemoryGateway.instructors.put(i.getInstructorId(), i);
         g.assignCourseInstructor(c1, i);
         assertEquals(List.of(c1), g.getCoursesTaughtBy(i));
@@ -107,12 +106,12 @@ public class InMemoryGatewayTest {
     public void canVerifyStudentEnrollment() {
         Course c1 = makeCourse("course1");
         Course c2 = makeCourse("course2");
-        InMemoryGateway.courses.put(c1.courseID, c1);
-        InMemoryGateway.courses.put(c2.courseID, c2);
+        InMemoryGateway.courses.put(c1.courseId, c1);
+        InMemoryGateway.courses.put(c2.courseId, c2);
         Student s = makeStudent("s");
         InMemoryGateway.students.put(s.userName, s);
         g.assignCoursesToStudent(c1, s);
-        assertTrue(g.getStudentIsEnrolled(s.userName, c1.courseID));
+        assertTrue(g.getStudentIsEnrolled(s.userName, c1.courseId));
     }
 
     private Course makeCourse(String name) {

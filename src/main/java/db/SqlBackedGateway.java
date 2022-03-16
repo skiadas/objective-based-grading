@@ -9,18 +9,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class DBBackedGateway implements Gateway {
+public class SqlBackedGateway implements Gateway {
     private final EntityManager em;
 
-    public DBBackedGateway(EntityManager em) {
+    public SqlBackedGateway(EntityManager em) {
         this.em = em;
     }
 
-    public boolean objectiveInCourse(String objective, UUID courseID) {
+    public boolean objectiveInCourse(String objective, UUID courseId) {
         return false;
     }
 
-    public boolean getStudentIsEnrolled(String userName, UUID courseID) {
+    public boolean getStudentIsEnrolled(String userName, UUID courseId) {
         return false;
     }
 
@@ -28,11 +28,11 @@ public class DBBackedGateway implements Gateway {
         return 0;
     }
 
-    public HashMap getObjMap(String studentName, UUID courseID) {
+    public HashMap getObjMap(String studentName, UUID courseId) {
         return null;
     }
 
-    public Enrollment getEnrollment(UUID courseID, String studentID) {
+    public Enrollment getEnrollment(UUID courseId, String studentId) {
         return null;
     }
 
@@ -96,7 +96,7 @@ public class DBBackedGateway implements Gateway {
     }
 
     public Course getCourse(UUID courseId) {
-        return em.createQuery("SELECT c FROM Course c WHERE c.courseID = :courseId",
+        return em.createQuery("SELECT c FROM Course c WHERE c.courseId = :courseId",
                               Course.class)
                 .setParameter("courseId", courseId)
                 .getSingleResult();

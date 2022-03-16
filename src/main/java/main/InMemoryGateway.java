@@ -66,14 +66,14 @@ public class InMemoryGateway implements Gateway {
     }
 
     @Override
-    public boolean objectiveInCourse(String objective, UUID courseID) {
+    public boolean objectiveInCourse(String objective, UUID courseId) {
         return false;
     }
 
     @Override
-    public boolean getStudentIsEnrolled(String userName, UUID courseID) {
+    public boolean getStudentIsEnrolled(String userName, UUID courseId) {
         for(Pair<Course, Student> p : courseStudentPairs ){
-            if(p.first.courseID == courseID && p.second.userName == userName) {
+            if(p.first.courseId == courseId && p.second.userName == userName) {
                 return true;
             }
         }
@@ -87,13 +87,13 @@ public class InMemoryGateway implements Gateway {
     }
 
     @Override
-    public HashMap getObjMap(String studentName, UUID courseID) {
+    public HashMap getObjMap(String studentName, UUID courseId) {
         //TODO
         return null;
     }
 
     @Override
-    public Enrollment getEnrollment(UUID courseID, String studentID) {
+    public Enrollment getEnrollment(UUID courseId, String studentId) {
         return null;
     }
 
@@ -134,7 +134,7 @@ public class InMemoryGateway implements Gateway {
     }
 
     Course addCourse(Course course) {
-        return courses.put(course.courseID, course);
+        return courses.put(course.courseId, course);
     }
 
     private static class Pair<T, S> {

@@ -43,16 +43,16 @@ public class UnattemptedObjectivesTest {
     @Test
     public void InvalidCourseTest(){
         when(gateway.getStudent(request.userName)).thenReturn(student);
-        when(gateway.getCourse(request.courseID)).thenReturn(null);
+        when(gateway.getCourse(request.courseId)).thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_COURSE);
     }
 
     @Test
     public void StudentNotInCourse(){
-        when(gateway.getCourse(request.courseID)).thenReturn(course);
+        when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(request.userName)).thenReturn(student);
-        when(gateway.getStudentIsEnrolled(request.userName, request.courseID)).thenReturn(false);
+        when(gateway.getStudentIsEnrolled(request.userName, request.courseId)).thenReturn(false);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
     }
@@ -61,9 +61,9 @@ public class UnattemptedObjectivesTest {
     public void ReturnStudentUnattemptedObjectives(){
         List<String> objectiveList = List.of("B1", "B2", "C3", "C4");
         when(gateway.getStudent(request.userName)).thenReturn(student);
-        when(gateway.getCourse(request.courseID)).thenReturn(course);
-        when(gateway.getStudentIsEnrolled(request.userName, request.courseID)).thenReturn(true);
-        when(gateway.getUnattemptedObjectives(request.userName, request.courseID)).thenReturn(objectiveList);
+        when(gateway.getCourse(request.courseId)).thenReturn(course);
+        when(gateway.getStudentIsEnrolled(request.userName, request.courseId)).thenReturn(true);
+        when(gateway.getUnattemptedObjectives(request.userName, request.courseId)).thenReturn(objectiveList);
         interactor.handle(request, presenter);
         verify(presenter).presentUnattemptedObjectives(objectiveList);
     }

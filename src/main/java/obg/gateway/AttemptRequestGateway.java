@@ -8,19 +8,19 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public interface AttemptRequestGateway {
-    Course getCourse(UUID courseID);
+    Course getCourse(UUID courseId);
 
     Student getStudent(String userName);
 
-    boolean objectiveInCourse(String objective, UUID courseID);
+    boolean objectiveInCourse(String objective, UUID courseId);
 
-    boolean getStudentIsEnrolled(String userName, UUID courseID);
+    boolean getStudentIsEnrolled(String userName, UUID courseId);
 
     int getAttemptNumber();
 
-    HashMap getObjMap(String studentName, UUID courseID);
+    HashMap getObjMap(String studentName, UUID courseId);
 
-    Enrollment getEnrollment(UUID courseID, String studentID);
+    Enrollment getEnrollment(UUID courseId, String studentId);
 
     Enrollment getEnrolledStudent();
 

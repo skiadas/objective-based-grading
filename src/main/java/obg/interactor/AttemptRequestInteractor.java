@@ -16,12 +16,12 @@ public class AttemptRequestInteractor implements Interactor {
     }
 
     public void handle(AttemptRequestRequest request, Presenter presenter) {
-        Enrollment enroll = gateway.getEnrollment(request.courseID, request.studentID);
-        if (gateway.getEnrollment(request.courseID, request.studentID) == null){
+        Enrollment enroll = gateway.getEnrollment(request.courseId, request.studentId);
+        if (gateway.getEnrollment(request.courseId, request.studentId) == null){
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
         } else if ((gateway.getEnrolledStudent() == null) || (gateway.getEnrolledCourse() == null)){
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
-        } else if (!gateway.objectiveInCourse(request.objective, request.courseID)) {
+        } else if (!gateway.objectiveInCourse(request.objective, request.courseId)) {
             presenter.reportError(ErrorResponse.INVALID_OBJECTIVE);
         }
 

@@ -7,24 +7,24 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.function.Consumer;
 
-public class DBBackedGatewayFactory {
-    private static final DBBackedGatewayFactory instance = new DBBackedGatewayFactory();
+public class SqlBackedGatewayFactory {
+    private static final SqlBackedGatewayFactory instance = new SqlBackedGatewayFactory();
 
     EntityManagerFactory factory = Persistence.createEntityManagerFactory("test");
 
-    public static DBBackedGatewayFactory getInstance() {
+    public static SqlBackedGatewayFactory getInstance() {
          return instance;
     }
 
-    private DBBackedGatewayFactory() {}
+    private SqlBackedGatewayFactory() {}
 
-    DBBackedGateway getGateway() {
+    SqlBackedGateway getGateway() {
         EntityManager em = factory.createEntityManager();
-        return new DBBackedGateway(em);
+        return new SqlBackedGateway(em);
     }
 
     void doWithGateway(Consumer<Gateway> gatewayConsumer) {
-        DBBackedGateway gateway = getGateway();
+        SqlBackedGateway gateway = getGateway();
         try {
             gateway.beginTransaction();
             gatewayConsumer.accept(gateway);
