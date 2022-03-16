@@ -1,7 +1,8 @@
 package obg.interactor;
 import obg.core.Interactor;
 import obg.core.Presenter;
-import obg.core.entity.*;
+import obg.core.entity.Attempt;
+import obg.core.entity.Enrollment;
 import obg.gateway.AttemptRequestGateway;
 import obg.request.AttemptRequestRequest;
 import obg.core.ErrorResponse;
