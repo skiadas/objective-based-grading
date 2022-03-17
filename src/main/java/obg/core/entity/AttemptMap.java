@@ -2,6 +2,7 @@ package obg.core.entity;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class AttemptMap {
 
@@ -40,5 +41,13 @@ public class AttemptMap {
 
     public AttemptList getAttemptList(String obj) {
         return objectiveMap.get(obj);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AttemptMap that = (AttemptMap) o;
+        return Objects.equals(objectiveMap, that.objectiveMap);
     }
 }

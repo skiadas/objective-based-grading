@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class AttemptList {
 
-    List<Attempt> list = new ArrayList<>();
+    public List<Attempt> list = new ArrayList<>();
 
     public void addAll(AttemptList attempts) {
         list.addAll(attempts.list);
@@ -25,4 +25,5 @@ public class AttemptList {
     public int hashCode() {
         return Objects.hash(list);
     }
+
 }

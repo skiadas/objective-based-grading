@@ -62,4 +62,15 @@ public class Enrollment {
                 ", attemptMap=" + attemptMap +
                 '}';
     }
+
+    public AttemptMap getAttemptMap() {
+        return attemptMap;
+    }
+
+    public void addAttempt(Attempt attempt) {
+        attemptMap.add(attempt.objective, attempt);
+    }
+
+    public void getObjectName() {
+    }
 }
