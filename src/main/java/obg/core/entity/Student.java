@@ -45,4 +45,8 @@ public class Student {
     public int hashCode() {
         return Objects.hash(userName);
     }
+
+    public UUID getStudentId() {
+        return studentId;
+    }
 }

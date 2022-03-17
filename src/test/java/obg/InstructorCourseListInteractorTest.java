@@ -2,7 +2,9 @@ package obg;
 
 import obg.core.Presenter;
 import obg.core.entity.Course;
+import obg.core.entity.Enrollment;
 import obg.core.entity.Instructor;
+import obg.core.entity.Student;
 import obg.gateway.InstructorCourseListGateway;
 import obg.interactor.InstructorCourseListInteractor;
 import obg.request.InstructorCourseListRequest;
@@ -10,6 +12,7 @@ import obg.core.ErrorResponse;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

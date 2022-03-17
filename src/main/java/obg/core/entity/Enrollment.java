@@ -2,6 +2,7 @@ package obg.core.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 public class Enrollment {
@@ -72,5 +73,17 @@ public class Enrollment {
     }
 
     public void getObjectName() {
+    }
+
+    public void removeStudent(Instructor instructorId, UUID studentId, UUID courseId) {
+        if (course.getCourseId() == courseId) {
+            if (course.isCourseInstructor(instructorId)){
+                if(student.getStudentId() == studentId){
+                    withdrawn = true;
+                    course = null;
+                    student = null;
+                }
+            }
+        }
     }
 }
