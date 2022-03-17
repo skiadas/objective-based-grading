@@ -14,8 +14,18 @@ public class InMemoryGateway implements Gateway {
     public static Map<String, Student> students = new HashMap<>();
     public static List<Attempt> attempts = new ArrayList<>();
 
+    @Override
+    public Instructor getInstructor(UUID instructorId) {
+        return null;
+    }
+
     public Course getCourse(UUID courseId) {
         return courses.get(courseId);
+    }
+
+    @Override
+    public Student getStudent(UUID studentId) {
+        return null;
     }
 
     @Override

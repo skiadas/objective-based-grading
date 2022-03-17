@@ -111,4 +111,8 @@ public class Course {
             objectiveByGroups.remove(obj);
         }
     }
+
+    public boolean addStudent(Student student) {
+        return students.add(student);
+    }
 }

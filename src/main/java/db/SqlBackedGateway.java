@@ -95,11 +95,21 @@ public class SqlBackedGateway implements Gateway {
                 .getResultList();
     }
 
+    @Override
+    public Instructor getInstructor(UUID instructorId) {
+        return null;
+    }
+
     public Course getCourse(UUID courseId) {
         return em.createQuery("SELECT c FROM Course c WHERE c.courseId = :courseId",
                               Course.class)
                 .setParameter("courseId", courseId)
                 .getSingleResult();
+    }
+
+    @Override
+    public Student getStudent(UUID studentId) {
+        return null;
     }
 
     EntityManager getEntityManager() {
