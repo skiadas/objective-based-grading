@@ -76,6 +76,10 @@ public class GradeBreakPoints {
 //            BreakpointEntry entry = new BreakpointEntry();
 //            addEntry(entry);
 //        }
+
+        public String getLetterGrade() {
+            return letterGrade;
+        }
     }
 }
 
