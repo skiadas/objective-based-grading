@@ -23,7 +23,7 @@ public class ViewTargetGradeInteractor {
         } else {
             presenter.presentTargetGradeRequirements(
                     new TargetGradeRequirementsResponse(request.letterGrade,
-                                                        course.gradeBreaks.get(request.letterGrade))
+                                                        course.gradeBreaks.getScore(request.letterGrade))
                                                     );
         }
     }

@@ -44,7 +44,7 @@ public class GradeBreakPoints {
         return new EnumMap<>(Map.of(BASIC, b, CORE, c, EXTRA, e));
     }
 
-    public EnumMap<ObjectiveGroup, Integer> get(String letterGrade) {
+    public EnumMap<ObjectiveGroup, Integer> getScore(String letterGrade) {
         for (BreakpointEntry be :
                 breakpointEntries) {
             if (be.letterGrade.equals(letterGrade)) {
@@ -52,6 +52,16 @@ public class GradeBreakPoints {
             }
         }
         throw new RuntimeException("No matching breakpoint found");
+    }
+
+    public String getLetterGrade(EnumMap<ObjectiveGroup,Integer> targetScore){
+        for (BreakpointEntry be :
+                breakpointEntries) {
+            if(be.targetScores == targetScore){
+                return be.letterGrade;
+            }
+        }
+        throw new RuntimeException("No Matching breakpoint found");
     }
 
     public boolean isValidScore(int score) {
@@ -67,8 +77,8 @@ public class GradeBreakPoints {
         addEntry(entry);
     }
 
-    public void remove(BreakpointEntry entry, String letterGrade){
-        breakpointEntries.removeIf(i -> i.letterGrade.equals(letterGrade) && i.equals(entry));
+    public void remove(String letterGrade){
+        breakpointEntries.removeIf(i -> i.letterGrade.equals(letterGrade));
     }
 
     public static class BreakpointEntry {
