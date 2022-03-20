@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class GradeBreakPointTest {
-    private GradeBreakPoints testPoints = new GradeBreakPoints();
+    private GradeBreakPoints gradeBP = new GradeBreakPoints();
 
     @Test
     public void canGetBreakPointEntry () {
        ArrayList<GradeBreakPoints.BreakpointEntry> testList;
-       testList = testPoints.getBreakpointEntries();
-       //assertEquals(testList[0].getLetterGrade(),"A");
+       testList = gradeBP.getBreakpointEntries();
+       assertEquals(testList.get(0).getLetterGrade(),"A");
     }
 }

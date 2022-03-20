@@ -21,17 +21,17 @@ public class GradeBreakPoints {
     }
 
     void populateGradeBreaks() {
-        gradeBreaks.put("A", targetScores(4, 4, 3));
-        gradeBreaks.put("A-", targetScores(4, 3, 2));
-        gradeBreaks.put("B+", targetScores(3, 3, 2));
-        gradeBreaks.put("B", targetScores(3, 3, 1));
-        gradeBreaks.put("B-", targetScores(3, 2, 1));
-        gradeBreaks.put("C+", targetScores(3, 2, 0));
-        gradeBreaks.put("C", targetScores(2, 2, 0));
-        gradeBreaks.put("C-", targetScores(2, 1, 0));
-        gradeBreaks.put("D+", targetScores(1, 1, 0));
-        gradeBreaks.put("D", targetScores(1, 0, 0));
-        gradeBreaks.put("F", targetScores(0, 0, 0));
+        breakpointEntries.add(new BreakpointEntry("A", targetScores(4, 4, 3)));
+        breakpointEntries.add(new BreakpointEntry("A-", targetScores(4, 3, 2)));
+        breakpointEntries.add(new BreakpointEntry("B+", targetScores(3, 3, 2)));
+        breakpointEntries.add(new BreakpointEntry("B", targetScores(3, 3, 1)));
+        breakpointEntries.add(new BreakpointEntry("B-", targetScores(3, 2, 1)));
+        breakpointEntries.add(new BreakpointEntry("C+", targetScores(3, 2, 0)));
+        breakpointEntries.add(new BreakpointEntry("C", targetScores(2, 2, 0)));
+        breakpointEntries.add(new BreakpointEntry("C-", targetScores(2, 1, 0)));
+        breakpointEntries.add(new BreakpointEntry("D+", targetScores(1, 1, 0)));
+        breakpointEntries.add(new BreakpointEntry("D", targetScores(1, 0, 0)));
+        breakpointEntries.add(new BreakpointEntry("F", targetScores(0, 0, 0)));
     }
 
     private EnumMap<ObjectiveGroup, Integer> targetScores(int b, int c, int e) {
@@ -67,15 +67,6 @@ public class GradeBreakPoints {
             this.letterGrade = letterGrade;
             this.targetScores = targetScores;
         }
-
-//        public void addEntry(BreakpointEntry entry) {
-//            breakpointEntries.add(entry);
-//        }
-
-//        public void add(String letterGrade, int b, int c, int e) {
-//            BreakpointEntry entry = new BreakpointEntry();
-//            addEntry(entry);
-//        }
 
         public String getLetterGrade() {
             return letterGrade;
