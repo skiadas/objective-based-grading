@@ -32,7 +32,7 @@ public class Course {
     public ArrayList<String> objectives = new ArrayList<>();
 
     @Transient
-    public GradeBreakPoints gradeBreaks = new GradeBreakPoints();
+    public GradeBreakPoints gradeBreaks = GradeBreakPoints.prePopulated();
 
     @Transient
     public EnumMap<ObjectiveGroup, String> objectiveByGroups = new EnumMap<>(ObjectiveGroup.class);

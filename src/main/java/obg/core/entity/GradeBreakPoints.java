@@ -12,26 +12,32 @@ public class GradeBreakPoints {
     private final HashMap<String, EnumMap<ObjectiveGroup, Integer>> gradeBreaks = new HashMap<>();
     private ArrayList<BreakpointEntry> breakpointEntries = new ArrayList<>();
 
+    public static GradeBreakPoints prePopulated() {
+        GradeBreakPoints gradeBreakPoints = new GradeBreakPoints();
+        gradeBreakPoints.populateGradeBreaks();
+        return gradeBreakPoints;
+    }
+
     public ArrayList<BreakpointEntry> getBreakpointEntries() {
         return breakpointEntries;
     }
 
     public GradeBreakPoints() {
-        this.populateGradeBreaks();
+
     }
 
     void populateGradeBreaks() {
-        breakpointEntries.add(new BreakpointEntry("A", targetScores(4, 4, 3)));
-        breakpointEntries.add(new BreakpointEntry("A-", targetScores(4, 3, 2)));
-        breakpointEntries.add(new BreakpointEntry("B+", targetScores(3, 3, 2)));
-        breakpointEntries.add(new BreakpointEntry("B", targetScores(3, 3, 1)));
-        breakpointEntries.add(new BreakpointEntry("B-", targetScores(3, 2, 1)));
-        breakpointEntries.add(new BreakpointEntry("C+", targetScores(3, 2, 0)));
-        breakpointEntries.add(new BreakpointEntry("C", targetScores(2, 2, 0)));
-        breakpointEntries.add(new BreakpointEntry("C-", targetScores(2, 1, 0)));
-        breakpointEntries.add(new BreakpointEntry("D+", targetScores(1, 1, 0)));
-        breakpointEntries.add(new BreakpointEntry("D", targetScores(1, 0, 0)));
-        breakpointEntries.add(new BreakpointEntry("F", targetScores(0, 0, 0)));
+        addEntry(new BreakpointEntry("A", targetScores(4, 4, 3)));
+        addEntry(new BreakpointEntry("A-", targetScores(4, 3, 2)));
+        addEntry(new BreakpointEntry("B+", targetScores(3, 3, 2)));
+        addEntry(new BreakpointEntry("B", targetScores(3, 3, 1)));
+        addEntry(new BreakpointEntry("B-", targetScores(3, 2, 1)));
+        addEntry(new BreakpointEntry("C+", targetScores(3, 2, 0)));
+        addEntry(new BreakpointEntry("C", targetScores(2, 2, 0)));
+        addEntry(new BreakpointEntry("C-", targetScores(2, 1, 0)));
+        addEntry(new BreakpointEntry("D+", targetScores(1, 1, 0)));
+        addEntry(new BreakpointEntry("D", targetScores(1, 0, 0)));
+        addEntry(new BreakpointEntry("F", targetScores(0, 0, 0)));
     }
 
     private EnumMap<ObjectiveGroup, Integer> targetScores(int b, int c, int e) {
@@ -39,7 +45,13 @@ public class GradeBreakPoints {
     }
 
     public EnumMap<ObjectiveGroup, Integer> get(String letterGrade) {
-        return gradeBreaks.get(letterGrade);
+        for (BreakpointEntry be :
+                breakpointEntries) {
+            if (be.letterGrade.equals(letterGrade)) {
+                return be.targetScores;
+            }
+        }
+        throw new RuntimeException("No matching breakpoint found");
     }
 
     public boolean isValidScore(int score) {
