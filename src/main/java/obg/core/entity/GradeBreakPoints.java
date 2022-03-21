@@ -91,7 +91,22 @@ public class GradeBreakPoints {
         }
 
         public boolean hasSameScoreAs(BreakpointEntry be) {
-            return this.targetScores == be.targetScores;
+           return this.targetScores.get(BASIC) == be.targetScores.get(BASIC) &&
+                   this.targetScores.get(CORE) == be.targetScores.get(CORE) &&
+                   this.targetScores.get(EXTRA) == be.targetScores.get(EXTRA);
+
+        }
+
+        public boolean isNoLessThan(BreakpointEntry be) {
+            return this.targetScores.get(BASIC) >= be.targetScores.get(BASIC) &&
+                    this.targetScores.get(CORE) >= be.targetScores.get(CORE) &&
+                    this.targetScores.get(EXTRA) >= be.targetScores.get(EXTRA);
+        }
+
+        public boolean isNoMoreThan(BreakpointEntry be) {
+            return this.targetScores.get(BASIC) <= be.targetScores.get(BASIC) &&
+                    this.targetScores.get(CORE) <= be.targetScores.get(CORE) &&
+                    this.targetScores.get(EXTRA) <= be.targetScores.get(EXTRA);
         }
     }
 }
