@@ -90,8 +90,8 @@ public class GradeBreakPoints {
             this.targetScores = targetScores;
         }
 
-        public String getLetterGrade() {
-            return letterGrade;
+        public boolean hasSameScoreAs(BreakpointEntry be) {
+            return this.targetScores == be.targetScores;
         }
     }
 }
