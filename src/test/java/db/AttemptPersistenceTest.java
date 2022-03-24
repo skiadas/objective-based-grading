@@ -6,6 +6,7 @@ import obg.core.entity.Enrollment;
 import obg.core.entity.Student;
 import org.junit.Test;
 
+import javax.persistence.NoResultException;
 import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
@@ -35,6 +36,26 @@ public class AttemptPersistenceTest {
             assertEquals(attempt.getStatus(), retrievedAttempt.getStatus());
             assertEquals(attempt.getEnrollment().getEnrolledCourse(), retrievedAttempt.getEnrollment().getEnrolledCourse());
             assertEquals(attempt.getEnrollment().getEnrolledStudent(), retrievedAttempt.getEnrollment().getEnrolledStudent());
+        });
+    }
+
+    @Test(expected = NoResultException.class)
+    public void canRemoveAttempt() {
+        String objective = "obj";
+        int attemptNumber = 1;
+        Course course = new Course(UUID.randomUUID(), "course");
+        Student student = new Student(UUID.randomUUID(), "student");
+        Enrollment enrollment = new Enrollment(course, student);
+        Attempt attempt = new Attempt(objective, attemptNumber, enrollment);
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.save(student);
+            gateway.save(course);
+            gateway.save(enrollment);
+            gateway.save(attempt);
+        });
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.removeAttempt(attempt);
+            gateway.getAttempt(attempt.getAttemptId());
         });
     }
 }

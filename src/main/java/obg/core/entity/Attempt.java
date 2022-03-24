@@ -53,6 +53,10 @@ public class Attempt {
 
     public UUID getAttemptId() { return attemptId; }
 
+    public Long getLongId() {
+        return id;
+    }
+
     public Course getCourse() {
         return enrollment.getEnrolledCourse();
     }
