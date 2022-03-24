@@ -127,6 +127,11 @@ public class InMemoryGateway implements Gateway {
         return null;
     }
 
+    @Override
+    public void removeAttempt(UUID id) {
+
+    }
+
     public void assignCourseInstructor(Course c, Instructor i) {
         courseInstructorPairs.add(new Pair<>(c, i));
     }

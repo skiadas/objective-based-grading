@@ -24,7 +24,7 @@ public class ViewPendingAttemptsInteractor {
         if (course == null) {
             presenter.reportError(ErrorResponse.INVALID_COURSE);
         } else if (!course.isCourseInstructor(instructor)) {
-            presenter.reportError(ErrorResponse.INVALID_COURSE_INSTRUCTOR);
+            presenter.reportError(ErrorResponse.NOT_COURSE_INSTRUCTOR);
         }
         else {
             presenter.presentPendingAttempts(gateway.getAttempts(course));

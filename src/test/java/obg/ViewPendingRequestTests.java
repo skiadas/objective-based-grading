@@ -68,7 +68,7 @@ public class ViewPendingRequestTests {
         whenInstructor(instructor);
         whenCourse(course);
         interactor.handle(request, presenter);
-        verify(presenter).reportError(INVALID_COURSE_INSTRUCTOR);
+        verify(presenter).reportError(NOT_COURSE_INSTRUCTOR);
     }
 
     @Test

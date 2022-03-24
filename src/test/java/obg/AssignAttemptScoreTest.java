@@ -81,7 +81,7 @@ public class AssignAttemptScoreTest {
         returnValidAttempt();
         returnValidInstructor();
         interactor.handle(request);
-        verify(presenter).reportError(ErrorResponse.INVALID_COURSE_INSTRUCTOR);
+        verify(presenter).reportError(ErrorResponse.NOT_COURSE_INSTRUCTOR);
     }
 
     @Test

@@ -77,7 +77,7 @@ public class addStudentToCourseTest {
         when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
         when(gateway.getCourse(UUID.fromString(request.courseId))).thenReturn(course);
         interactor.handle(request);
-        verify(presenter).reportError(ErrorResponse.INVALID_COURSE_INSTRUCTOR);
+        verify(presenter).reportError(ErrorResponse.NOT_COURSE_INSTRUCTOR);
     }
 
 

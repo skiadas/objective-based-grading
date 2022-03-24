@@ -86,7 +86,7 @@ public class Attempt {
         return status == PENDING;
     }
 
-    public boolean canBeGradedBy(Instructor instructor) {
+    public boolean isEnrollmentCourseInstructor(Instructor instructor) {
         return enrollment.getEnrolledCourse().isCourseInstructor(instructor);
     }
 

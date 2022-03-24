@@ -16,15 +16,15 @@ public class AttemptPersistenceTest {
 
     @Test
     public void canWriteAndReadAttempt() {
-        String objective = "obj1";
+        String objective = "obj";
         int attemptNumber = 1;
-        Course course1 = new Course(UUID.randomUUID(), "course1");
-        Student student1 = new Student(UUID.randomUUID(), "student1");
-        Enrollment enrollment = new Enrollment(course1, student1);
+        Course course = new Course(UUID.randomUUID(), "course");
+        Student student = new Student(UUID.randomUUID(), "student");
+        Enrollment enrollment = new Enrollment(course, student);
         Attempt attempt = new Attempt(objective, attemptNumber, enrollment);
         gatewayFactory.doWithGateway(gateway -> {
-            gateway.save(student1);
-            gateway.save(course1);
+            gateway.save(student);
+            gateway.save(course);
             gateway.save(enrollment);
             gateway.save(attempt);
         });

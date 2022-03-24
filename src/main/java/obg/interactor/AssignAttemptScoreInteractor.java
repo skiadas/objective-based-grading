@@ -28,8 +28,8 @@ public class AssignAttemptScoreInteractor {
             presenter.reportError(ErrorResponse.INVALID_INSTRUCTOR);
         } else if (attempt.isInGradableStatus()) {
             presenter.reportError(ErrorResponse.INVALID_ATTEMPT_STATUS);
-        } else if (!attempt.canBeGradedBy(instructor)) {
-            presenter.reportError(ErrorResponse.INVALID_COURSE_INSTRUCTOR);
+        } else if (!attempt.isEnrollmentCourseInstructor(instructor)) {
+            presenter.reportError(ErrorResponse.NOT_COURSE_INSTRUCTOR);
         } else if (!attempt.isValidScore(request.score)) {
             presenter.reportError(ErrorResponse.INVALID_SCORE);
         } else {
