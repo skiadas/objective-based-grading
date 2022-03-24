@@ -162,7 +162,7 @@ public class TestDb {
         Enrollment enrollment1 = new Enrollment(course1, student1, "today", false);
         Enrollment enrollment2 = new Enrollment(course1, student2, "today", false);
         Enrollment enrollment3 = new Enrollment(course2, student2, "today", false);
-        enrollment1.removeStudent(instructor, course1.getCourseId(), student1.getStudentId());
+        enrollment1.removeStudent(enrollment1);
         gatewayFactory.doWithGateway(gateway -> {
             gateway.save(enrollment1);
             gateway.save(enrollment2);

@@ -68,20 +68,6 @@ public class AttemptRequestTest {
         verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
     }
 
-    @Test
-    public void removeStudentResultsInInvalidErrorMessage(){
-        Student student1 = new Student(UUID.randomUUID(), "James");
-        Course course1 = new Course(UUID.randomUUID(), "course1");
-        Course course2 = new Course(UUID.randomUUID(), "course2");
-        Instructor instructor = new Instructor(UUID.randomUUID().toString(), "first", "last");
-        Enrollment enrollment = new Enrollment(course1, student1, "today", false);
-        Enrollment enrollment2 = new Enrollment(course2, student1, "today", false);
-        enrollment.removeStudent(instructor, student1.getStudentId(), course1.getCourseId());
-        when(gateway.getEnrollment(course2.getCourseId(), student1.userName)).thenReturn(enrollment2);
-        when(gateway.getEnrollment(course1.getCourseId(), student1.userName)).thenReturn(null);
-        interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
-    }
 
 
     @Test
