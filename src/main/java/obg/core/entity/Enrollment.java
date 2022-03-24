@@ -76,6 +76,17 @@ public class Enrollment {
     }
 
     public void removeStudent(Enrollment e) {
+        e.withdrawn = true;
+        e.student = null;
+        e.course = null;
+        e = null;
+    }
 
+    public void setWithdrawn(boolean b) {
+        withdrawn = b;
+    }
+
+    public long getLongId() {
+        return id;
     }
 }

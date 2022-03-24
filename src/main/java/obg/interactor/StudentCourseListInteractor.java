@@ -15,8 +15,7 @@ public class StudentCourseListInteractor {
         this.gateway = gateway;
     }
 
-
-    public void handle(StudentCourseListRequest request, Presenter presenter){
+    public void handle(StudentCourseListRequest request, Presenter presenter) {
         if (gateway.getStudent(request.userName) == null) {
             presenter.reportError(ErrorResponse.INVALID_STUDENT);
         } else {

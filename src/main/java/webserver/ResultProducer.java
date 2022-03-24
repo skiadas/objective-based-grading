@@ -3,6 +3,7 @@ package webserver;
 import obg.core.Presenter;
 import obg.core.entity.Attempt;
 import obg.core.entity.Course;
+import obg.core.entity.Enrollment;
 import obg.core.entity.Instructor;
 import obg.response.TargetGradeRequirementsResponse;
 import spark.ModelAndView;
@@ -66,6 +67,11 @@ public class ResultProducer implements Presenter {
 
     public void presentLoginScreen() {
         result = engine.render(new ModelAndView(model, "login"));
+    }
+
+    @Override
+    public void presentsRemovedStudent(Enrollment enrollment) {
+
     }
 
     static class ErrorResponseException extends RuntimeException {

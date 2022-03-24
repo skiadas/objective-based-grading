@@ -33,7 +33,10 @@ public class SqlBackedGateway implements Gateway {
     }
 
     public Enrollment getEnrollment(UUID courseId, String studentId) {
-        return null;
+        TypedQuery<Enrollment> q = em.createQuery("SELECT e FROM Enrollment e WHERE (e.student.studentId =:studentId) AND (e.course.courseId =: courseId)", Enrollment.class);
+        q.setParameter("studentId",  UUID.fromString(studentId));
+        q.setParameter("courseId", courseId);
+        return q.getSingleResult();
     }
 
     public Enrollment getEnrolledStudent() {
@@ -126,6 +129,13 @@ public class SqlBackedGateway implements Gateway {
 
     public <E> void save(E o) {
         getEntityManager().persist(o);
+    }
+
+    @Override
+    public void removeStudent(Enrollment enrollment1) {
+        long enrollment_Id = enrollment1.getLongId();
+        Enrollment removeEnroll = em.find(Enrollment.class, enrollment_Id);
+        em.remove(removeEnroll);
     }
 
     void rollbackTransaction() {

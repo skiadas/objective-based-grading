@@ -2,6 +2,7 @@ package obg.core;
 
 import obg.core.entity.Attempt;
 import obg.core.entity.Course;
+import obg.core.entity.Enrollment;
 import obg.response.TargetGradeRequirementsResponse;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface Presenter {
     void presentIndexPage();
 
     void presentLoginScreen();
+
+    void presentsRemovedStudent(Enrollment enrollment);
 }

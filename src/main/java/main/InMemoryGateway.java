@@ -66,6 +66,11 @@ public class InMemoryGateway implements Gateway {
         // TODO
     }
 
+    @Override
+    public void removeStudent(Enrollment enrollment1) {
+        students.remove(enrollment1.getEnrolledStudent());
+    }
+
     public void addStudent(Student student) { students.put(student.userName, student); }
 
     public List<Course> getCoursesTaughtBy(Instructor instructor) {
