@@ -82,11 +82,6 @@ public class SqlBackedGateway implements Gateway {
         return q.getSingleResult();
     }
 
-    @Override
-    public void removeAttempt(UUID id) {
-
-    }
-
     public Instructor getInstructor(String instructorId) {
         TypedQuery<Instructor> q = em.createQuery("SELECT e FROM Instructor e WHERE e.instructorId = :instructorId", Instructor.class);
         q.setParameter("instructorId", instructorId);

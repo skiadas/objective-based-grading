@@ -12,7 +12,7 @@ import java.util.UUID;
 public class InstructorCanDeleteAttemptInteractor {
     private final InstructorCanDeleteAttemptGateway gateway;
 
-    public InstructorCanDeleteAttemptInteractor(InstructorCanDeleteAttemptGateway gateway, InstructorCanDeleteAttemptPresenter presenter) {
+    public InstructorCanDeleteAttemptInteractor(InstructorCanDeleteAttemptGateway gateway) {
         this.gateway = gateway;
     }
 
@@ -28,7 +28,7 @@ public class InstructorCanDeleteAttemptInteractor {
         } else if (!attempt.isEnrollmentCourseInstructor(instructor)) {
             presenter.reportError((ErrorResponse.NOT_COURSE_INSTRUCTOR));
         } else {
-            gateway.removeAttempt(attemptUUID);
+            gateway.removeAttempt(attempt);
             presenter.presentSuccessfulRemove("Successfully Removed");
         }
     }
