@@ -20,4 +20,5 @@ public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, 
     <E> void save(E o);
 
     void removeStudent(Enrollment enrollment1);
+
 }

@@ -1,5 +1,6 @@
 package db;
 
+import obg.core.ErrorResponse;
 import obg.core.entity.*;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -257,6 +258,7 @@ public class TestDb {
         });
     }
 
+
     private void printQueryResults(EntityManager em, String query) {
         List<Object[]> resultList = em.createQuery(query).getResultList();
         printList(query, resultList);
@@ -274,24 +276,5 @@ public class TestDb {
         });
         System.out.println("====================================");
     }
-
-    @Test
-    public void genericRemoveMethodCanRemoveManyObjectTypes() {
-        Instructor instructor1 = new Instructor("newId_1", "new1", "name1");
-        Course course1 = new Course(UUID.randomUUID(), "course_1", new ArrayList<>());
-        UUID student1Id = randomUUID();
-        Student student1 = new Student(student1Id, "joe23" + student1Id);
-        // TODO
-        assertTrue(true);
-//        gatewayFactory.doWithGateway(gateway -> {
-//            gateway.save(instructor1);
-//            gateway.save(course1);
-//            gateway.save(student1);
-//        });
-//        gatewayFactory.doWithGateway( gateway -> {
-//            gateway.remove(student1);
-//            gateway.remove(course1);
-//            gateway.remove(instructor1);
-//        });
-    }
 }
+
