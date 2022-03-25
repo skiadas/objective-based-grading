@@ -54,7 +54,7 @@ public class AttemptPersistenceTest {
             gateway.save(attempt);
         });
         gatewayFactory.doWithGateway(gateway -> {
-            gateway.removeAttempt(attempt);
+            gateway.removeAttempt(attempt.getLongId());
             gateway.getAttempt(attempt.getAttemptId());
         });
     }

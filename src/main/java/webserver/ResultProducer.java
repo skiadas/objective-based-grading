@@ -25,6 +25,11 @@ public class ResultProducer implements Presenter {
         throw new ErrorResponseException(errorMessage);
     }
 
+    @Override
+    public void presentSuccessfulRemove(String message) {
+
+    }
+
     public void presentInstructorCourseList(List<Course> courses) {
         addToModel("courses", courses);
         addToModel("instructor", new Instructor("skiadas", "Haris", "Skiadas"));

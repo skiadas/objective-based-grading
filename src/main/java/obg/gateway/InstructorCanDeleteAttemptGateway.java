@@ -9,5 +9,5 @@ public interface InstructorCanDeleteAttemptGateway {
 
     Instructor getInstructor(UUID id);
     Attempt getAttempt(UUID id);
-    void removeAttempt(Attempt attempt);
+    void removeAttempt(Long longId);
 }

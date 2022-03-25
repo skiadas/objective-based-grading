@@ -13,7 +13,7 @@ public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, 
 
     void addAttempt(Attempt attempt);
 
-    void removeAttempt(Attempt attempt);
+    void removeAttempt(Long longId);
 
     void clearAttempts();
 

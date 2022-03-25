@@ -67,8 +67,8 @@ public class SqlBackedGateway implements Gateway {
 
     }
 
-    public void removeAttempt(Attempt attempt) {
-        Long attemptId = attempt.getLongId();
+    public void removeAttempt(Long longId) {
+        Long attemptId = longId;
         Attempt removeAttempt = em.find(Attempt.class, attemptId);
         em.remove(removeAttempt);
     }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class TestDb {
@@ -272,5 +273,25 @@ public class TestDb {
             System.out.println();
         });
         System.out.println("====================================");
+    }
+
+    @Test
+    public void genericRemoveMethodCanRemoveManyObjectTypes() {
+        Instructor instructor1 = new Instructor("newId_1", "new1", "name1");
+        Course course1 = new Course(UUID.randomUUID(), "course_1", new ArrayList<>());
+        UUID student1Id = randomUUID();
+        Student student1 = new Student(student1Id, "joe23" + student1Id);
+        // TODO
+        assertTrue(true);
+//        gatewayFactory.doWithGateway(gateway -> {
+//            gateway.save(instructor1);
+//            gateway.save(course1);
+//            gateway.save(student1);
+//        });
+//        gatewayFactory.doWithGateway( gateway -> {
+//            gateway.remove(student1);
+//            gateway.remove(course1);
+//            gateway.remove(instructor1);
+//        });
     }
 }

@@ -53,8 +53,8 @@ public class InMemoryGateway implements Gateway {
     }
 
     @Override
-    public void removeAttempt(Attempt attempt) {
-        attempts.remove(attempt);
+    public void removeAttempt(Long longId) {
+        attempts.remove(longId);
     }
 
     @Override

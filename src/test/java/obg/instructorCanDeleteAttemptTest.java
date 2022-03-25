@@ -34,15 +34,11 @@ public class instructorCanDeleteAttemptTest {
         presenter = mock(InstructorCanDeleteAttemptPresenter.class);
         gateway = mock(InstructorCanDeleteAttemptGateway.class);
         interactor = new InstructorCanDeleteAttemptInteractor(gateway);
-        String instructorId = UUID.randomUUID().toString();
-        String attemptId = UUID.randomUUID().toString();
-        request = new InstructorCanDeleteAttemptRequest(instructorId, attemptId);
-        instructorUUID = UUID.fromString(request.instructorId);
-        attemptUUID = UUID.fromString(request.attemptId);
+        request = new InstructorCanDeleteAttemptRequest(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+        instructorUUID = UUIDfromString(request.instructorId);
+        attemptUUID = UUIDfromString(request.attemptId);
         instructor = new Instructor(request.instructorId, "first", "last");
-        Student student = new Student(UUID.randomUUID(), "student");
-        Course course = new Course(UUID.randomUUID(), "course");
-        enrollment = new Enrollment(course, student);
+        enrollment = new Enrollment(new Course(UUID.randomUUID(), "course"), new Student(UUID.randomUUID(), "student"));
         attempt = new Attempt("obj1", 1, enrollment);
     }
 
@@ -61,7 +57,7 @@ public class instructorCanDeleteAttemptTest {
         interactor.handle(request, presenter);
         verify(gateway).getInstructor(instructorUUID);
         verify(presenter).reportError(ErrorResponse.INVALID_INSTRUCTOR);
-        verify(gateway, Mockito.times(0)).removeAttempt(attempt);
+        verify(gateway, Mockito.times(0)).removeAttempt(attempt.getLongId());
     }
 
     @Test
@@ -71,7 +67,7 @@ public class instructorCanDeleteAttemptTest {
         interactor.handle(request, presenter);
         verify(gateway).getAttempt(attemptUUID);
         verify(presenter).reportError(ErrorResponse.INVALID_ATTEMPT);
-        verify(gateway, Mockito.times(0)).removeAttempt(attempt);
+        verify(gateway, Mockito.times(0)).removeAttempt(attempt.getLongId());
     }
 
     @Test
@@ -80,7 +76,7 @@ public class instructorCanDeleteAttemptTest {
         when(gateway.getAttempt(attemptUUID)).thenReturn(attempt);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.NOT_COURSE_INSTRUCTOR);
-        verify(gateway, Mockito.times(0)).removeAttempt(attempt);
+        verify(gateway, Mockito.times(0)).removeAttempt(attempt.getLongId());
     }
 
     @Test
@@ -89,7 +85,11 @@ public class instructorCanDeleteAttemptTest {
         when(gateway.getAttempt(attemptUUID)).thenReturn(attempt);
         enrollment.getEnrolledCourse().setInstructor(instructor);
         interactor.handle(request, presenter);
-        verify(gateway, Mockito.times(1)).removeAttempt(attempt);
+        verify(gateway, Mockito.times(1)).removeAttempt(attempt.getLongId());
         verify(presenter).presentSuccessfulRemove("Successfully Removed");
+    }
+
+    private UUID UUIDfromString(String stringId) {
+        return UUID.fromString(stringId);
     }
 }

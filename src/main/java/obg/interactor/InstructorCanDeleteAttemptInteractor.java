@@ -17,9 +17,9 @@ public class InstructorCanDeleteAttemptInteractor {
     }
 
     public void handle(InstructorCanDeleteAttemptRequest request, InstructorCanDeleteAttemptPresenter presenter) {
-        UUID instructorUUID = UUID.fromString(request.instructorId);
+        UUID instructorUUID = UUIDfromString(request.instructorId);
         Instructor instructor = gateway.getInstructor(instructorUUID);
-        UUID attemptUUID = UUID.fromString(request.attemptId);
+        UUID attemptUUID = UUIDfromString(request.attemptId);
         Attempt attempt = gateway.getAttempt(attemptUUID);
         if (instructor == null) {
             presenter.reportError(ErrorResponse.INVALID_INSTRUCTOR);
@@ -28,8 +28,12 @@ public class InstructorCanDeleteAttemptInteractor {
         } else if (!attempt.isEnrollmentCourseInstructor(instructor)) {
             presenter.reportError((ErrorResponse.NOT_COURSE_INSTRUCTOR));
         } else {
-            gateway.removeAttempt(attempt);
+            gateway.removeAttempt(attempt.getLongId());
             presenter.presentSuccessfulRemove("Successfully Removed");
         }
+    }
+
+    private UUID UUIDfromString(String stringId) {
+        return UUID.fromString(stringId);
     }
 }
