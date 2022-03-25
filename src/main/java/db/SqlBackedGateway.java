@@ -143,5 +143,4 @@ public class SqlBackedGateway implements Gateway {
     void rollbackTransaction() {
         getEntityManager().getTransaction().rollback();
     }
-
 }

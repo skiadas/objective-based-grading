@@ -152,6 +152,7 @@ public class InMemoryGateway implements Gateway {
         return courses.put(course.courseId, course);
     }
 
+
     private static class Pair<T, S> {
         private final T first;
         private final S second;

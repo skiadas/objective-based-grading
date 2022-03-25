@@ -61,6 +61,20 @@ public class TestDb {
     }
 
     @Test
+    public void canCreateNewInstructor() {
+        String instructorId = UUID.randomUUID().toString();
+        String first = "first";
+        String last = "last";
+        Instructor instructor = new Instructor(instructorId, first, last);
+        gatewayFactory.doWithGateway(gateway -> gateway.save(instructor));
+        gatewayFactory.doWithGateway(gateway -> {
+            Instructor retrievedInstructor = gateway.getInstructor(instructor.getInstructorId());
+            assertEquals(instructor, retrievedInstructor);
+        });
+    }
+
+
+    @Test
     public void canAddCourses() {
         Course course = new Course(UUID.randomUUID(), "course name");
         gatewayFactory.doWithGateway(gateway -> gateway.save(course));
