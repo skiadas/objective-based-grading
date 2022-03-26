@@ -1,6 +1,7 @@
-package obg.core.entity;
+package obg;
 
 import obg.core.ErrorResponse;
+import obg.core.entity.*;
 import obg.gateway.AssignedAttemptGateway;
 import obg.interactor.ViewAssignedAttemptsInteractor;
 import obg.presenter.ViewAssignedAttemptsPresenter;
