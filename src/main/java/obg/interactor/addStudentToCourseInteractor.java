@@ -3,6 +3,7 @@ package obg.interactor;
 import obg.core.ErrorResponse;
 import obg.core.Presenter;
 import obg.core.entity.Course;
+import obg.core.entity.Enrollment;
 import obg.core.entity.Instructor;
 import obg.core.entity.Student;
 import obg.gateway.addStudentToCourseGateway;
@@ -30,6 +31,8 @@ public class addStudentToCourseInteractor {
         } else if (!course.isCourseInstructor(instructor)) {
             presenter.reportError(ErrorResponse.NOT_COURSE_INSTRUCTOR);
         } else if (student == null) {
+            Enrollment enrollment = new Enrollment(course, student);
+            gateway.saveEnrollment(enrollment);
             presenter.reportError(ErrorResponse.INVALID_STUDENT);
         } else {
             course.addStudent(student);

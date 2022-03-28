@@ -117,6 +117,11 @@ public class SqlBackedGateway implements Gateway {
         return null;
     }
 
+    @Override
+    public void saveEnrollment(Enrollment enrollment) {
+
+    }
+
     EntityManager getEntityManager() {
         return em;
     }

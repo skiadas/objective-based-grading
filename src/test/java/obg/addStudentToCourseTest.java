@@ -3,18 +3,22 @@ package obg;
 import obg.core.ErrorResponse;
 import obg.core.Presenter;
 import obg.core.entity.Course;
+import obg.core.entity.Enrollment;
 import obg.core.entity.Instructor;
 import obg.core.entity.Student;
 import obg.gateway.addStudentToCourseGateway;
 import obg.interactor.addStudentToCourseInteractor;
 import obg.request.addStudentToCourseRequest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
 
 public class addStudentToCourseTest {
@@ -80,10 +84,6 @@ public class addStudentToCourseTest {
         verify(presenter).reportError(ErrorResponse.NOT_COURSE_INSTRUCTOR);
     }
 
-
-    // TEST 5:
-    // Student student = gateway.getStudent(request.studentId);
-    // If (student == null) { presenter.reportError(INVALID_STUDENT); }
     @Test
     public void interactorReportsInvalidStudent() {
         when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
@@ -94,8 +94,6 @@ public class addStudentToCourseTest {
         verify(presenter).reportError(ErrorResponse.INVALID_STUDENT);
     }
 
-    // Test 6:
-    // When all checks are successful, student is added to course!
     @Test
     public void interactorAddsStudentToCourse() {
         when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
@@ -104,5 +102,24 @@ public class addStudentToCourseTest {
         when(gateway.getStudent(UUID.fromString(request.studentId))).thenReturn(student);
         interactor.handle(request);
         assertTrue(course.students.contains(student));
+    }
+
+    // Failing Test
+    @Ignore
+    @Test
+    public void interactorReportsEnrollment(){
+        when(gateway.getStudent(UUID.fromString(request.studentId))).thenReturn(student);
+        when(gateway.getCourse(UUID.fromString(request.courseId))).thenReturn(course);
+        when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
+        course.setInstructor(instructor);
+        interactor.handle(request);
+        ArgumentCaptor<Enrollment> captor = ArgumentCaptor.forClass(Enrollment.class);
+        verify(gateway).saveEnrollment(captor.capture());
+        Enrollment savedEnrollment = captor.getValue();
+        assertEquals(request.studentId, savedEnrollment.student);
+        assertEquals(request.courseId, savedEnrollment.course);
+        assertSame(request.studentId, savedEnrollment.student);
+        assertSame(request.courseId, savedEnrollment.course);
+        assertTrue(course.courseName.equals(request.courseId));
     }
 }

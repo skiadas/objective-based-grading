@@ -29,6 +29,11 @@ public class InMemoryGateway implements Gateway {
     }
 
     @Override
+    public void saveEnrollment(Enrollment enrollment) {
+
+    }
+
+    @Override
     public List<Attempt> getAttempts(Course course) {
         List<Attempt> attempts = new ArrayList<>();
         for (Attempt attempt : InMemoryGateway.attempts) {
