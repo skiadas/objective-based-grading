@@ -1,7 +1,6 @@
 package obg.interactor;
 
 import obg.core.Presenter;
-import obg.core.Request;
 import obg.core.entity.Course;
 import obg.gateway.ComputeObjectiveGradeGateway;
 import obg.request.ComputeObjectiveGradeRequest;

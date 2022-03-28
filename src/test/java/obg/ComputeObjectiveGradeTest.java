@@ -8,10 +8,13 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ComputeObjectiveGradeTest {
 
+    private String courseId;
     private ComputeObjectiveGradeGateway gateway;
     private Presenter presenter;
     private ComputeObjectiveGradeInteractor interactor;
@@ -19,16 +22,21 @@ public class ComputeObjectiveGradeTest {
 
     @Before
     public void setUp() throws Exception {
-//        request = ComputeObjectiveGradeRequest(courseId);
+        request = new ComputeObjectiveGradeRequest(courseId);
         gateway = mock(ComputeObjectiveGradeGateway.class);
         presenter = mock(Presenter.class);
         interactor = new ComputeObjectiveGradeInteractor(gateway, presenter);
     }
 
     @Test
-    @Ignore
     public void canCreateComputeObjectiveGradeRequest() {
-        ComputeObjectiveGradeInteractor interactor = new ComputeObjectiveGradeInteractor(gateway, presenter);
-        interactor.handle(request);
+        String courseId = "courseId";
+        ComputeObjectiveGradeRequest request = new ComputeObjectiveGradeRequest(courseId);
+        assertEquals(courseId, request.courseId);
+    }
+
+    @Test
+    public void interactorCanRequestAttempts() {
+        // when(gateway.getAttempts());
     }
 }

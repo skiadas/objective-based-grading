@@ -1,18 +1,13 @@
 package obg.gateway;
 
-
+import obg.core.entity.Attempt;
+import obg.core.entity.AttemptList;
 import obg.core.entity.Course;
 
 import java.util.UUID;
 
-public class ComputeObjectiveGradeGateway {
-    public final String courseId;
-
-    public ComputeObjectiveGradeGateway(String courseId) {
-        this.courseId = courseId;
-    }
-
-    public Course getCourse(UUID courseId) {
-        return null;
-    }
+public interface ComputeObjectiveGradeGateway {
+    Course getCourse(UUID courseId);
+    Attempt attempt(UUID courseId, String studentId, String objective);
+    AttemptList getAttempt(String objective, Integer numAttempts);
 }
