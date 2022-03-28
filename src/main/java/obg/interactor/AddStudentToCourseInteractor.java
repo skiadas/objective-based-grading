@@ -6,21 +6,21 @@ import obg.core.entity.Course;
 import obg.core.entity.Enrollment;
 import obg.core.entity.Instructor;
 import obg.core.entity.Student;
-import obg.gateway.addStudentToCourseGateway;
-import obg.request.addStudentToCourseRequest;
+import obg.gateway.AddStudentToCourseGateway;
+import obg.request.AddStudentToCourseRequest;
 
 import java.util.UUID;
 
-public class addStudentToCourseInteractor {
-    private final addStudentToCourseGateway gateway;
+public class AddStudentToCourseInteractor {
+    private final AddStudentToCourseGateway gateway;
     private final Presenter presenter;
 
-    public addStudentToCourseInteractor(addStudentToCourseGateway gateway, Presenter presenter) {
+    public AddStudentToCourseInteractor(AddStudentToCourseGateway gateway, Presenter presenter) {
         this.gateway = gateway;
         this.presenter = presenter;
     }
 
-    public void handle(addStudentToCourseRequest request) {
+    public void handle(AddStudentToCourseRequest request) {
         Instructor instructor = gateway.getInstructor(UUID.fromString(request.instructorId));
         Course course = gateway.getCourse(UUID.fromString(request.courseId));
         Student student = gateway.getStudent(UUID.fromString(request.studentId));

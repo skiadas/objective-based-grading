@@ -7,7 +7,7 @@ import obg.core.entity.Student;
 
 import java.util.UUID;
 
-public interface addStudentToCourseGateway {
+public interface AddStudentToCourseGateway {
     Instructor getInstructor(UUID instructorId);
     Course getCourse(UUID courseId);
     Student getStudent(UUID studentId);

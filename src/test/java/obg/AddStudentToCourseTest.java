@@ -6,9 +6,9 @@ import obg.core.entity.Course;
 import obg.core.entity.Enrollment;
 import obg.core.entity.Instructor;
 import obg.core.entity.Student;
-import obg.gateway.addStudentToCourseGateway;
-import obg.interactor.addStudentToCourseInteractor;
-import obg.request.addStudentToCourseRequest;
+import obg.gateway.AddStudentToCourseGateway;
+import obg.interactor.AddStudentToCourseInteractor;
+import obg.request.AddStudentToCourseRequest;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -21,15 +21,15 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
 
-public class addStudentToCourseTest {
+public class AddStudentToCourseTest {
 
     private String instructorId;
     private String courseId;
     private String studentId;
     private Presenter presenter;
-    private addStudentToCourseRequest request;
-    private addStudentToCourseGateway gateway;
-    private addStudentToCourseInteractor interactor;
+    private AddStudentToCourseRequest request;
+    private AddStudentToCourseGateway gateway;
+    private AddStudentToCourseInteractor interactor;
     private Instructor instructor;
     private Course course;
     private Student student;
@@ -40,9 +40,9 @@ public class addStudentToCourseTest {
         courseId = UUID.randomUUID().toString();
         studentId = UUID.randomUUID().toString();
         presenter = mock(Presenter.class);
-        request = new addStudentToCourseRequest(instructorId, courseId, studentId);
-        gateway = mock(addStudentToCourseGateway.class);
-        interactor = new addStudentToCourseInteractor(gateway, presenter);
+        request = new AddStudentToCourseRequest(instructorId, courseId, studentId);
+        gateway = mock(AddStudentToCourseGateway.class);
+        interactor = new AddStudentToCourseInteractor(gateway, presenter);
         instructor = new Instructor(instructorId, "first", "last");
         course = new Course(UUID.randomUUID(), "course");
         student = new Student(UUID.randomUUID(), "student");
@@ -53,7 +53,7 @@ public class addStudentToCourseTest {
         String instructorId = "InstructorId";
         String courseId = "courseId";
         String studentId = "studentId";
-        addStudentToCourseRequest request = new addStudentToCourseRequest(instructorId, courseId, studentId);
+        AddStudentToCourseRequest request = new AddStudentToCourseRequest(instructorId, courseId, studentId);
         assertEquals(instructorId, request.instructorId);
         assertEquals(courseId, request.courseId);
         assertEquals(studentId, request.studentId);
@@ -113,8 +113,11 @@ public class addStudentToCourseTest {
         when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
         course.setInstructor(instructor);
         interactor.handle(request);
+        System.out.println("We are here");
         ArgumentCaptor<Enrollment> captor = ArgumentCaptor.forClass(Enrollment.class);
+        System.out.println("We are here now");
         verify(gateway).saveEnrollment(captor.capture());
+        System.out.println("We are here and now"); // The problem is line 118
         Enrollment savedEnrollment = captor.getValue();
         assertEquals(request.studentId, savedEnrollment.student);
         assertEquals(request.courseId, savedEnrollment.course);
