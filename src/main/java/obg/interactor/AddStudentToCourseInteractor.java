@@ -30,12 +30,12 @@ public class AddStudentToCourseInteractor {
             presenter.reportError(ErrorResponse.INVALID_COURSE);
         } else if (!course.isCourseInstructor(instructor)) {
             presenter.reportError(ErrorResponse.NOT_COURSE_INSTRUCTOR);
-        } else if (student == null) {
+        } else if (course.hasStudent(student)) { // what happens when student is in course
+            presenter.reportError(ErrorResponse.EXISTING_ENROLLMENT);
+        } else {
             Enrollment enrollment = new Enrollment(course, student);
             gateway.saveEnrollment(enrollment);
             presenter.reportError(ErrorResponse.INVALID_STUDENT);
-        } else {
-            course.addStudent(student);
         }
     }
 }

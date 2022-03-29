@@ -18,6 +18,7 @@ import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static obg.core.ErrorResponse.EXISTING_ENROLLMENT;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -61,14 +62,18 @@ public class AddStudentToCourseTest {
 
     @Test
     public void interactorReportsInstructorDoesNotExist() {
+        when(gateway.getStudent(UUID.fromString(request.studentId))).thenReturn(student);
+        when(gateway.getCourse(UUID.fromString(request.courseId))).thenReturn(course);
         when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(null);
         interactor.handle(request);
         verify(gateway).getInstructor(UUID.fromString(request.instructorId));
         verify(presenter).reportError(ErrorResponse.INVALID_INSTRUCTOR);
+
     }
 
     @Test
     public void interactorReportsInvalidCourse() {
+        when(gateway.getStudent(UUID.fromString(request.studentId))).thenReturn(student);
         when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
         when(gateway.getCourse(UUID.fromString(request.courseId))).thenReturn(null);
         interactor.handle(request);
@@ -78,14 +83,17 @@ public class AddStudentToCourseTest {
 
     @Test
     public void interactorReportsNotCourseInstructor() {
+        when(gateway.getStudent(UUID.fromString(request.studentId))).thenReturn(student);
         when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
         when(gateway.getCourse(UUID.fromString(request.courseId))).thenReturn(course);
+        // Not setting instructor as course instructor.
         interactor.handle(request);
         verify(presenter).reportError(ErrorResponse.NOT_COURSE_INSTRUCTOR);
     }
 
     @Test
     public void interactorReportsInvalidStudent() {
+        when(gateway.getStudent(UUID.fromString(request.studentId))).thenReturn(null);
         when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
         when(gateway.getCourse(UUID.fromString(request.courseId))).thenReturn(course);
         course.setInstructor(instructor);
@@ -95,34 +103,31 @@ public class AddStudentToCourseTest {
     }
 
     @Test
-    public void interactorAddsStudentToCourse() {
-        when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
-        when(gateway.getCourse(UUID.fromString(request.courseId))).thenReturn(course);
-        course.setInstructor(instructor);
+    public void interactorReportsEnrollment() {
         when(gateway.getStudent(UUID.fromString(request.studentId))).thenReturn(student);
+        when(gateway.getCourse(UUID.fromString(request.courseId))).thenReturn(course);
+        when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
+        course.setInstructor(instructor);
         interactor.handle(request);
-        assertTrue(course.students.contains(student));
+        ArgumentCaptor<Enrollment> captor = ArgumentCaptor.forClass(Enrollment.class);
+        verify(gateway).saveEnrollment(captor.capture());
+        Enrollment savedEnrollment = captor.getValue();
+        verify(gateway).getStudent(UUID.fromString(request.studentId));
+        verify(gateway).getCourse(UUID.fromString(request.courseId));
+        verify(gateway).getInstructor(UUID.fromString(request.instructorId));
+        assertSame(student, savedEnrollment.student);
+        assertSame(course, savedEnrollment.course);
     }
 
-    // Failing Test
-    @Ignore
     @Test
-    public void interactorReportsEnrollment(){
+    public void interactorDoesNotEnrollStudentAlreadyEnrolledInCourse() {
         when(gateway.getStudent(UUID.fromString(request.studentId))).thenReturn(student);
         when(gateway.getCourse(UUID.fromString(request.courseId))).thenReturn(course);
         when(gateway.getInstructor(UUID.fromString(request.instructorId))).thenReturn(instructor);
         course.setInstructor(instructor);
+        course.addEnrollment(new Enrollment(course, student));
         interactor.handle(request);
-        System.out.println("We are here");
-        ArgumentCaptor<Enrollment> captor = ArgumentCaptor.forClass(Enrollment.class);
-        System.out.println("We are here now");
-        verify(gateway).saveEnrollment(captor.capture());
-        System.out.println("We are here and now"); // The problem is line 118
-        Enrollment savedEnrollment = captor.getValue();
-        assertEquals(request.studentId, savedEnrollment.student);
-        assertEquals(request.courseId, savedEnrollment.course);
-        assertSame(request.studentId, savedEnrollment.student);
-        assertSame(request.courseId, savedEnrollment.course);
-        assertTrue(course.courseName.equals(request.courseId));
+        verify(gateway, never()).saveEnrollment(any());
+        verify(presenter).reportError(EXISTING_ENROLLMENT);
     }
 }

@@ -24,7 +24,7 @@ public class Course {
     public List<Student> students;
 
     @OneToMany(mappedBy = "course")
-    public List<Enrollment> enrollments;
+    public List<Enrollment> enrollments = new ArrayList<>();
 
 
     // TODO: Fix it
@@ -112,10 +112,20 @@ public class Course {
         }
     }
 
-
-
-
     public boolean addStudent(Student student) {
         return students.add(student);
+    }
+
+    public void addEnrollment(Enrollment enrollment) {
+        enrollments.add(enrollment);
+    }
+
+    public boolean hasStudent(Student student) {
+        for (Enrollment e : enrollments) {
+            if (e.getEnrolledStudent().equals(student)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

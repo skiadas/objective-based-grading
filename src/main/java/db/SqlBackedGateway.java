@@ -119,7 +119,7 @@ public class SqlBackedGateway implements Gateway {
 
     @Override
     public void saveEnrollment(Enrollment enrollment) {
-
+        save(enrollment);
     }
 
     EntityManager getEntityManager() {

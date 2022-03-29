@@ -16,6 +16,7 @@ import java.util.UUID;
 import static java.util.UUID.randomUUID;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TestDb {
 
@@ -272,6 +273,26 @@ public class TestDb {
         });
     }
 
+    @Test
+    public void canAddEnrollment() {
+        Course course = new Course(UUID.randomUUID(),"course");
+        Student student = new Student(UUID.randomUUID(), "student");
+        Enrollment enrollment = new Enrollment(course, student);
+        // Check that enrollment is created correctly
+        gatewayFactory.doWithGateway(gateway ->  {
+            gateway.save(course);
+            gateway.save(student);
+        });
+
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.saveEnrollment(enrollment);
+        });
+
+        gatewayFactory.doWithGateway(gateway -> {
+            Enrollment savedEnrollment = gateway.getEnrollment(course.getCourseId(), student.studentId.toString());
+            assertNotNull(savedEnrollment);
+        });
+    }
 
     private void printQueryResults(EntityManager em, String query) {
         List<Object[]> resultList = em.createQuery(query).getResultList();

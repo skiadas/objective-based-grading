@@ -13,6 +13,7 @@ public class ErrorResponse {
     public static final String INVALID_ATTEMPT = "Attempt does not exist";
     public static final String INVALID_SCORE = "Invalid integer score";
     public static final String INVALID_ATTEMPT_STATUS = "Invalid attempt status";
+    public static final String EXISTING_ENROLLMENT = "Student already enrolled in course";
     public static String NOT_COURSE_INSTRUCTOR = "Not course instructor";
     private final String errMessage;
 
