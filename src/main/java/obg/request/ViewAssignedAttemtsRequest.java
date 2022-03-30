@@ -7,6 +7,7 @@ import obg.core.entity.Student;
 import java.util.List;
 
 public class ViewAssignedAttemtsRequest implements Request {
+
     public final Student student;
     public final Course course;
     public final List<String> objectives;

@@ -3,6 +3,7 @@ package obg.request;
 import java.util.UUID;
 
 public class UnattemptedObjectiveRequest {
+
     public String userName;
     public UUID courseId;
 

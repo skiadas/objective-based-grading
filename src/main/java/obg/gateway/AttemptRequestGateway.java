@@ -18,8 +18,6 @@ public interface AttemptRequestGateway {
 
     int getAttemptNumber();
 
-    HashMap getObjMap(String studentName, UUID courseId);
-
     Enrollment getEnrollment(UUID courseId, String studentId);
 
     Enrollment getEnrolledStudent();

@@ -28,7 +28,7 @@ public class SqlBackedGateway implements Gateway {
         return 0;
     }
 
-    public HashMap getObjMap(String studentName, UUID courseId) {
+    public HashMap<String, UUID> getObjMap(String studentName, UUID courseId) {
         return null;
     }
 
@@ -68,8 +68,7 @@ public class SqlBackedGateway implements Gateway {
     }
 
     public void removeAttempt(Long longId) {
-        Long attemptId = longId;
-        Attempt removeAttempt = em.find(Attempt.class, attemptId);
+        Attempt removeAttempt = em.find(Attempt.class, longId);
         em.remove(removeAttempt);
     }
 

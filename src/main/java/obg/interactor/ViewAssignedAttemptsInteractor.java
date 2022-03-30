@@ -20,22 +20,22 @@ public class ViewAssignedAttemptsInteractor {
 
     public void handle(ViewAssignedAttemtsRequest request, ViewAssignedAttemptsPresenter presenter){
         Enrollment enrollment = gateway.getEnrollment(request.course, request.student);
-        if(enrollment == null){
+        if(enrollment == null) {
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
-        }else{
+        } else {
             AttemptMap map = enrollment.getAttemptMap();
-            AttemptList assignedlist = new AttemptList();
+            AttemptList assignedList = new AttemptList();
             for (String obj: request.objectives) {
                 if (map.getAttemptList(obj) != null) {
                     List<Attempt> thisList = map.getAttemptList(obj).list;
                     for (Attempt attempt : thisList) {
                         if (attempt.getStatus() == Attempt.AttemptStatus.ASSIGNED) {
-                            assignedlist.add(attempt);
+                            assignedList.add(attempt);
                         }
                     }
                 }
             }
-            presenter.presentAssignedAttempts(assignedlist);
+            presenter.presentAssignedAttempts(assignedList);
         }
     }
 }

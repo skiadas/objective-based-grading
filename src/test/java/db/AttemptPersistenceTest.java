@@ -13,7 +13,7 @@ import static junit.framework.TestCase.assertEquals;
 
 public class AttemptPersistenceTest {
 
-    private SqlBackedGatewayFactory gatewayFactory = SqlBackedGatewayFactory.getInstance();
+    private final SqlBackedGatewayFactory gatewayFactory = SqlBackedGatewayFactory.getInstance();
 
     @Test
     public void canWriteAndReadAttempt() {

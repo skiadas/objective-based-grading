@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 public class TestDb {
 
-    private SqlBackedGatewayFactory gatewayFactory = SqlBackedGatewayFactory.getInstance();
+    private final SqlBackedGatewayFactory gatewayFactory = SqlBackedGatewayFactory.getInstance();
 
     @Test(expected = javax.persistence.PersistenceException.class)
     public void testCannotAddTwoStudentsWithSameUUID() {
@@ -214,7 +214,7 @@ public class TestDb {
 
         gatewayFactory.doWithGateway(gateway -> {
             gateway.removeStudent(enrollment1);
-            //// trying to see why it was not passing so we checked to see if the enrolment itself was right in being null becuase student is remove from course
+            //// trying to see why it was not passing, so we checked to see if the enrolment itself was right in being null because student is remove from course
             List<Course> retrievedStudentCourses = gateway.getStudentCourses(student2.userName);
             List<Course> retrievedStudentCourses_2 = gateway.getStudentCourses(student1.userName);
             assertEquals(List.of(course1, course2), retrievedStudentCourses);
@@ -263,8 +263,8 @@ public class TestDb {
         });
 
         gatewayFactory.doWithGateway(gateway -> {
-            List retrievedCourseList_1 = gateway.getCoursesTaughtBy(instructor1);
-            List retrievedCourseList_2 = gateway.getCoursesTaughtBy(instructor2);
+            List<Course> retrievedCourseList_1 = gateway.getCoursesTaughtBy(instructor1);
+            List<Course> retrievedCourseList_2 = gateway.getCoursesTaughtBy(instructor2);
             assertEquals(List.of(course1, course3), retrievedCourseList_1);
             assertEquals(List.of(course2, course4), retrievedCourseList_2);
         });
@@ -281,9 +281,7 @@ public class TestDb {
             gateway.save(student);
         });
 
-        gatewayFactory.doWithGateway(gateway -> {
-            gateway.saveEnrollment(enrollment);
-        });
+        gatewayFactory.doWithGateway(gateway -> gateway.saveEnrollment(enrollment));
 
         gatewayFactory.doWithGateway(gateway -> {
             Enrollment savedEnrollment = gateway.getEnrollment(course.getCourseId(), student.studentId.toString());

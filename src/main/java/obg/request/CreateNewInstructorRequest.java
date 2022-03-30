@@ -1,6 +1,7 @@
 package obg.request;
 
 public class CreateNewInstructorRequest {
+
     public String instructorId;
     public String first;
     public String last;

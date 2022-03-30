@@ -22,9 +22,6 @@ import static org.mockito.Mockito.*;
 
 public class AddStudentToCourseTest {
 
-    private String instructorId;
-    private String courseId;
-    private String studentId;
     private Presenter presenter;
     private AddStudentToCourseRequest request;
     private AddStudentToCourseGateway gateway;
@@ -35,9 +32,9 @@ public class AddStudentToCourseTest {
 
     @Before
     public void setUp() throws Exception {
-        instructorId = UUID.randomUUID().toString();
-        courseId = UUID.randomUUID().toString();
-        studentId = UUID.randomUUID().toString();
+        String instructorId = UUID.randomUUID().toString();
+        String courseId = UUID.randomUUID().toString();
+        String studentId = UUID.randomUUID().toString();
         presenter = mock(Presenter.class);
         request = new AddStudentToCourseRequest(instructorId, courseId, studentId);
         gateway = mock(AddStudentToCourseGateway.class);

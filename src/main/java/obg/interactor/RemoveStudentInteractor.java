@@ -15,7 +15,7 @@ public class RemoveStudentInteractor implements Interactor {
     }
 
     public void handle(RemoveStudentRequest request, Presenter presenter) {
-        if(gateway.getEnrollment(request.enrollment) == null){
+        if (gateway.getEnrollment(request.enrollment) == null) {
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
         }
         presenter.presentsRemovedStudent(request.enrollment);

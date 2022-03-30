@@ -1,6 +1,7 @@
 package obg.request;
 
 public class CreateCourseRequest {
+
     public String instructorId;
     public String courseName;
 
