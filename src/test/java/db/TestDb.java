@@ -310,10 +310,31 @@ public class TestDb {
 
     @Test
     public void canSaveAttempt() {
-    }
+        Course course1 = new Course(UUID.randomUUID(),"course1");
+        Course course2 = new Course(UUID.randomUUID(),"course2");
+        Student student1 = new Student(UUID.randomUUID(), "student1");
+        Student student2 = new Student(UUID.randomUUID(), "student2");
+        Enrollment enrollment1 = new Enrollment(course1, student2);
+        Enrollment enrollment2 = new Enrollment(course2, student2);
+        Attempt attempt1 = new Attempt("obj1", 1, enrollment1);
+        Attempt attempt2 = new Attempt("obj2",2, enrollment2);
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.save(student1);
+            gateway.save(student2);
+            gateway.save(course1);
+            gateway.save(course2);
+            gateway.save(enrollment1);
+            gateway.save(enrollment2);
+            gateway.save(attempt1);
+            gateway.save(attempt2);
+        });
 
-    @Test
-    public void canClearAttempts() {
+        gatewayFactory.doWithGateway(gateway -> {
+            Attempt retrievedAttempt1 = gateway.getAttempt(attempt1.getAttemptId());
+            Attempt retrievedAttempt2 = gateway.getAttempt(attempt2.getAttemptId());
+            assertEquals(attempt1.getAttemptId(), retrievedAttempt1.getAttemptId());
+            assertEquals(attempt2.getAttemptId(), retrievedAttempt2.getAttemptId());
+        });
     }
 
     private void printQueryResults(EntityManager em, String query) {

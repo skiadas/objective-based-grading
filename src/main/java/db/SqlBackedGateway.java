@@ -73,10 +73,6 @@ public class SqlBackedGateway implements Gateway {
         em.remove(removeAttempt);
     }
 
-    public void clearAttempts() {
-
-    }
-
     @Override
     public Attempt getAttempt(UUID id) {
         TypedQuery<Attempt> q = em.createQuery("SELECT a FROM Attempt a WHERE a.attemptId = :attemptId", Attempt.class);

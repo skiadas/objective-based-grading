@@ -62,7 +62,6 @@ public class InMemoryGateway implements Gateway {
         attempts.remove(longId);
     }
 
-    @Override
     public void clearAttempts() {
         attempts.clear();
     }

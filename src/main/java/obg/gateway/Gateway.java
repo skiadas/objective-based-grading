@@ -15,8 +15,6 @@ public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, 
 
     void removeAttempt(Long longId);
 
-    void clearAttempts();
-
     <E> void save(E o);
 
     void removeStudent(Enrollment enrollment1);
