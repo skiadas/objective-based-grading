@@ -4,8 +4,6 @@ import obg.core.entity.Course;
 import obg.core.entity.ObjectiveGroup;
 import org.junit.Test;
 
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.UUID;
 
 import static org.junit.Assert.*;

@@ -6,7 +6,6 @@ import obg.gateway.StudentCourseListGateway;
 import obg.request.StudentCourseListRequest;
 import obg.core.ErrorResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StudentCourseListInteractor {

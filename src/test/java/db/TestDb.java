@@ -1,6 +1,5 @@
 package db;
 
-import obg.core.ErrorResponse;
 import obg.core.entity.*;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 

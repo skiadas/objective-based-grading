@@ -2,7 +2,6 @@ package obg.core.entity;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 public class Enrollment {

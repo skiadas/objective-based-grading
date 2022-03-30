@@ -7,8 +7,6 @@ import obg.gateway.CreateCourseGateway;
 import obg.presenter.CreateCoursePresenter;
 import obg.request.CreateCourseRequest;
 
-import java.util.UUID;
-
 public class CreateCourseInteractor {
     private final CreateCourseGateway gateway;
 

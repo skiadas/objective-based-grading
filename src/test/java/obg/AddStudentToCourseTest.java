@@ -10,14 +10,12 @@ import obg.gateway.AddStudentToCourseGateway;
 import obg.interactor.AddStudentToCourseInteractor;
 import obg.request.AddStudentToCourseRequest;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static obg.core.ErrorResponse.EXISTING_ENROLLMENT;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;

@@ -5,12 +5,10 @@ import obg.gateway.ComputeObjectiveGradeGateway;
 import obg.interactor.ComputeObjectiveGradeInteractor;
 import obg.request.ComputeObjectiveGradeRequest;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ComputeObjectiveGradeTest {
 

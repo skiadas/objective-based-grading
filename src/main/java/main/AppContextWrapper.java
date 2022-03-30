@@ -1,6 +1,5 @@
 package main;
 
-import obg.ConcreteAppContext;
 import obg.core.AppContext;
 import obg.core.Presenter;
 
