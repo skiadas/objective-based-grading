@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class TestDb {
 
@@ -290,6 +289,31 @@ public class TestDb {
             Enrollment savedEnrollment = gateway.getEnrollment(course.getCourseId(), student.studentId.toString());
             assertNotNull(savedEnrollment);
         });
+    }
+
+    @Test
+    public void canSaveInstructor() {
+        Instructor instructor1 = new Instructor( "instructor1", "Mrs.", "James");
+        Instructor instructor2 = new Instructor( "instructor2", "Mrs.", "Kiyoko");
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.save(instructor1);
+            gateway.save(instructor2);
+        });
+
+        gatewayFactory.doWithGateway(gateway -> {
+            Instructor retrievedInstructor1 = gateway.getInstructor(instructor1.getInstructorId());
+            Instructor retrievedInstructor2 = gateway.getInstructor(instructor2.getInstructorId());
+            assertSame(instructor1.getInstructorId(), retrievedInstructor1.getInstructorId());
+            assertSame(instructor2.getInstructorId(), retrievedInstructor2.getInstructorId());
+        });
+    }
+
+    @Test
+    public void canSaveAttempt() {
+    }
+
+    @Test
+    public void canClearAttempts() {
     }
 
     private void printQueryResults(EntityManager em, String query) {

@@ -67,7 +67,7 @@ public class InMemoryGatewayTest {
 
     @Test
     public void canAddAttemptToGateway() {
-        g.addAttempt(attempt);
+        g.saveAttempt(attempt);
         assertEquals(List.of(attempt), InMemoryGateway.attempts);
         g.clearAttempts();
         assertTrue(InMemoryGateway.attempts.isEmpty());
@@ -75,11 +75,11 @@ public class InMemoryGatewayTest {
 
     @Test
     public void canGetAttemptsFromCourse() {
-        g.addAttempt(attempt);
+        g.saveAttempt(attempt);
         Student student2 = makeStudent("student2");
         Attempt attempt2 = makeAttempt(course, "obj2", 2, student2);
         attempt2.setStatus(ASSIGNED);
-        g.addAttempt(attempt2);
+        g.saveAttempt(attempt2);
         List<Attempt> expected = List.of(attempt, attempt2);
         assertEquals(expected, g.getAttempts(course));
         g.clearAttempts();

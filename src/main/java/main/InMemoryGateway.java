@@ -48,12 +48,12 @@ public class InMemoryGateway implements Gateway {
         return instructors.get(instructorId);
     }
 
-    public void addInstructor(Instructor instructor) {
+    public void saveInstructor(Instructor instructor) {
         instructors.put(instructor.getInstructorId(), instructor);
     }
 
     @Override
-    public void addAttempt(Attempt attempt) {
+    public void saveAttempt(Attempt attempt) {
         attempts.add(attempt);
     }
 

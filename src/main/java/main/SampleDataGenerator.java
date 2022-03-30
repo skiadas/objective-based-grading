@@ -17,7 +17,7 @@ public class SampleDataGenerator {
         Instructor instructor = new Instructor("instructor", "Haris", "Skiadas");
         Course course = new Course(UUID.randomUUID(), "course1");
         Student student = new Student(UUID.randomUUID(), "student");
-        gateway.addInstructor(instructor);
+        gateway.saveInstructor(instructor);
         gateway.addCourse(course);
         gateway.assignCourseInstructor(course, instructor);
     }

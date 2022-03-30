@@ -9,9 +9,9 @@ public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, 
 
     Student getStudent(String username);
 
-    void addInstructor(Instructor instructor);
+    void saveInstructor(Instructor instructor);
 
-    void addAttempt(Attempt attempt);
+    void saveAttempt(Attempt attempt);
 
     void removeAttempt(Long longId);
 

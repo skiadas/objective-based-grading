@@ -59,12 +59,12 @@ public class SqlBackedGateway implements Gateway {
                 .getResultList();
     }
 
-    public void addInstructor(Instructor instructor) {
-
+    public void saveInstructor(Instructor instructor) {
+        save(instructor);
     }
 
-    public void addAttempt(Attempt attempt) {
-
+    public void saveAttempt(Attempt attempt) {
+        save(attempt);
     }
 
     public void removeAttempt(Long longId) {
