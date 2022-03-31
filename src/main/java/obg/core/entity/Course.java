@@ -95,12 +95,16 @@ public class Course {
 
     public String getObjectivesFor(ObjectiveGroup group) {
 
-        if (objectiveByGroups.containsKey(group)) {
+        if (isValidObjectiveGroup(group)) {
             return objectiveByGroups.get(group);
         }
         else {
             throw new RuntimeException(group.toString() + ": Not Found");
         }
+    }
+
+    public boolean isValidObjectiveGroup(ObjectiveGroup group) {
+        return objectiveByGroups.containsKey(group);
     }
 
     public void addObjective(ObjectiveGroup group, String obj) {
