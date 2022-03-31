@@ -75,10 +75,11 @@ public class Enrollment {
     public void getObjectName() {
     }
 
-    public void removeStudent(Enrollment e) {
-        e.student=null;
-        e.course=null;
-        e.withdrawn = true;
+    public void removeStudent() {
+        course.removeStudent(student);
+        withdrawn = true;
+        course=null;
+        student=null;
     }
 
     public void setWithdrawn(boolean b) {

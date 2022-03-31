@@ -56,6 +56,7 @@ public class Course {
         this(UUID.randomUUID(), courseName);
     }
 
+
     public UUID getCourseId() {
         return courseId;
     }
@@ -112,9 +113,9 @@ public class Course {
         }
     }
 
-    public boolean addStudent(Student student) {
-        return students.add(student);
-    }
+    public void addStudent(Student student) {students.add(student);}
+
+    public void removeStudent(Student student){students.remove(student);}
 
     public void addEnrollment(Enrollment enrollment) {
         enrollments.add(enrollment);

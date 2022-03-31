@@ -212,13 +212,12 @@ public class TestDb {
         });
 
         gatewayFactory.doWithGateway(gateway -> {
-            gateway.removeStudent(enrollment1);
-            ///gateway.getEnrollment(course1ID, student1Id.toString()).removeStudent(enrollment1);   //STILL ISSUES
+            //gateway.removeStudent(enrollment1); this is another way to remove a student
+            gateway.getEnrollment(course1ID, student1Id.toString()).removeStudent();
             List<Course> retrievedStudentCourses = gateway.getStudentCourses(student2.userName);
             List<Course> retrievedStudentCourses_2 = gateway.getStudentCourses(student1.userName);
             assertEquals(List.of(course1, course2), retrievedStudentCourses);
-           // assertEquals(null, gateway.getEnrollment(course1.getCourseId(), student1.getStudentId().toString()));
-            assertEquals(List.of(), retrievedStudentCourses_2);            //returns a course NOT SUPPOSE TOO??? WHY???
+            assertEquals(List.of(), retrievedStudentCourses_2);
         });
     }
 
