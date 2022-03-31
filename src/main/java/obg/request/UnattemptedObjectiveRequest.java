@@ -4,11 +4,11 @@ import java.util.UUID;
 
 public class UnattemptedObjectiveRequest {
 
-    public String userName;
+    public String studentId;
     public UUID courseId;
 
-    public UnattemptedObjectiveRequest(String username, UUID courseId) {
-        this.userName = username;
+    public UnattemptedObjectiveRequest(String studentId, UUID courseId) {
+        this.studentId = studentId;
         this.courseId = courseId;
     }
 

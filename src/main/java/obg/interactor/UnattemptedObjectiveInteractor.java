@@ -16,14 +16,14 @@ public class UnattemptedObjectiveInteractor {
     }
 
     public void handle(UnattemptedObjectiveRequest request, Presenter presenter){
-        if (gateway.getStudent(request.userName) == null) {
+        if (gateway.getStudent(request.studentId) == null) {
             presenter.reportError(ErrorResponse.INVALID_STUDENT);
         } else if (gateway.getCourse(request.courseId) == null) {
             presenter.reportError(ErrorResponse.INVALID_COURSE);
-        } else if (!gateway.getStudentIsEnrolled(request.userName, request.courseId)) {
+        } else if (!gateway.getStudentIsEnrolled(request.studentId, request.courseId)) {
             presenter.reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
         } else {
-            List<String> objectiveList = gateway.getUnattemptedObjectives(request.userName, request.courseId);
+            List<String> objectiveList = gateway.getUnattemptedObjectives(request.studentId, request.courseId);
             presenter.presentUnattemptedObjectives(objectiveList);
         }
     }
