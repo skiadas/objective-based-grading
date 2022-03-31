@@ -1,6 +1,7 @@
 package obg.core.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
@@ -101,5 +102,15 @@ public class Enrollment {
     @Override
     public int hashCode() {
         return Objects.hash(id, course, student, date, withdrawn, attemptMap);
+    }
+
+    public ArrayList<String> getUnattemptedObjectives() {
+        ArrayList<String> objs = new ArrayList<>();
+        for (String obj : course.objectives){
+            if(!getAttemptMap().objectiveMap.containsKey(obj)){
+                objs.add(obj);
+            }
+        }
+        return objs;
     }
 }
