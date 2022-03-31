@@ -5,7 +5,12 @@ import obg.core.entity.Enrollment;
 import obg.core.entity.Instructor;
 import obg.core.entity.Student;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, InstructorCourseListGateway, StudentCourseListGateway, ViewPendingAttemptsGateway, AssignAttemptScoreGateway, CreateCourseGateway, AddStudentToCourseGateway, InstructorCanDeleteAttemptGateway,CreateNewInstructorGateway {
+
+    HashMap getObjMap(String studentName, UUID courseId);
 
     Student getStudent(String username);
 
