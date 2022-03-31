@@ -2,6 +2,7 @@ package obg.core.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Enrollment {
@@ -75,10 +76,9 @@ public class Enrollment {
     }
 
     public void removeStudent(Enrollment e) {
+        e.student=null;
+        e.course=null;
         e.withdrawn = true;
-        e.student = null;
-        e.course = null;
-        e = null;
     }
 
     public void setWithdrawn(boolean b) {
@@ -87,5 +87,18 @@ public class Enrollment {
 
     public long getLongId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Enrollment that = (Enrollment) o;
+        return Objects.equals(id, that.id) && Objects.equals(course, that.course) && Objects.equals(student, that.student) && Objects.equals(date, that.date) && withdrawn.equals(that.withdrawn) && Objects.equals(attemptMap, that.attemptMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, course, student, date, withdrawn, attemptMap);
     }
 }
