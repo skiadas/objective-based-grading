@@ -3,11 +3,13 @@ package obg;
 import obg.core.ErrorResponse;
 import obg.core.Presenter;
 import obg.core.entity.Course;
+import obg.core.entity.Enrollment;
 import obg.core.entity.Student;
 import obg.gateway.UnattemptedObjectiveGateway;
 import obg.interactor.UnattemptedObjectiveInteractor;
 import obg.request.UnattemptedObjectiveRequest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public class UnattemptedObjectivesTest {
     private Presenter presenter;
     private Student student;
     private Course course;
+    private Course course1;
+    private Enrollment enroll;
 
     @Before
     public void setUp() {
@@ -32,6 +36,16 @@ public class UnattemptedObjectivesTest {
         presenter = mock(Presenter.class);
         student = new Student(UUID.randomUUID(), request.studentId);
         course = new Course(null, null, null);
+        course1 = new Course(UUID.randomUUID(), "course1");
+        enroll = new Enrollment(course, student);
+    }
+
+    @Ignore
+    @Test
+    public void InvalidEnrollmentTest(){
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(null);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
     }
 
     @Test
@@ -57,6 +71,7 @@ public class UnattemptedObjectivesTest {
         verify(presenter).reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
     }
 
+    @Ignore
     @Test
     public void ReturnStudentUnattemptedObjectives(){
         List<String> objectiveList = List.of("B1", "B2", "C3", "C4");

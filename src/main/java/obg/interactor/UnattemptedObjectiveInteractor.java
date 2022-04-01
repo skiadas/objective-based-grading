@@ -22,7 +22,10 @@ public class UnattemptedObjectiveInteractor {
             presenter.reportError(ErrorResponse.INVALID_COURSE);
         } else if (!gateway.getStudentIsEnrolled(request.studentId, request.courseId)) {
             presenter.reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
-        } else {
+        } else if (gateway.getEnrollment(request.courseId, request.studentId ) == null){
+            presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
+        }
+            else {
             List<String> objectiveList = gateway.getUnattemptedObjectives(request.studentId, request.courseId);
             presenter.presentUnattemptedObjectives(objectiveList);
         }
