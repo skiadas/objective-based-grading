@@ -1,5 +1,6 @@
 package db;
 
+import obg.GatewayFactory;
 import obg.gateway.Gateway;
 
 import javax.persistence.EntityManager;
@@ -7,7 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.function.Consumer;
 
-public class SqlBackedGatewayFactory {
+public class SqlBackedGatewayFactory implements GatewayFactory {
     private static final SqlBackedGatewayFactory instance = new SqlBackedGatewayFactory();
 
     EntityManagerFactory factory = Persistence.createEntityManagerFactory("test");
@@ -16,9 +17,9 @@ public class SqlBackedGatewayFactory {
          return instance;
     }
 
-    private SqlBackedGatewayFactory() {}
+    public SqlBackedGatewayFactory() {}
 
-    SqlBackedGateway getGateway() {
+    public SqlBackedGateway getGateway() {
         EntityManager em = factory.createEntityManager();
         return new SqlBackedGateway(em);
     }
@@ -33,5 +34,9 @@ public class SqlBackedGatewayFactory {
             gateway.rollbackTransaction();
             throw e;
         }
+    }
+
+    public Gateway acquireGateway() {
+        return instance.acquireGateway();
     }
 }

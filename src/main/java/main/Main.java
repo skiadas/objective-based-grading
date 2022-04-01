@@ -1,5 +1,7 @@
 package main;
 
+import db.SqlBackedGateway;
+import db.SqlBackedGatewayFactory;
 import obg.ConcreteAppContext;
 import webserver.Server;
 import webserver.user.UserAdministrator;
@@ -21,9 +23,9 @@ public class Main implements Observer<Integer> {
     }
 
     private void start() {
-        InMemoryGatewayFactory gatewayFactory = new InMemoryGatewayFactory();
-        InMemoryGateway gateway = (InMemoryGateway) gatewayFactory.acquireGateway();
-        new SampleDataGenerator(gateway).populateWithData();
+        SqlBackedGatewayFactory gatewayFactory = new SqlBackedGatewayFactory();
+        SqlBackedGateway gateway = (SqlBackedGateway) gatewayFactory.acquireGateway();
+        new SqlBackedSampleDataGenerator(gateway).populateWithData();
 
         context = new ConcreteAppContext(gatewayFactory);
         loggingContext = new LoggingContext(context);

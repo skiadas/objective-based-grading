@@ -135,6 +135,21 @@ public class SqlBackedGateway implements Gateway {
         em.remove(removeEnroll);
     }
 
+    @Override
+    public void saveCourse(Course course) {
+        save(course);
+    }
+
+    @Override
+    public void assignCourseInstructor(Course course, Instructor instructor) {
+        // stubbed, will fix later.
+    }
+
+    @Override
+    public void addCourse(Course course) {
+
+    }
+
     void rollbackTransaction() {
         getEntityManager().getTransaction().rollback();
     }

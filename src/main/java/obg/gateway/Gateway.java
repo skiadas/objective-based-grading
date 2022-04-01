@@ -1,12 +1,6 @@
 package obg.gateway;
 
-import obg.core.entity.Attempt;
-import obg.core.entity.Enrollment;
-import obg.core.entity.Instructor;
-import obg.core.entity.Student;
-
-import java.util.HashMap;
-import java.util.UUID;
+import obg.core.entity.*;
 
 public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, InstructorCourseListGateway, StudentCourseListGateway, ViewPendingAttemptsGateway, AssignAttemptScoreGateway, CreateCourseGateway, AddStudentToCourseGateway, InstructorCanDeleteAttemptGateway, CreateNewInstructorGateway, RemoveStudentGateway {
 
@@ -22,4 +16,9 @@ public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, 
 
     void removeStudent(Enrollment enrollment1);
 
+    void saveCourse(Course course);
+
+    void assignCourseInstructor(Course course, Instructor instructor);
+
+    void addCourse(Course course);
 }
