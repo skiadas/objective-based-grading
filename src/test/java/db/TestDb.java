@@ -1,7 +1,6 @@
 package db;
 
 import obg.core.entity.*;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.persistence.*;
@@ -36,7 +35,6 @@ public class TestDb {
     public void testCanConnect() {
         UUID studentId = UUID.randomUUID();
         Student student = new Student(studentId, "skiadas");
-
         gatewayFactory.doWithGateway(gateway -> gateway.save(student));
     }
 
@@ -44,13 +42,11 @@ public class TestDb {
     public void canFindStudentByUsername() {
         UUID studentId = UUID.randomUUID();
         Student student = new Student(studentId, "skiadas");
-
         gatewayFactory.doWithGateway(gateway -> {
             gateway.save(student);
             gateway.save(new Student(UUID.randomUUID(), "anotherStudent"));
             gateway.save(new Student(UUID.randomUUID(), "yetAnotherStudent"));
         });
-
         gatewayFactory.doWithGateway(gateway -> {
             Student retrievedStudent = gateway.getStudent("skiadas");
             assertEquals("skiadas", retrievedStudent.userName);
@@ -70,7 +66,6 @@ public class TestDb {
             assertEquals(instructor, retrievedInstructor);
         });
     }
-
 
     @Test
     public void canAddCourses() {
@@ -106,7 +101,7 @@ public class TestDb {
         gatewayFactory.doWithGateway(gateway -> {
             EntityManager em = ((SqlBackedGateway) gateway).getEntityManager();
             String name = student1.userName;
-            Boolean getAllEnrollments = false;
+            boolean getAllEnrollments = false;
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Enrollment> cq = cb.createQuery(Enrollment.class);
             Root<Enrollment> e = cq.from(Enrollment.class);
@@ -145,7 +140,6 @@ public class TestDb {
             gateway.save(enrollment2);
             gateway.save(enrollment3);
         });
-
         gatewayFactory.doWithGateway(gateway -> {
             List<Course> retrievedStudentCourses = gateway.getStudentCourses(student2.userName);
             List<Course> retrievedStudentCourses_2 = gateway.getStudentCourses(student1.userName);
@@ -176,10 +170,7 @@ public class TestDb {
             gateway.save(enrollment1);
             gateway.save(enrollment3);
         });
-
-        gatewayFactory.doWithGateway(gateway -> {
-            assertEquals(enrollment1,  gateway.getEnrollment(course1.getCourseId(), student1Id.toString()));
-        });
+        gatewayFactory.doWithGateway(gateway -> assertEquals(enrollment1,  gateway.getEnrollment(course1.getCourseId(), student1Id.toString())));
     }
 
     @Test
@@ -210,9 +201,7 @@ public class TestDb {
             gateway.save(enrollment2);
             gateway.save(enrollment3);
         });
-
         gatewayFactory.doWithGateway(gateway -> {
-            //gateway.removeStudent(enrollment1); this is another way to remove a student
             gateway.getEnrollment(course1ID, student1Id.toString()).removeStudent();
             List<Course> retrievedStudentCourses = gateway.getStudentCourses(student2.userName);
             List<Course> retrievedStudentCourses_2 = gateway.getStudentCourses(student1.userName);
@@ -224,20 +213,16 @@ public class TestDb {
     @Test
     public void CanFindInstructorById(){
         Instructor instructor = new Instructor("newId", "Joe", "Brown");
-
         gatewayFactory.doWithGateway(gateway -> {
             gateway.save(instructor);
             gateway.save(new Instructor("new1", "new", "1"));
             gateway.save(new Instructor("new2", "new", "2"));
-
-                });
-
+        });
         gatewayFactory.doWithGateway(gateway -> {
         Instructor retrievedInstructor = gateway.getInstructor(instructor.getInstructorId());
         assertEquals(instructor.getInstructorId(), retrievedInstructor.getInstructorId());
         });
     }
-
 
     @Test
     public void canGetDifferentCoursesForDifferentInstructors(){
@@ -259,7 +244,6 @@ public class TestDb {
             gateway.save(course3);
             gateway.save(course4);
         });
-
         gatewayFactory.doWithGateway(gateway -> {
             List<Course> retrievedCourseList_1 = gateway.getCoursesTaughtBy(instructor1);
             List<Course> retrievedCourseList_2 = gateway.getCoursesTaughtBy(instructor2);
@@ -273,14 +257,11 @@ public class TestDb {
         Course course = new Course(UUID.randomUUID(),"course");
         Student student = new Student(UUID.randomUUID(), "student");
         Enrollment enrollment = new Enrollment(course, student);
-        // Check that enrollment is created correctly
         gatewayFactory.doWithGateway(gateway ->  {
             gateway.save(course);
             gateway.save(student);
         });
-
         gatewayFactory.doWithGateway(gateway -> gateway.saveEnrollment(enrollment));
-
         gatewayFactory.doWithGateway(gateway -> {
             Enrollment savedEnrollment = gateway.getEnrollment(course.getCourseId(), student.studentId.toString());
             assertNotNull(savedEnrollment);
@@ -295,7 +276,6 @@ public class TestDb {
             gateway.save(instructor1);
             gateway.save(instructor2);
         });
-
         gatewayFactory.doWithGateway(gateway -> {
             Instructor retrievedInstructor1 = gateway.getInstructor(instructor1.getInstructorId());
             Instructor retrievedInstructor2 = gateway.getInstructor(instructor2.getInstructorId());
@@ -324,7 +304,6 @@ public class TestDb {
             gateway.save(attempt1);
             gateway.save(attempt2);
         });
-
         gatewayFactory.doWithGateway(gateway -> {
             Attempt retrievedAttempt1 = gateway.getAttempt(attempt1.getAttemptId());
             Attempt retrievedAttempt2 = gateway.getAttempt(attempt2.getAttemptId());
