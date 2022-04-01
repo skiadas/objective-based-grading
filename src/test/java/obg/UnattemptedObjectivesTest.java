@@ -36,26 +36,27 @@ public class UnattemptedObjectivesTest {
         presenter = mock(Presenter.class);
         student = new Student(UUID.randomUUID(), request.studentId);
         course = new Course(null, null, null);
-        course1 = new Course(UUID.randomUUID(), "course1");
-        enroll = new Enrollment(course, student);
+        enroll = new Enrollment(new Course(request.courseId, "course1"), new Student(UUID.randomUUID(), request.studentId));
     }
 
-    @Ignore
     @Test
     public void InvalidEnrollmentTest(){
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(null);
         interactor.handle(request, presenter);
+        System.out.println("Value of student id: " + request.studentId);
         verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
     }
 
     @Test
     public void InvalidStudentTest(){
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_STUDENT);
     }
 
     @Test
     public void InvalidCourseTest(){
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
         when(gateway.getStudent(request.studentId)).thenReturn(student);
         when(gateway.getCourse(request.courseId)).thenReturn(null);
         interactor.handle(request, presenter);
@@ -64,6 +65,7 @@ public class UnattemptedObjectivesTest {
 
     @Test
     public void StudentNotInCourse(){
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(request.studentId)).thenReturn(student);
         when(gateway.getStudentIsEnrolled(request.studentId, request.courseId)).thenReturn(false);
@@ -71,9 +73,9 @@ public class UnattemptedObjectivesTest {
         verify(presenter).reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
     }
 
-    @Ignore
     @Test
     public void ReturnStudentUnattemptedObjectives(){
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
         List<String> objectiveList = List.of("B1", "B2", "C3", "C4");
         when(gateway.getStudent(request.studentId)).thenReturn(student);
         when(gateway.getCourse(request.courseId)).thenReturn(course);
