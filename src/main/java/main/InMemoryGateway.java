@@ -106,12 +106,6 @@ public class InMemoryGateway implements Gateway {
     }
 
     @Override
-    public HashMap getObjMap(String studentName, UUID courseId) {
-        //TODO
-        return null;
-    }
-
-    @Override
     public Enrollment getEnrollment(UUID courseId, String studentId) {
         return null;
     }
@@ -154,6 +148,11 @@ public class InMemoryGateway implements Gateway {
 
     Course addCourse(Course course) {
         return courses.put(course.courseId, course);
+    }
+
+    @Override
+    public Enrollment getEnrollment(Enrollment enrollment) {
+        return null;
     }
 
 

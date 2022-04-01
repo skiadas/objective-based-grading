@@ -5,7 +5,6 @@ import obg.gateway.Gateway;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,10 +25,6 @@ public class SqlBackedGateway implements Gateway {
 
     public int getAttemptNumber() {
         return 0;
-    }
-
-    public HashMap<String, UUID> getObjMap(String studentName, UUID courseId) {
-        return null;
     }
 
     public Enrollment getEnrollment(UUID courseId, String studentId) {
@@ -142,5 +137,10 @@ public class SqlBackedGateway implements Gateway {
 
     void rollbackTransaction() {
         getEntityManager().getTransaction().rollback();
+    }
+
+    @Override
+    public Enrollment getEnrollment(Enrollment enrollment) {
+        return null;
     }
 }
