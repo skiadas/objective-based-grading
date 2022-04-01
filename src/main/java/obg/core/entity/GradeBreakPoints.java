@@ -18,10 +18,6 @@ public class GradeBreakPoints {
         return gradeBreakPoints;
     }
 
-    public ArrayList<BreakpointEntry> getBreakpointEntries() {
-        return breakpointEntries;
-    }
-
     public GradeBreakPoints() {
 
     }

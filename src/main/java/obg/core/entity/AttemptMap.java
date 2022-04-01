@@ -49,4 +49,9 @@ public class AttemptMap {
         AttemptMap that = (AttemptMap) o;
         return Objects.equals(objectiveMap, that.objectiveMap);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(objectiveMap);
+    }
 }
