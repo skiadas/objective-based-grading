@@ -62,6 +62,10 @@ public class ResultProducer implements Presenter {
 
     }
 
+    public void presentObjectiveGrade(int objGrade) {
+        // TODO
+    }
+
     public void presentPendingAttempts() {
         //TODO
     }

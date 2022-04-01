@@ -30,7 +30,7 @@ public class ComputeObjectiveGradeTest {
     public void setUp() throws Exception {
         UUID courseId = UUID.randomUUID();
         UUID studentId = UUID.randomUUID();
-        request = new ComputeObjectiveGradeRequest(courseId, "joe");
+        request = new ComputeObjectiveGradeRequest(courseId, "joe", "obj1");
         gateway = mock(ComputeObjectiveGradeGateway.class);
         presenter = mock(Presenter.class);
         interactor = new ComputeObjectiveGradeInteractor(gateway, presenter);

@@ -125,4 +125,28 @@ public class EnrollmentTests {
         assertNotEquals(course.objectives, objs);
         assertEquals(objs , unattemptedObjectives);
     }
+
+
+    @Test
+    public void computeObjectiveGradeTest(){
+        UUID courseId = UUID.randomUUID();
+        UUID studentId = UUID.randomUUID();
+
+        course = new Course(courseId, "test course");
+        student = new Student(studentId, "Test student");
+        enroll = new Enrollment(course, student);
+        String obj = "obj1";
+        course.addObjective(ObjectiveGroup.BASIC, obj);
+        Attempt attempt = new Attempt("obj1", 1, enroll);
+        Attempt attempt2 = new Attempt("obj1", 2, enroll);
+        enroll.addAttempt(attempt);
+        enroll.addAttempt(attempt2);
+        attempt.assignScore(2);
+        attempt2.assignScore(3);
+        int objGrade = 0;
+        objGrade = enroll.computeObjectiveGrade(obj);
+        assertEquals(3, objGrade);
+
+
+    }
 }

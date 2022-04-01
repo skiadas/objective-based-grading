@@ -28,4 +28,6 @@ public interface Presenter extends InstructorCanDeleteAttemptPresenter {
     void presentLoginScreen();
 
     void presentsRemovedStudent(Enrollment enrollment);
+
+    void presentObjectiveGrade(int objGrade);
 }

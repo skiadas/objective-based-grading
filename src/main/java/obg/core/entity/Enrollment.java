@@ -113,4 +113,15 @@ public class Enrollment {
         }
         return objs;
     }
+
+    public int computeObjectiveGrade(String objective) {
+        AttemptList attemptList = attemptMap.getAttemptList(objective);
+        int maxGrade = 0;
+        for(Attempt a : attemptList.list){
+            if( a.getScore() > maxGrade){
+                maxGrade = a.getScore();
+            }
+        }
+        return maxGrade;
+    }
 }
