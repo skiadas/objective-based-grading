@@ -1,10 +1,14 @@
 package obg.request;
 
+import java.util.UUID;
+
 public class ComputeObjectiveGradeRequest {
 
-    public String courseId;
+    public UUID courseId;
+    public String studentId;
 
-    public ComputeObjectiveGradeRequest(String courseId) {
+    public ComputeObjectiveGradeRequest(UUID courseId, String studentId) {
         this.courseId = courseId;
+        this.studentId = studentId;
     }
 }

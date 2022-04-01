@@ -1,5 +1,6 @@
 package obg.interactor;
 
+import obg.core.ErrorResponse;
 import obg.core.Presenter;
 import obg.core.entity.Course;
 import obg.gateway.ComputeObjectiveGradeGateway;
@@ -17,6 +18,8 @@ public class ComputeObjectiveGradeInteractor {
     }
 
     public void handle(ComputeObjectiveGradeRequest request) {
-        Course course = gateway.getCourse(UUID.fromString(request.courseId));
+        if (gateway.getEnrollment(request.courseId, request.studentId) == null) {
+            presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
+        }
     }
 }
