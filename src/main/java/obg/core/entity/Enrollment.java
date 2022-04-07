@@ -18,6 +18,13 @@ public class Enrollment {
     public String date;
     @Basic
     public Boolean withdrawn;
+
+    public int getRemainingAttempts() {
+        return remainingAttempts;
+    }
+
+    @Basic
+    private int remainingAttempts;
     // TODO: Need to eventually fix
     @Transient
     public AttemptMap attemptMap = new AttemptMap();
@@ -36,6 +43,12 @@ public class Enrollment {
         this.student = student;
         withdrawn = false;
         date = new Date().toString();
+    }
+
+    public Enrollment(Course course, Student student, int remainingAttempts) {
+        this(course,student);
+        this.remainingAttempts=remainingAttempts;
+
     }
 
     public Student getEnrolledStudent() {

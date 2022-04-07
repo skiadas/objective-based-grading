@@ -149,4 +149,16 @@ public class EnrollmentTests {
 
 
     }
+
+    @Test
+    public void enrollmentHasRemaingAttemptsField() {
+        UUID courseId = UUID.randomUUID();
+        UUID studentId = UUID.randomUUID();
+
+        course = new Course(courseId, "test course");
+        student = new Student(studentId, "Test student");
+        int remainingAttempts = 40;
+        Enrollment enrollment = new Enrollment(course,student,remainingAttempts);
+        assertEquals(remainingAttempts,enrollment.getRemainingAttempts());
+    }
 }

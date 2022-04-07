@@ -1,6 +1,8 @@
 package obg;
 
 import obg.core.ErrorResponse;
+import obg.core.entity.Course;
+import obg.core.entity.Enrollment;
 import obg.core.entity.Student;
 import obg.gateway.StudentViewRemainingAttemptsGateway;
 import obg.interactor.StudentViewRemainingAttemptsInteractor;
@@ -20,6 +22,9 @@ public class StudentViewRemainingAttemptsTest {
     private StudentViewRemainingAttemptsGateway gateway;
     private StudentViewRemainingAttemptsPresenter presenter;
     private StudentViewRemainingAttemptsInteractor interactor;
+    private Student student;
+    private Course course;
+
 
     @Before
     public void setUp() throws Exception {
@@ -29,6 +34,8 @@ public class StudentViewRemainingAttemptsTest {
         gateway = mock(StudentViewRemainingAttemptsGateway.class);
         presenter = mock(StudentViewRemainingAttemptsPresenter.class);
         interactor = new StudentViewRemainingAttemptsInteractor(gateway, presenter);
+        student = new Student(UUID.fromString(studentId), "name");
+        course = new Course(courseId,"course");
     }
 
     @Test
@@ -50,11 +57,31 @@ public class StudentViewRemainingAttemptsTest {
 
     @Test
     public void interactorReportsInvalidCourse() {
-        UUID studentId = UUID.randomUUID();
-        when(gateway.getStudent(request.studentId)).thenReturn(new Student(studentId, "name"));
+        when(gateway.getStudent(request.studentId)).thenReturn(student);
         when(gateway.getCourse(request.courseId)).thenReturn(null);
         interactor.handle(request);
         verify(presenter).reportError(ErrorResponse.INVALID_COURSE);
         verify(gateway).getCourse(request.courseId);
+    }
+
+    @Test
+    public void interactorReportsInvalidEnrollment() {
+        when(gateway.getStudent(request.studentId)).thenReturn(student);
+        when(gateway.getCourse(request.courseId)).thenReturn(course);
+        when(gateway.getEnrollment(request.courseId,request.studentId)).thenReturn(null);
+        interactor.handle(request);
+        verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
+        verify(gateway).getEnrollment(request.courseId,request.studentId);
+    }
+
+    @Test
+    public void interactorReportsRemainingAttemptsAfterSuccessfulChecks() {
+        Enrollment enrollment = new Enrollment(course,student,40);
+        when(gateway.getStudent(request.studentId)).thenReturn(student);
+        when(gateway.getCourse(request.courseId)).thenReturn(course);
+        when(gateway.getEnrollment(request.courseId,request.studentId)).thenReturn(enrollment);
+        interactor.handle(request);
+        verify(presenter).presentRemainingAttempts(enrollment.getRemainingAttempts());
+        verify(gateway).getEnrollment(request.courseId,request.studentId);
     }
 }
