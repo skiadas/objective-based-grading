@@ -2,7 +2,7 @@ package obg.gateway;
 
 import obg.core.entity.*;
 
-public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, InstructorCourseListGateway, StudentCourseListGateway, ViewPendingAttemptsGateway, AssignAttemptScoreGateway, CreateCourseGateway, AddStudentToCourseGateway, InstructorCanDeleteAttemptGateway, CreateNewInstructorGateway, RemoveStudentGateway {
+public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, InstructorCourseListGateway, StudentCourseListGateway, ViewPendingAttemptsGateway, AssignAttemptScoreGateway, CreateCourseGateway, AddStudentToCourseGateway, InstructorCanDeleteAttemptGateway, CreateNewInstructorGateway, RemoveStudentGateway, StudentViewRemainingAttemptsGateway {
 
     Student getStudent(String username);
 

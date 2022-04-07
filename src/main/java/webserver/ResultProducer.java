@@ -26,6 +26,10 @@ public class ResultProducer implements Presenter {
     }
 
     @Override
+    public void presentRemainingAttempts(int attempts) {
+    }
+
+    @Override
     public void presentSuccessfulRemove(String message) {
 
     }

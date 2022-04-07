@@ -4,11 +4,12 @@ import obg.core.entity.Attempt;
 import obg.core.entity.Course;
 import obg.core.entity.Enrollment;
 import obg.presenter.InstructorCanDeleteAttemptPresenter;
+import obg.presenter.StudentViewRemainingAttemptsPresenter;
 import obg.response.TargetGradeRequirementsResponse;
 
 import java.util.List;
 
-public interface Presenter extends InstructorCanDeleteAttemptPresenter {
+public interface Presenter extends InstructorCanDeleteAttemptPresenter, StudentViewRemainingAttemptsPresenter {
     void reportError(String errorMessage);
 
     void presentInstructorCourseList(List<Course> courses);
