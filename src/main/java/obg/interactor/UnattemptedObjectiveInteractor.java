@@ -5,28 +5,26 @@ import obg.core.Presenter;
 import obg.gateway.UnattemptedObjectiveGateway;
 import obg.request.UnattemptedObjectiveRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UnattemptedObjectiveInteractor {
 
     private final UnattemptedObjectiveGateway gateway;
+    private final Presenter presenter;
 
-    public UnattemptedObjectiveInteractor(UnattemptedObjectiveGateway gateway) {
+
+    public UnattemptedObjectiveInteractor(UnattemptedObjectiveGateway gateway, Presenter presenter) {
         this.gateway = gateway;
+        this.presenter = presenter;
     }
 
-    public void handle(UnattemptedObjectiveRequest request, Presenter presenter){
+    public void handle(UnattemptedObjectiveRequest request){
         if (gateway.getEnrollment(request.courseId, request.studentId ) == null) {
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
-        } else if (gateway.getStudent(request.studentId) == null) {
-            presenter.reportError(ErrorResponse.INVALID_STUDENT);
-        } else if (gateway.getCourse(request.courseId) == null) {
-            presenter.reportError(ErrorResponse.INVALID_COURSE);
-        } else if (!gateway.getStudentIsEnrolled(request.studentId, request.courseId)) {
-            presenter.reportError(ErrorResponse.STUDENT_NOT_ENROLLED);
         }
-            else {
-            List<String> objectiveList = gateway.getUnattemptedObjectives(request.studentId, request.courseId);
+        else {
+            List<String> objectiveList = gateway.getEnrollment( request.courseId, request.studentId).getUnattemptedObjectives();
             presenter.presentUnattemptedObjectives(objectiveList);
         }
     }

@@ -9,14 +9,6 @@ import java.util.UUID;
 
 public interface UnattemptedObjectiveGateway {
 
-    Student getStudent(String studentId);
-
-    Course getCourse(UUID courseId);
-
-    List<String> getUnattemptedObjectives(String student, UUID course);
-
-    Boolean getStudentIsEnrolled(String userName, UUID courseId);
-
     Enrollment getEnrollment(UUID courseId, String studentId);
 }
 
