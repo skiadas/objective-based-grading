@@ -285,6 +285,33 @@ public class TestDb {
     }
 
     @Test
+    public void canAddAttempt() {
+        Course course1 = new Course(UUID.randomUUID(),"course1");
+        Student student1 = new Student(UUID.randomUUID(), "student1");
+        Enrollment enrollment1 = new Enrollment(course1, student1);
+        enrollment1.getEnrolledCourse().objectives.add("obj1");
+        enrollment1.getEnrolledCourse().objectives.add("obj2");
+        Attempt attempt1 = new Attempt("obj2", 1, enrollment1);
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.save(student1);
+            gateway.save(course1);
+            gateway.save(enrollment1);
+            gateway.save(attempt1);
+        });
+        gatewayFactory.doWithGateway(gateway -> {
+            gateway.addAttempt(attempt1, enrollment1);
+            AttemptMap map = new AttemptMap();
+            map.add(attempt1.getObjectName(),gateway.getAttempt(attempt1.getAttemptId()));
+            ArrayList<String> objs = new ArrayList<>();
+            objs.add("obj1");
+            AttemptList Attemptlist = map.getAttemptList(attempt1.getObjectName());
+            //assertEquals(objs, gateway.getEnrollment(course1.getCourseId(), student1.getStudentId().toString()).getUnattemptedObjectives());
+            // // Needs work with the getUnattemptedObjectives method
+            assertEquals(gateway.getAttempt(attempt1.getAttemptId()), Attemptlist.list.get(0));
+        });
+    }
+
+    @Test
     public void canSaveAttempt() {
         Course course1 = new Course(UUID.randomUUID(),"course1");
         Course course2 = new Course(UUID.randomUUID(),"course2");

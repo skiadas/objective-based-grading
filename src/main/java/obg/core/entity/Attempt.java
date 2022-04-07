@@ -111,6 +111,14 @@ public class Attempt {
         return attemptNumber == attempt.attemptNumber && Objects.equals(objective, attempt.objective) && Objects.equals(getStudent(), attempt.getStudent()) && Objects.equals(getCourse(), attempt.getCourse()) && status == attempt.status;
     }
 
+    public String getObjectName() {
+        return objective;
+    }
+
+    public int getAttemptNumber() {
+        return attemptNumber;
+    }
+
     public enum AttemptStatus {
         PENDING,
         ASSIGNED,
