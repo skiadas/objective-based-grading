@@ -137,4 +137,8 @@ public class Enrollment {
         }
         return maxGrade;
     }
+
+    public void removeSingleAttempt() {
+        remainingAttempts = remainingAttempts - 1;
+    }
 }

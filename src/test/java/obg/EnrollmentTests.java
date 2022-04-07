@@ -154,11 +154,27 @@ public class EnrollmentTests {
     public void enrollmentHasRemaingAttemptsField() {
         UUID courseId = UUID.randomUUID();
         UUID studentId = UUID.randomUUID();
-
         course = new Course(courseId, "test course");
         student = new Student(studentId, "Test student");
-        int remainingAttempts = 40;
-        Enrollment enrollment = new Enrollment(course,student,remainingAttempts);
-        assertEquals(remainingAttempts,enrollment.getRemainingAttempts());
+        Course course2 = new Course(UUID.randomUUID(), "course2");
+        Student student2 = new Student(UUID.randomUUID(), "student2");
+        int remainingAttempts1 = 40;
+        int remainingAttempts2 = 6;
+        Enrollment enrollment1 = new Enrollment(course, student, remainingAttempts1);
+        Enrollment enrollment2 = new Enrollment(course, student, remainingAttempts2);
+        assertEquals(remainingAttempts1,enrollment1.getRemainingAttempts());
+        assertEquals(remainingAttempts2,enrollment2.getRemainingAttempts());
+    }
+
+    @Test
+    public void canRemoveSingleRemainingAttemptFromEnrollment() {
+        int remainingAttempts1 = 40;
+        int remainingAttempts2 = 6;
+        Enrollment enrollment1 = new Enrollment(course, student, remainingAttempts1);
+        Enrollment enrollment2 = new Enrollment(course, student, remainingAttempts2);
+        enrollment1.removeSingleAttempt();
+        enrollment2.removeSingleAttempt();
+        assertEquals(39, enrollment1.getRemainingAttempts());
+        assertEquals(5, enrollment2.getRemainingAttempts());
     }
 }
