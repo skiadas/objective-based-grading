@@ -39,6 +39,7 @@ public class UnattemptedObjectivesTest {
         enroll.getEnrolledCourse().objectives.add("obj1");
         enroll.getEnrolledCourse().objectives.add("obj2");
         attempt = new Attempt("obj2", 1, enroll);
+        enroll.addAttempt(attempt);
         objs = new ArrayList<>();
         objs.add("obj1");
     }
@@ -54,8 +55,8 @@ public class UnattemptedObjectivesTest {
     @Test
     public void ReturnStudentUnattemptedObjectives(){
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
+//      TODO Do not need this call to gateway.addAttempt(attempt, enroll) below
         gateway.addAttempt(attempt, enroll);
-        enroll.addAttempt(attempt);
         interactor.handle(request);
         verify(presenter).presentUnattemptedObjectives(objs);
     }
