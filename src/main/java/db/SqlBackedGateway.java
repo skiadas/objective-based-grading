@@ -158,4 +158,9 @@ public class SqlBackedGateway implements Gateway {
     public Enrollment getEnrollment(Enrollment enrollment) {
         return null;
     }
+
+    @Override
+    public void addStudent(String username) {
+
+    }
 }

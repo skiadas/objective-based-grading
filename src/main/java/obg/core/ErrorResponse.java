@@ -15,6 +15,7 @@ public class ErrorResponse {
     public static final String INVALID_ATTEMPT_STATUS = "Invalid attempt status";
     public static final String EXISTING_ENROLLMENT = "Student already enrolled in course";
     public static String NOT_COURSE_INSTRUCTOR = "Not course instructor";
+    public static String EXISTING_STUDENT = "Student already exists";
     private final String errMessage;
 
     public ErrorResponse(String errMessage) {
