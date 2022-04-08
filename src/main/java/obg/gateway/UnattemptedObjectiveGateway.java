@@ -11,8 +11,6 @@ import java.util.UUID;
 public interface UnattemptedObjectiveGateway {
 
     Enrollment getEnrollment(UUID courseId, String studentId);
-
-    void addAttempt(Attempt attempt, Enrollment enrollment);
 }
 
 

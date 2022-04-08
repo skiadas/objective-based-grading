@@ -21,6 +21,4 @@ public interface Gateway extends ViewTargetGradeGateway, AttemptRequestGateway, 
     void assignCourseInstructor(Course course, Instructor instructor);
 
     void addCourse(Course course);
-
-    void addAttempt(Attempt attemptId, Enrollment enrollment1);
 }

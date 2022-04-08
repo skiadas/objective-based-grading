@@ -150,14 +150,6 @@ public class SqlBackedGateway implements Gateway {
 
     }
 
-    @Override
-    public void addAttempt(Attempt attempt1, Enrollment enrollment1) {
-       Attempt new_attempt = new Attempt(attempt1.getObjectName(), attempt1.getAttemptNumber(), enrollment1);
-       enrollment1.addAttempt(attempt1);
-       em.merge(enrollment1);
-       saveAttempt(new_attempt);
-    }
-
     void rollbackTransaction() {
         getEntityManager().getTransaction().rollback();
     }

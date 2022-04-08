@@ -55,8 +55,6 @@ public class UnattemptedObjectivesTest {
     @Test
     public void ReturnStudentUnattemptedObjectives(){
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
-//      TODO Do not need this call to gateway.addAttempt(attempt, enroll) below
-        gateway.addAttempt(attempt, enroll);
         interactor.handle(request);
         verify(presenter).presentUnattemptedObjectives(objs);
     }
