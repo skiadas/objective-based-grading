@@ -48,7 +48,7 @@ public class Attempt {
     }
 
     public Student getStudent() {
-        return enrollment.getEnrolledStudent();
+        return enrollment.getStudent();
     }
 
     public UUID getAttemptId() { return attemptId; }
@@ -58,7 +58,7 @@ public class Attempt {
     }
 
     public Course getCourse() {
-        return enrollment.getEnrolledCourse();
+        return enrollment.getCourse();
     }
 
     public Enrollment getEnrollment() {
@@ -91,11 +91,11 @@ public class Attempt {
     }
 
     public boolean isEnrollmentCourseInstructor(Instructor instructor) {
-        return enrollment.getEnrolledCourse().isCourseInstructor(instructor);
+        return enrollment.getCourse().isCourseInstructor(instructor);
     }
 
     public boolean isValidScore(int score) {
-        return enrollment.getEnrolledCourse().gradeBreaks.isValidScore(score);
+        return enrollment.getCourse().gradeBreaks.isValidScore(score);
     }
 
     @Override

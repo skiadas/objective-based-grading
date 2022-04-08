@@ -34,8 +34,8 @@ public class AttemptPersistenceTest {
             assertEquals(attempt.getAttemptId(), retrievedAttempt.getAttemptId());
             assertEquals(attempt.getScore(), retrievedAttempt.getScore());
             assertEquals(attempt.getStatus(), retrievedAttempt.getStatus());
-            assertEquals(attempt.getEnrollment().getEnrolledCourse(), retrievedAttempt.getEnrollment().getEnrolledCourse());
-            assertEquals(attempt.getEnrollment().getEnrolledStudent(), retrievedAttempt.getEnrollment().getEnrolledStudent());
+            assertEquals(attempt.getEnrollment().getCourse(), retrievedAttempt.getEnrollment().getCourse());
+            assertEquals(attempt.getEnrollment().getStudent(), retrievedAttempt.getEnrollment().getStudent());
         });
     }
 

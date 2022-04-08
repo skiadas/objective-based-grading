@@ -10,11 +10,9 @@ import obg.gateway.UnattemptedObjectiveGateway;
 import obg.interactor.UnattemptedObjectiveInteractor;
 import obg.request.UnattemptedObjectiveRequest;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.Mockito.*;
@@ -36,8 +34,8 @@ public class UnattemptedObjectivesTest {
         presenter = mock(Presenter.class);
         interactor = new UnattemptedObjectiveInteractor(gateway, presenter);
         enroll = new Enrollment(new Course(request.courseId, "course1"), new Student(UUID.randomUUID(), request.studentId));
-        enroll.getEnrolledCourse().objectives.add("obj1");
-        enroll.getEnrolledCourse().objectives.add("obj2");
+        enroll.getCourse().objectives.add("obj1");
+        enroll.getCourse().objectives.add("obj2");
         attempt = new Attempt("obj2", 1, enroll);
         enroll.addAttempt(attempt);
         objs = new ArrayList<>();

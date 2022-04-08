@@ -46,7 +46,7 @@ public class EnrollmentTests {
 
         assertEquals(courseId, course.courseId);
         assertEquals(studentId, student.studentId);
-        assertEquals(enroll.getEnrolledStudent(), student);
+        assertEquals(enroll.getStudent(), student);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class EnrollmentTests {
 
         assertEquals(courseId, course.courseId);
         assertEquals(studentId, student.studentId);
-        assertEquals(enroll.getEnrolledCourse(), course);
+        assertEquals(enroll.getCourse(), course);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class EnrollmentTests {
 
         assertEquals(courseId, course.courseId);
         assertEquals(studentId, student.studentId);
-        assertFalse(enroll.checkWithdrawn());
+        assertFalse(enroll.getWithdrawn());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class EnrollmentTests {
 
         assertEquals(courseId, course.courseId);
         assertEquals(studentId, student.studentId);
-        assertEquals(enroll.getEnrollmentDate(), date);
+        assertEquals(enroll.getDate(), date);
     }
 
     @Test

@@ -83,7 +83,7 @@ public class instructorCanDeleteAttemptTest {
     public void interactorUsesGatewayToRemoveAttemptAfterSuccessfulChecks() {
         when(gateway.getInstructor(instructorUUID)).thenReturn(instructor);
         when(gateway.getAttempt(attemptUUID)).thenReturn(attempt);
-        enrollment.getEnrolledCourse().setInstructor(instructor);
+        enrollment.getCourse().setInstructor(instructor);
         interactor.handle(request, presenter);
         verify(gateway, Mockito.times(1)).removeAttempt(attempt.getLongId());
         verify(presenter).presentSuccessfulRemove("Successfully Removed");

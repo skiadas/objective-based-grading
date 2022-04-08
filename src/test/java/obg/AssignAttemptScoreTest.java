@@ -130,6 +130,6 @@ public class AssignAttemptScoreTest {
     }
 
     private void setAttemptEnrollmentCourseInstructor() {
-        attempt.getEnrollment().getEnrolledCourse().setInstructor(instructor);
+        attempt.getEnrollment().getCourse().setInstructor(instructor);
     }
 }
