@@ -1,13 +1,12 @@
 package obg;
 
 import obg.core.ErrorResponse;
-import obg.core.Presenter;
-import obg.core.Request;
-import obg.core.entity.*;
+import obg.core.entity.Course;
+import obg.core.entity.Enrollment;
+import obg.core.entity.Student;
 import obg.gateway.ObjectiveGroupGradeGateway;
 import obg.interactor.ObjectiveGroupGradeInteractor;
 import obg.presenter.ObjectiveGroupGradePresenter;
-import obg.request.ObjectiveGradeRequest;
 import obg.request.ObjectiveGroupGradeRequest;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,8 +21,8 @@ public class ObjectiveGroupGradeTest {
     private ObjectiveGroupGradeInteractor interactor;
     private ObjectiveGroupGradeGateway gateway;
     private ObjectiveGroupGradePresenter presenter;
-    private UUID studentID = UUID.randomUUID();
-    private UUID courseID = UUID.randomUUID();
+    private final UUID studentID = UUID.randomUUID();
+    private final UUID courseID = UUID.randomUUID();
     private Student student;
     private Course course;
     private Enrollment enrollment;
@@ -44,6 +43,7 @@ public class ObjectiveGroupGradeTest {
         when(gateway.getStudent(studentID)).thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_STUDENT);
+        verify(gateway).getStudent(studentID);
     }
 
     @Test
@@ -52,12 +52,12 @@ public class ObjectiveGroupGradeTest {
         when(gateway.getStudent(studentID)).thenReturn(student);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_COURSE);
+        verify(gateway).getCourse(courseID);
     }
 
     @Test
     public void checkInvalidObjectiveTest() {
         ObjectiveGroupGradeRequest request1 = new ObjectiveGroupGradeRequest(courseID, studentID, "J1");
-        course.removeObjective(ObjectiveGroup.BASIC);
         when(gateway.getCourse(courseID)).thenReturn(course);
         when(gateway.getStudent(studentID)).thenReturn(student);
         interactor.handle(request1, presenter);
@@ -71,6 +71,7 @@ public class ObjectiveGroupGradeTest {
         when(gateway.getEnrollment(courseID, studentID)).thenReturn(null);
         interactor.handle(request, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
+        verify(gateway).getEnrollment(courseID, studentID);
     }
 
 }
