@@ -27,6 +27,7 @@ public class UnattemptedObjectivesTest {
     private Presenter presenter;
     private Enrollment enroll;
     private Attempt attempt;
+    private ArrayList<String> objs;
 
     @Before
     public void setUp() {
@@ -35,7 +36,11 @@ public class UnattemptedObjectivesTest {
         presenter = mock(Presenter.class);
         interactor = new UnattemptedObjectiveInteractor(gateway, presenter);
         enroll = new Enrollment(new Course(request.courseId, "course1"), new Student(UUID.randomUUID(), request.studentId));
+        enroll.getEnrolledCourse().objectives.add("obj1");
+        enroll.getEnrolledCourse().objectives.add("obj2");
         attempt = new Attempt("obj2", 1, enroll);
+        objs = new ArrayList<>();
+        objs.add("obj1");
     }
 
     @Test
@@ -49,12 +54,8 @@ public class UnattemptedObjectivesTest {
     @Test
     public void ReturnStudentUnattemptedObjectives(){
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
-        enroll.getEnrolledCourse().objectives.add("obj1");
-        enroll.getEnrolledCourse().objectives.add("obj2");
         gateway.addAttempt(attempt, enroll);
         enroll.addAttempt(attempt);
-        ArrayList<String> objs = new ArrayList<>();
-        objs.add("obj1");
         interactor.handle(request);
         verify(presenter).presentUnattemptedObjectives(objs);
     }
