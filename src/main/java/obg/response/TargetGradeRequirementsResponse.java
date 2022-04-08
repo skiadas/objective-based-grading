@@ -31,16 +31,4 @@ public class TargetGradeRequirementsResponse {
     public int hashCode() {
         return Objects.hash(letterGrade, objectiveRequirements);
     }
-
-    public Object getValues() {
-        return null;
-    }
-
-    public String getErrorMessage() {
-        return null;
-    }
-
-    public boolean isSuccessful() {
-        return false;
-    }
 }

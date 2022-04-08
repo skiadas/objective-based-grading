@@ -51,12 +51,4 @@ public class Instructor {
     public Long getId() {
         return id;
     }
-
-    public String getFirst() {
-        return first;
-    }
-
-    public String getLast() {
-        return last;
-    }
 }

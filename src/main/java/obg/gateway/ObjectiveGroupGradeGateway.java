@@ -11,6 +11,5 @@ public interface ObjectiveGroupGradeGateway {
 
     Student getStudent(UUID studentId);
     Course getCourse(UUID courseId);
-    List<Integer> getHighestObjectiveGrade(UUID studentId, UUID courseId, ObjectiveGroup group);
 
 }

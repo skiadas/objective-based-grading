@@ -28,12 +28,6 @@ public class AttemptMap {
         objectiveMap.get(obj).add(attempt);
     }
 
-
-
-    public String getObjective(String objective) {
-        return objective;
-    }
-
     public boolean isEmpty(){
         return objectiveMap.isEmpty();
     }

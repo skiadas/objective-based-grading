@@ -88,10 +88,6 @@ public class Course {
         this.instructor = instructor;
     }
 
-    public boolean isValidObjective(String objective) {
-        List<String> objectiveList = new ArrayList<>(List.of("L1", "L2", "S1", "S2", "C1", "C2"));
-        return objectiveList.contains(objective);
-    }
 
     public String getObjectivesFor(ObjectiveGroup group) {
 
@@ -116,8 +112,6 @@ public class Course {
             objectiveByGroups.remove(obj);
         }
     }
-
-    public void addStudent(Student student) {students.add(student);}
 
     public void removeStudent(Student student){students.remove(student);}
 
