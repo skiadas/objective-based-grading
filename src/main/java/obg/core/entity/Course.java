@@ -113,6 +113,11 @@ public class Course {
         }
     }
 
+    public boolean isValidObjective(String objective) {
+        List<String> objectiveList = new ArrayList<>(List.of("L1", "L2", "S1", "S2", "C1", "C2"));
+        return objectiveList.contains(objective);
+    }
+
     public void removeStudent(Student student){students.remove(student);}
 
     public void addEnrollment(Enrollment enrollment) {

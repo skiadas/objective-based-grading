@@ -3,6 +3,7 @@ package obg.interactor;
 import obg.core.ErrorResponse;
 import obg.core.Presenter;
 import obg.core.entity.Course;
+import obg.core.entity.Enrollment;
 import obg.core.entity.ObjectiveGroup;
 import obg.core.entity.Student;
 import obg.gateway.ObjectiveGroupGradeGateway;
@@ -22,15 +23,19 @@ public class ObjectiveGroupGradeInteractor {
     public void handle(ObjectiveGroupGradeRequest request, ObjectiveGroupGradePresenter presenter) {
         Student student = gateway.getStudent(request.studentID);
         Course course = gateway.getCourse(request.courseID);
-        ObjectiveGroup group = request.group;
+        Enrollment enrollment = gateway.getEnrollment(request.courseID, request.studentID);
+
         if (student == null) {
             presenter.reportError(ErrorResponse.INVALID_STUDENT);
         }
         else if (course == null) {
             presenter.reportError(ErrorResponse.INVALID_COURSE);
         }
-        else if (!course.isValidObjectiveGroup(group)) {
+        else if (!course.isValidObjective(request.objective)) {
             presenter.reportError(ErrorResponse.INVALID_OBJECTIVE);
+        }
+        else if (enrollment == null) {
+            presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
         }
     }
 }

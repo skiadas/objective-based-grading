@@ -3,10 +3,7 @@ package obg;
 import obg.core.ErrorResponse;
 import obg.core.Presenter;
 import obg.core.Request;
-import obg.core.entity.Attempt;
-import obg.core.entity.Course;
-import obg.core.entity.ObjectiveGroup;
-import obg.core.entity.Student;
+import obg.core.entity.*;
 import obg.gateway.ObjectiveGroupGradeGateway;
 import obg.interactor.ObjectiveGroupGradeInteractor;
 import obg.presenter.ObjectiveGroupGradePresenter;
@@ -21,22 +18,22 @@ import static org.mockito.Mockito.*;
 
 public class ObjectiveGroupGradeTest {
 
-    private Attempt attempt;
     private ObjectiveGroupGradeRequest request;
     private ObjectiveGroupGradeInteractor interactor;
     private ObjectiveGroupGradeGateway gateway;
     private ObjectiveGroupGradePresenter presenter;
-    private String stringAttemptID;
     private UUID studentID = UUID.randomUUID();
     private UUID courseID = UUID.randomUUID();
     private Student student;
     private Course course;
+    private Enrollment enrollment;
 
     @Before
     public void setUp() {
         course = new Course(courseID, "CS327");
         student = new Student(studentID, "Jay");
-        request = new ObjectiveGroupGradeRequest(courseID, studentID, ObjectiveGroup.BASIC);
+        enrollment = new Enrollment(course, student);
+        request = new ObjectiveGroupGradeRequest(courseID, studentID, "L1");
         gateway = mock(ObjectiveGroupGradeGateway.class);
         presenter = mock(ObjectiveGroupGradePresenter.class);
         interactor = new ObjectiveGroupGradeInteractor(gateway);
@@ -59,11 +56,21 @@ public class ObjectiveGroupGradeTest {
 
     @Test
     public void checkInvalidObjectiveTest() {
+        ObjectiveGroupGradeRequest request1 = new ObjectiveGroupGradeRequest(courseID, studentID, "J1");
         course.removeObjective(ObjectiveGroup.BASIC);
         when(gateway.getCourse(courseID)).thenReturn(course);
         when(gateway.getStudent(studentID)).thenReturn(student);
-        interactor.handle(request, presenter);
+        interactor.handle(request1, presenter);
         verify(presenter).reportError(ErrorResponse.INVALID_OBJECTIVE);
+    }
+
+    @Test
+    public void checkStudentIsNotInCourse() {
+        when(gateway.getCourse(courseID)).thenReturn(course);
+        when(gateway.getStudent(studentID)).thenReturn(student);
+        when(gateway.getEnrollment(courseID, studentID)).thenReturn(null);
+        interactor.handle(request, presenter);
+        verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
     }
 
 }
