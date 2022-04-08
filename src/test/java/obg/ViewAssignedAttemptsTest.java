@@ -59,7 +59,6 @@ public class ViewAssignedAttemptsTest {
         expectedList.add(attemptAssigned);
         enrollment.addAttempt(attempt);
         enrollment.addAttempt(attemptAssigned);
-        enrollment.getObjectName();
         when(gateway.getEnrollment(course, student)).thenReturn(enrollment);
         interactor.handle(request, presenter);
         verify(presenter).presentAssignedAttempts(expectedList);

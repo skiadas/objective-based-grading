@@ -126,7 +126,7 @@ public class Course {
 
     public boolean hasStudent(Student student) {
         for (Enrollment e : enrollments) {
-            if (e.getEnrolledStudent().equals(student)) {
+            if (e.getStudent().equals(student)) {
                 return true;
             }
         }

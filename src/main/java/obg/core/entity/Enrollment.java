@@ -19,16 +19,12 @@ public class Enrollment {
     @Basic
     public Boolean withdrawn;
 
-    public int getRemainingAttempts() {
-        return remainingAttempts;
-    }
-
     @Basic
     private int remainingAttempts;
+
     // TODO: Need to eventually fix
     @Transient
     public AttemptMap attemptMap = new AttemptMap();
-
     protected Enrollment() {}
 
     public Enrollment(Course course, Student student, String date, Boolean withdrawn) {
@@ -51,42 +47,41 @@ public class Enrollment {
 
     }
 
-    public Student getEnrolledStudent() {
-        return student;
+    public long getLongId() {
+        return id;
     }
 
-    public Course getEnrolledCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public boolean checkWithdrawn() {
+    public Student getStudent() {
+        return student;
+    }
+
+    public boolean getWithdrawn() {
         return withdrawn;
     }
 
-    public String getEnrollmentDate() {
+    public String getDate() {
         return date;
-    }
-
-    public String toString() {
-        return "Enrollment{" +
-                "id=" + id +
-                ", course=" + course +
-                ", student=" + student +
-                ", date='" + date + '\'' +
-                ", withdrawn=" + withdrawn +
-                ", attemptMap=" + attemptMap +
-                '}';
     }
 
     public AttemptMap getAttemptMap() {
         return attemptMap;
     }
 
+    public int getRemainingAttempts() {
+        return remainingAttempts;
+    }
+
+
     public void addAttempt(Attempt attempt) {
         attemptMap.add(attempt.objective, attempt);
     }
 
-    public void getObjectName() {
+    public void setWithdrawn(boolean b) {
+        withdrawn = b;
     }
 
     public void removeStudent() {
@@ -96,25 +91,8 @@ public class Enrollment {
         student=null;
     }
 
-    public void setWithdrawn(boolean b) {
-        withdrawn = b;
-    }
-
-    public long getLongId() {
-        return id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Enrollment that = (Enrollment) o;
-        return Objects.equals(id, that.id) && Objects.equals(course, that.course) && Objects.equals(student, that.student) && Objects.equals(date, that.date) && withdrawn.equals(that.withdrawn) && Objects.equals(attemptMap, that.attemptMap);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, course, student, date, withdrawn, attemptMap);
+    public void removeSingleAttempt() {
+        remainingAttempts = remainingAttempts - 1;
     }
 
     public ArrayList<String> getUnattemptedObjectives() {
@@ -138,7 +116,27 @@ public class Enrollment {
         return maxGrade;
     }
 
-    public void removeSingleAttempt() {
-        remainingAttempts = remainingAttempts - 1;
+    public String toString() {
+        return "Enrollment{" +
+                "id=" + id +
+                ", course=" + course +
+                ", student=" + student +
+                ", date='" + date + '\'' +
+                ", withdrawn=" + withdrawn +
+                ", attemptMap=" + attemptMap +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Enrollment that = (Enrollment) o;
+        return Objects.equals(id, that.id) && Objects.equals(course, that.course) && Objects.equals(student, that.student) && Objects.equals(date, that.date) && withdrawn.equals(that.withdrawn) && Objects.equals(attemptMap, that.attemptMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, course, student, date, withdrawn, attemptMap);
     }
 }
