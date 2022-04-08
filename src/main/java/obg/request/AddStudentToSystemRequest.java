@@ -4,13 +4,13 @@ import java.util.UUID;
 
 public class AddStudentToSystemRequest {
 
-    private String userName;
+    public final String userName;
 
     public AddStudentToSystemRequest(String userName) {
         this.userName = userName;
     }
 
-    public String getUserName() {
-        return userName;
-    }
+//    public String getUserName() {
+//        return userName;
+//    }
 }

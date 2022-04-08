@@ -163,4 +163,9 @@ public class SqlBackedGateway implements Gateway {
     public void addStudent(String username) {
 
     }
+
+    @Override
+    public Student getStudentUsername(String username) {
+        return null;
+    }
 }
