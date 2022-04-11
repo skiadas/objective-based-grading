@@ -10,5 +10,5 @@ import java.util.UUID;
 public interface ComputeObjectiveGradeGateway {
     Enrollment getEnrollment(UUID courseId, String studentId);
     Attempt attempt(UUID courseId, String studentId, String objective);
-    AttemptList getAttempt(String objective, Integer numAttempts);
+    AttemptList getAttempts(String objective, Integer numAttempts);
 }
