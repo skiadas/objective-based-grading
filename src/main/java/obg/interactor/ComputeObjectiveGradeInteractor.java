@@ -20,8 +20,9 @@ public class ComputeObjectiveGradeInteractor {
     public void handle(ComputeObjectiveGradeRequest request) {
         if (gateway.getEnrollment(request.courseId, request.studentId) == null) {
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
-        }
-        else{
+        } else if (gateway.getEnrollment(request.courseId, request.studentId).attemptMap.isEmpty()) {
+            presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
+        } else {
             int objGrade = gateway.getEnrollment(request.courseId, request.studentId).computeObjectiveGrade(request.obj);
             presenter.presentObjectiveGrade(objGrade);
         }

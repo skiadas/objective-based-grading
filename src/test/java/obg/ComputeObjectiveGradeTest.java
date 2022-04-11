@@ -2,6 +2,7 @@ package obg;
 
 import obg.core.ErrorResponse;
 import obg.core.Presenter;
+import obg.core.entity.Attempt;
 import obg.core.entity.Course;
 import obg.core.entity.Enrollment;
 import obg.core.entity.Student;
@@ -25,6 +26,7 @@ public class ComputeObjectiveGradeTest {
     private ComputeObjectiveGradeRequest request;
     private Enrollment enroll;
     private Student studentId;
+    private Attempt attempt;
 
     @Before
     public void setUp() throws Exception {
@@ -35,6 +37,7 @@ public class ComputeObjectiveGradeTest {
         presenter = mock(Presenter.class);
         interactor = new ComputeObjectiveGradeInteractor(gateway, presenter);
         enroll = new Enrollment(new Course(request.courseId, "course"), new Student(studentId, request.studentId));
+        attempt = new Attempt("obj1", 1, enroll);
     }
 
     @Test
@@ -44,15 +47,64 @@ public class ComputeObjectiveGradeTest {
         verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
     }
 
-//    @Test
-//    public void canCreateComputeObjectiveGradeRequest() {
-//        String courseId = "courseId";
-//        ComputeObjectiveGradeRequest request = new ComputeObjectiveGradeRequest(courseId, studentId);
-//        assertEquals(courseId, request.courseId);
-//    }
-//
-//    @Test
-//    public void interactorCanRequestAttempts() {
-//        // when(gateway.getAttempts());
-//    }
+    @Test
+    public void computeGradeWithZeroAttempts() {
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
+        interactor.handle(request);
+        verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
+    }
+
+    @Test
+    public void computeGradeWithOneAttemptGivenScoreFive() {
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
+        attempt.assignScore(5);
+        enroll.addAttempt(attempt);
+        interactor.handle(request);
+        verify(presenter).presentObjectiveGrade(attempt.getScore());
+    }
+
+    @Test
+    public void computeGradeWithThreeAttempts() {
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
+        Attempt attempt2 = new Attempt("obj1", 2, enroll);
+        Attempt attempt3 = new Attempt("obj1", 3, enroll);
+        attempt.assignScore(2);
+        attempt2.assignScore(6);
+        attempt3.assignScore(4);
+        enroll.addAttempt(attempt);
+        enroll.addAttempt(attempt2);
+        enroll.addAttempt(attempt3);
+        interactor.handle(request);
+        verify(presenter).presentObjectiveGrade(6);
+    }
+
+    @Test
+    public void computeGradeWithThreeAttemptsOfSameScore() {
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
+        Attempt attempt2 = new Attempt("obj1", 2, enroll);
+        Attempt attempt3 = new Attempt("obj1", 3, enroll);
+        attempt.assignScore(2);
+        attempt2.assignScore(2);
+        attempt3.assignScore(2);
+        enroll.addAttempt(attempt);
+        enroll.addAttempt(attempt2);
+        enroll.addAttempt(attempt3);
+        interactor.handle(request);
+        verify(presenter).presentObjectiveGrade(2);
+    }
+
+    @Test
+    public void computeGradeWithThreeAttemptsOfDifferentObjectives() {
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
+        Attempt attempt2 = new Attempt("obj2", 1, enroll);
+        Attempt attempt3 = new Attempt("obj3", 1, enroll);
+        attempt.assignScore(5);
+        attempt2.assignScore(2);
+        attempt3.assignScore(6);
+        enroll.addAttempt(attempt);
+        enroll.addAttempt(attempt2);
+        enroll.addAttempt(attempt3);
+        interactor.handle(request);
+        verify(presenter).presentObjectiveGrade(attempt.getScore());
+    }
 }
