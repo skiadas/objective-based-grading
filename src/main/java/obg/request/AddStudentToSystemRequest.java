@@ -12,7 +12,4 @@ public class AddStudentToSystemRequest implements Request {
         this.userName = userName;
     }
 
-//    public String getUserName() {
-//        return userName;
-//    }
 }

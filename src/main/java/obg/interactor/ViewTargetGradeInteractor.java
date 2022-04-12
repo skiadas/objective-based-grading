@@ -22,9 +22,7 @@ public class ViewTargetGradeInteractor {
             presenter.reportError(ErrorResponse.INVALID_LETTER_GRADE);
         } else {
             presenter.presentTargetGradeRequirements(
-                    new TargetGradeRequirementsResponse(request.letterGrade,
-                                                        course.gradeBreaks.getScore(request.letterGrade))
-                                                    );
+                    new TargetGradeRequirementsResponse(request.letterGrade, course.gradeBreaks.getScore(request.letterGrade)));
         }
     }
 }

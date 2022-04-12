@@ -7,10 +7,6 @@ public class AttemptMap {
 
     HashMap<String, AttemptList> objectiveMap = new HashMap<>();
 
-    public void createObjectiveList(String obj, AttemptList attempts) {
-        add(obj, attempts);
-    }
-
     public void add(String obj, AttemptList attempts) {
 
         if (objectiveMap.containsKey(obj)) {

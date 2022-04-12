@@ -43,7 +43,7 @@ public class Enrollment {
     }
 
     public Enrollment(Course course, Student student, int remainingAttempts) {
-        this(course,student);
+        this(course, student);
         this.remainingAttempts = remainingAttempts;
     }
 

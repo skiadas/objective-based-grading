@@ -117,14 +117,6 @@ public class Attempt {
                 && status == attempt.status;
     }
 
-    public String getObjectName() {
-        return objective;
-    }
-
-    public int getAttemptNumber() {
-        return attemptNumber;
-    }
-
     public enum AttemptStatus {
         PENDING,
         ASSIGNED,

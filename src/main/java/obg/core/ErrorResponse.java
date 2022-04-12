@@ -8,7 +8,6 @@ public class ErrorResponse {
     public static final String INVALID_LETTER_GRADE = "Invalid letter grade";
     public static final String INVALID_INSTRUCTOR = "Invalid Instructor";
     public static final String INVALID_OBJECTIVE = "Invalid Objective";
-    public static final String STUDENT_NOT_ENROLLED = "Student not enrolled";
     public static final String INVALID_ENROLLMENT = "Enrollment does not exist";
     public static final String INVALID_ATTEMPT = "Attempt does not exist";
     public static final String INVALID_SCORE = "Invalid integer score";

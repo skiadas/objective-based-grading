@@ -69,12 +69,7 @@ public class ComputeObjectiveGradeTest {
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
         Attempt attempt2 = new Attempt("obj1", 2, enroll);
         Attempt attempt3 = new Attempt("obj1", 3, enroll);
-        attempt.assignScore(2);
-        attempt2.assignScore(6);
-        attempt3.assignScore(4);
-        enroll.addAttempt(attempt);
-        enroll.addAttempt(attempt2);
-        enroll.addAttempt(attempt3);
+        assignAttemptsWithScores(attempt, 2, attempt2, 6, attempt3, 4, enroll);
         when(gateway.getAttempts(request.obj,3)).thenReturn(enroll.attemptMap.getAttemptList("obj1"));
         interactor.handle(request);
         verify(presenter).presentObjectiveGrade(6);
@@ -85,12 +80,7 @@ public class ComputeObjectiveGradeTest {
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
         Attempt attempt2 = new Attempt("obj1", 2, enroll);
         Attempt attempt3 = new Attempt("obj1", 3, enroll);
-        attempt.assignScore(2);
-        attempt2.assignScore(2);
-        attempt3.assignScore(2);
-        enroll.addAttempt(attempt);
-        enroll.addAttempt(attempt2);
-        enroll.addAttempt(attempt3);
+        assignAttemptsWithScores(attempt, 2, attempt2, 2, attempt3, 2, enroll);
         when(gateway.getAttempts(request.obj,3)).thenReturn(enroll.attemptMap.getAttemptList("obj1"));
         interactor.handle(request);
         verify(presenter).presentObjectiveGrade(2);
@@ -101,12 +91,7 @@ public class ComputeObjectiveGradeTest {
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
         Attempt attempt2 = new Attempt("obj2", 1, enroll);
         Attempt attempt3 = new Attempt("obj3", 1, enroll);
-        attempt.assignScore(5);
-        attempt2.assignScore(2);
-        attempt3.assignScore(6);
-        enroll.addAttempt(attempt);
-        enroll.addAttempt(attempt2);
-        enroll.addAttempt(attempt3);
+        assignAttemptsWithScores(attempt, 5, attempt2, 2, attempt3, 6, enroll);
         when(gateway.getAttempts(request.obj,1)).thenReturn(enroll.attemptMap.getAttemptList("obj1"));
         when(gateway.getAttempts(request.obj,1)).thenReturn(enroll.attemptMap.getAttemptList("obj2"));
         when(gateway.getAttempts(request.obj,1)).thenReturn(enroll.attemptMap.getAttemptList("obj3"));
@@ -114,17 +99,21 @@ public class ComputeObjectiveGradeTest {
         verify(presenter).presentObjectiveGrade(attempt.getScore());
     }
 
+    private void assignAttemptsWithScores(Attempt attempt, int score, Attempt attempt2, int score1, Attempt attempt3, int score2, Enrollment enroll) {
+        attempt.assignScore(score);
+        attempt2.assignScore(score1);
+        attempt3.assignScore(score2);
+        enroll.addAttempt(attempt);
+        enroll.addAttempt(attempt2);
+        enroll.addAttempt(attempt3);
+    }
+
     @Test
     public void computeGradeWithOnlyOneObj1Attempt() {
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
         Attempt attempt2 = new Attempt("obj2", 1, enroll);
         Attempt attempt3 = new Attempt("obj2", 2, enroll);
-        attempt.assignScore(1);
-        attempt2.assignScore(7);
-        attempt3.assignScore(7);
-        enroll.addAttempt(attempt);
-        enroll.addAttempt(attempt2);
-        enroll.addAttempt(attempt2);
+        assignAttemptsWithScores(attempt, 1, attempt2, 7, attempt3, 7, enroll);
         when(gateway.getAttempts(request.obj,1)).thenReturn(enroll.attemptMap.getAttemptList("obj1"));
         when(gateway.getAttempts(request.obj,2)).thenReturn(enroll.attemptMap.getAttemptList("obj2"));
         interactor.handle(request);
@@ -136,12 +125,7 @@ public class ComputeObjectiveGradeTest {
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
         Attempt attempt2 = new Attempt("obj1", 2, enroll);
         Attempt attempt3 = new Attempt("obj1", 3, enroll);
-        attempt.assignScore(5);
-        attempt2.assignScore(5);
-        attempt3.assignScore(1);
-        enroll.addAttempt(attempt);
-        enroll.addAttempt(attempt2);
-        enroll.addAttempt(attempt3);
+        assignAttemptsWithScores(attempt, 5, attempt2, 5, attempt3, 1, enroll);
         when(gateway.getAttempts(request.obj,3)).thenReturn(enroll.attemptMap.getAttemptList("obj1"));
         interactor.handle(request);
         verify(presenter).presentObjectiveGrade(5);

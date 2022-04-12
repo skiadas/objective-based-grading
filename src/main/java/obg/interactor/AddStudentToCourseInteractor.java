@@ -30,7 +30,7 @@ public class AddStudentToCourseInteractor {
             presenter.reportError(ErrorResponse.INVALID_COURSE);
         } else if (!course.isCourseInstructor(instructor)) {
             presenter.reportError(ErrorResponse.NOT_COURSE_INSTRUCTOR);
-        } else if (course.hasStudent(student)) { // what happens when student is in course
+        } else if (course.hasStudent(student)) {
             presenter.reportError(ErrorResponse.EXISTING_ENROLLMENT);
         } else {
             Enrollment enrollment = new Enrollment(course, student);

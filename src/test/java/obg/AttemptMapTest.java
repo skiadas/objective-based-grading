@@ -3,6 +3,7 @@ package obg;
 import obg.core.Presenter;
 import obg.core.entity.*;
 import obg.gateway.AttemptRequestGateway;
+import obg.interactor.ObjectiveGradeInteractor;
 import obg.request.ObjectiveGradeRequest;
 import org.junit.Before;
 import org.junit.Test;

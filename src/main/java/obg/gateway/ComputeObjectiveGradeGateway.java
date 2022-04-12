@@ -2,7 +2,6 @@ package obg.gateway;
 
 import obg.core.entity.Attempt;
 import obg.core.entity.AttemptList;
-import obg.core.entity.Course;
 import obg.core.entity.Enrollment;
 
 import java.util.UUID;
