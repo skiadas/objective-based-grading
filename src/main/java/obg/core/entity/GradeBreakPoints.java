@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static obg.core.entity.ObjectiveGroup.*;
-import static obg.core.entity.ObjectiveGroup.BASIC;
 
 public class GradeBreakPoints {
     private final HashMap<String, EnumMap<ObjectiveGroup, Integer>> gradeBreaks = new HashMap<>();

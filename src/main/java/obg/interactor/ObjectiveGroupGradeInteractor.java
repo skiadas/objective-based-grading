@@ -1,17 +1,12 @@
 package obg.interactor;
 
 import obg.core.ErrorResponse;
-import obg.core.Presenter;
 import obg.core.entity.Course;
 import obg.core.entity.Enrollment;
-import obg.core.entity.ObjectiveGroup;
 import obg.core.entity.Student;
 import obg.gateway.ObjectiveGroupGradeGateway;
 import obg.presenter.ObjectiveGroupGradePresenter;
 import obg.request.ObjectiveGroupGradeRequest;
-
-import java.util.EnumMap;
-import java.util.UUID;
 
 public class ObjectiveGroupGradeInteractor {
 

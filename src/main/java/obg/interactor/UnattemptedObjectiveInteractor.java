@@ -5,7 +5,6 @@ import obg.core.Presenter;
 import obg.gateway.UnattemptedObjectiveGateway;
 import obg.request.UnattemptedObjectiveRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UnattemptedObjectiveInteractor {

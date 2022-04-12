@@ -1,7 +1,6 @@
 package obg;
 
 import obg.core.ErrorResponse;
-import obg.core.Presenter;
 import obg.core.entity.*;
 import obg.gateway.DeleteObjectiveGateway;
 import obg.interactor.DeleteObjectiveInteratcor;
@@ -14,18 +13,14 @@ import java.util.UUID;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.verify;
 
 public class DeleteObjectiveTests {
     public UUID randId;
-    private Course course;
-    private Student student;
     private DeleteObjectiveInteratcor interactor;
     private DeleteObjectiveGateway gateway;
     private DeleteObjectiveRequest request;
     private DeleteObjectivePresenter presenter;
     private Enrollment enrollment;
-    private Attempt attempt;
     private String obj1;
 
 
@@ -35,11 +30,11 @@ public class DeleteObjectiveTests {
         presenter = mock(DeleteObjectivePresenter.class);
         gateway = mock(DeleteObjectiveGateway.class);
         randId = UUID.randomUUID();
-        course = new Course(randId, null, null);
-        student = new Student(randId, "student1");
+        Course course = new Course(randId, null, null);
+        Student student = new Student(randId, "student1");
         interactor = new DeleteObjectiveInteratcor(gateway);
         enrollment = new Enrollment(course, student);
-        attempt = new Attempt(obj1, 1, enrollment);
+        Attempt attempt = new Attempt(obj1, 1, enrollment);
         enrollment.addAttempt(attempt);
         request = new DeleteObjectiveRequest(obj1, enrollment);
     }

@@ -4,11 +4,8 @@ import obg.core.ErrorResponse;
 import obg.core.Presenter;
 import obg.core.entity.Student;
 import obg.gateway.AddStudentToSystemGateway;
-import obg.interactor.AddStudentToCourseInteractor;
 import obg.interactor.AddStudentToSystemInteractor;
 import obg.request.AddStudentToSystemRequest;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -17,7 +14,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class AddStudentToSystemTest {
-    private AddStudentToSystemGateway gateway;
 
 
     @Test

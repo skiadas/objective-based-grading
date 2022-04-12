@@ -25,13 +25,11 @@ public class ObjectiveGroupGradeTest {
     private final UUID courseID = UUID.randomUUID();
     private Student student;
     private Course course;
-    private Enrollment enrollment;
 
     @Before
     public void setUp() {
         course = new Course(courseID, "CS327");
         student = new Student(studentID, "Jay");
-        enrollment = new Enrollment(course, student);
         request = new ObjectiveGroupGradeRequest(courseID, studentID, "L1");
         gateway = mock(ObjectiveGroupGradeGateway.class);
         presenter = mock(ObjectiveGroupGradePresenter.class);

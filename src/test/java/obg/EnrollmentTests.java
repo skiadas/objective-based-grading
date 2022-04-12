@@ -20,7 +20,7 @@ public class EnrollmentTests {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         courseId = UUID.randomUUID();
         studentId = UUID.randomUUID();
         course = new Course(courseId, "test course");
@@ -128,8 +128,7 @@ public class EnrollmentTests {
         enroll.addAttempt(attempt2);
         attempt.assignScore(2);
         attempt2.assignScore(3);
-        int objGrade = 0;
-        objGrade = enroll.computeObjectiveGrade(obj);
+        int objGrade = enroll.computeObjectiveGrade(obj);
         assertEquals(3, objGrade);
 
 

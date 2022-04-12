@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class ComputeObjectiveGradeTest {
@@ -29,7 +28,7 @@ public class ComputeObjectiveGradeTest {
     private Attempt attempt;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         courseId = UUID.randomUUID();
         studentId = UUID.randomUUID();
         request = new ComputeObjectiveGradeRequest(courseId, "joe", "obj1");

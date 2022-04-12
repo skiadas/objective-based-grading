@@ -17,10 +17,8 @@ public class AttemptMapTest {
     public UUID randId;
     private Course course;
     private Student student;
-    private ObjectiveGradeInteractor interactor;
     private AttemptRequestGateway gateway;
     private ObjectiveGradeRequest request;
-    private Presenter presenter;
     private Enrollment enrollment;
 
     @Before
@@ -30,13 +28,11 @@ public class AttemptMapTest {
         course = new Course(randId, null, null);
         request = new ObjectiveGradeRequest("Name", randId);
         student = new Student(UUID.randomUUID(), request.userName);
-        interactor = new ObjectiveGradeInteractor(gateway);
         enrollment = new Enrollment(course, student);
     }
 
     @Test
     public void ValidMapDisplay() {
-        AttemptMap map = new AttemptMap();
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(student.userName)).thenReturn(student);
     }

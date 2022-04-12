@@ -8,7 +8,6 @@ public class AttemptMap {
     HashMap<String, AttemptList> objectiveMap = new HashMap<>();
 
     public void add(String obj, AttemptList attempts) {
-
         if (objectiveMap.containsKey(obj)) {
             objectiveMap.get(obj).addAll(attempts);
         } else {

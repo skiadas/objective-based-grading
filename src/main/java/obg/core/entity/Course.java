@@ -37,7 +37,7 @@ public class Course {
     @Transient
     public EnumMap<ObjectiveGroup, String> objectiveByGroups = new EnumMap<>(ObjectiveGroup.class);
 
-    private Course() {
+    protected Course() {
     }
 
     public Course(UUID courseId, String courseName, List<Student> students) {
@@ -55,6 +55,7 @@ public class Course {
     public Course(String courseName) {
         this(UUID.randomUUID(), courseName);
     }
+
 
 
     public UUID getCourseId() {
@@ -108,9 +109,7 @@ public class Course {
     }
 
     public void removeObjective(ObjectiveGroup obj) {
-        if (objectiveByGroups.containsKey(obj)) {
-            objectiveByGroups.remove(obj);
-        }
+        objectiveByGroups.remove(obj);
     }
 
     public boolean isValidObjective(String objective) {

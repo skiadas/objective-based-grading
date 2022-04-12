@@ -1,7 +1,5 @@
 package obg.request;
 
-import obg.core.entity.ObjectiveGroup;
-
 import java.util.UUID;
 
 public class ObjectiveGroupGradeRequest {
