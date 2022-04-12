@@ -126,6 +126,26 @@ public class EnrollmentTests {
         assertEquals(objs , unattemptedObjectives);
     }
 
+    @Test
+    public void deleteObjectFromEnrollment(){
+        UUID courseId = UUID.randomUUID();
+        UUID studentId = UUID.randomUUID();
+
+        course = new Course(courseId, "test course");
+        student = new Student(studentId, "Test student");
+        enroll = new Enrollment(course, student);
+
+        course.objectives.add( "obj1");
+        course.objectives.add("obj2");
+
+        Attempt attempt = new Attempt("obj1", 1, enroll);
+        Attempt attempt2 = new Attempt("obj2", 2, enroll);
+        enroll.addAttempt(attempt);
+        enroll.addAttempt(attempt2);
+        enroll.deleteObjective("obj2");
+
+        assertNull(enroll.getAttemptMap().getAttemptList("obj2"));
+    }
 
     @Test
     public void computeObjectiveGradeTest(){

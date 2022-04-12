@@ -138,4 +138,8 @@ public class Enrollment {
     public int hashCode() {
         return Objects.hash(id, course, student, date, withdrawn, attemptMap);
     }
+
+    public void deleteObjective(String object) {
+        attemptMap.deleteObjective(object);
+    }
 }

@@ -48,4 +48,8 @@ public class AttemptMap {
     public int hashCode() {
         return Objects.hash(objectiveMap);
     }
+
+    public void deleteObjective(String object) {
+        objectiveMap.remove(object);
+    }
 }
