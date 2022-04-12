@@ -76,7 +76,8 @@ public class Course {
     }
 
     public boolean isValidLetterGrade(String letterGrade) {
-        List<String> letterGrades = new ArrayList<>(List.of("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"));
+        List<String> letterGrades = new ArrayList<>(
+                List.of("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"));
         return letterGrades.contains(letterGrade);
     }
 
@@ -93,8 +94,7 @@ public class Course {
 
         if (isValidObjectiveGroup(group)) {
             return objectiveByGroups.get(group);
-        }
-        else {
+        } else {
             throw new RuntimeException(group.toString() + ": Not Found");
         }
     }
@@ -118,7 +118,9 @@ public class Course {
         return objectiveList.contains(objective);
     }
 
-    public void removeStudent(Student student){students.remove(student);}
+    public void removeStudent(Student student) {
+        students.remove(student);
+    }
 
     public void addEnrollment(Enrollment enrollment) {
         enrollments.add(enrollment);

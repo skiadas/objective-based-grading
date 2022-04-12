@@ -18,7 +18,7 @@ public class Student {
     @Basic
     public String userName;
 
-    @OneToMany(mappedBy = "student", cascade =CascadeType.ALL)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     public List<Enrollment> enrollments;
 
     protected Student() {}

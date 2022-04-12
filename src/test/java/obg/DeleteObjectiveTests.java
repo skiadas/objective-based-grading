@@ -25,7 +25,6 @@ public class DeleteObjectiveTests {
     private DeleteObjectiveRequest request;
     private DeleteObjectivePresenter presenter;
     private Enrollment enrollment;
-    private AttemptMap attemptMap;
     private Attempt attempt;
     private String obj1;
 
@@ -40,7 +39,6 @@ public class DeleteObjectiveTests {
         student = new Student(randId, "student1");
         interactor = new DeleteObjectiveInteratcor(gateway);
         enrollment = new Enrollment(course, student);
-        attemptMap = new AttemptMap();
         attempt = new Attempt(obj1, 1, enrollment);
         enrollment.addAttempt(attempt);
         request = new DeleteObjectiveRequest(obj1, enrollment);

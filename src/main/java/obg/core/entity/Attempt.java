@@ -51,7 +51,9 @@ public class Attempt {
         return enrollment.getStudent();
     }
 
-    public UUID getAttemptId() { return attemptId; }
+    public UUID getAttemptId() {
+        return attemptId;
+    }
 
     public Long getLongId() {
         return id;
@@ -108,7 +110,11 @@ public class Attempt {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Attempt attempt = (Attempt) o;
-        return attemptNumber == attempt.attemptNumber && Objects.equals(objective, attempt.objective) && Objects.equals(getStudent(), attempt.getStudent()) && Objects.equals(getCourse(), attempt.getCourse()) && status == attempt.status;
+        return attemptNumber == attempt.attemptNumber
+                && Objects.equals(objective, attempt.objective)
+                && Objects.equals(getStudent(), attempt.getStudent())
+                && Objects.equals(getCourse(), attempt.getCourse())
+                && status == attempt.status;
     }
 
     public String getObjectName() {

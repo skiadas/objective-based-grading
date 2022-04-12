@@ -15,20 +15,19 @@ public class AttemptMap {
 
         if (objectiveMap.containsKey(obj)) {
             objectiveMap.get(obj).addAll(attempts);
-        }
-        else {
+        } else {
             objectiveMap.put(obj, attempts);
         }
     }
 
-    public void add(String obj, Attempt attempt){
+    public void add(String obj, Attempt attempt) {
         if (!objectiveMap.containsKey(obj)) {
             objectiveMap.put(obj, new AttemptList());
         }
         objectiveMap.get(obj).add(attempt);
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return objectiveMap.isEmpty();
     }
 

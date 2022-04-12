@@ -11,7 +11,10 @@ public class AttemptList {
     public void addAll(AttemptList attempts) {
         list.addAll(attempts.list);
     }
-    public void add(Attempt attempt){this.list.add(attempt); }
+
+    public void add(Attempt attempt) {
+        this.list.add(attempt);
+    }
 
     @Override
     public boolean equals(Object o) {
