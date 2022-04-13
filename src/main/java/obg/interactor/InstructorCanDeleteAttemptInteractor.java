@@ -29,6 +29,7 @@ public class InstructorCanDeleteAttemptInteractor {
             presenter.reportError((ErrorResponse.NOT_COURSE_INSTRUCTOR));
         } else {
             gateway.removeAttempt(attempt.getLongId());
+
             presenter.presentSuccessfulRemove("Successfully Removed");
         }
     }

@@ -18,7 +18,6 @@ public class InstructorCourseListInteractor implements Interactor {
     }
 
     public void handle(InstructorCourseListRequest request, Presenter presenter) {
-        // Ask the gateway if instructor exists
         // TODO: Can we do this better?
         Instructor instr = gateway.getInstructor(request.instructorId);
         if (instr == null) {

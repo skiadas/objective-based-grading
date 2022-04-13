@@ -2,8 +2,6 @@ package obg.request;
 
 import obg.core.Request;
 
-import java.util.UUID;
-
 public class AddStudentToSystemRequest implements Request {
 
     public final String userName;
@@ -12,7 +10,4 @@ public class AddStudentToSystemRequest implements Request {
         this.userName = userName;
     }
 
-//    public String getUserName() {
-//        return userName;
-//    }
 }

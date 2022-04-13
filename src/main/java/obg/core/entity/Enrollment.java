@@ -25,6 +25,7 @@ public class Enrollment {
     // TODO: Need to eventually fix
     @Transient
     public AttemptMap attemptMap = new AttemptMap();
+
     protected Enrollment() {}
 
     public Enrollment(Course course, Student student, String date, Boolean withdrawn) {
@@ -42,9 +43,8 @@ public class Enrollment {
     }
 
     public Enrollment(Course course, Student student, int remainingAttempts) {
-        this(course,student);
-        this.remainingAttempts=remainingAttempts;
-
+        this(course, student);
+        this.remainingAttempts = remainingAttempts;
     }
 
     public long getLongId() {
@@ -75,6 +75,9 @@ public class Enrollment {
         return remainingAttempts;
     }
 
+    public void addRemainingAttempts(){remainingAttempts++;}
+
+    public void subtractRemainingAttempts(){remainingAttempts--;}
 
     public void addAttempt(Attempt attempt) {
         attemptMap.add(attempt.objective, attempt);
@@ -87,8 +90,8 @@ public class Enrollment {
     public void removeStudent() {
         course.removeStudent(student);
         withdrawn = true;
-        course=null;
-        student=null;
+        course = null;
+        student = null;
     }
 
     public void removeSingleAttempt() {
@@ -97,8 +100,8 @@ public class Enrollment {
 
     public ArrayList<String> getUnattemptedObjectives() {
         ArrayList<String> objs = new ArrayList<>();
-        for (String obj : course.objectives){
-            if(!getAttemptMap().objectiveMap.containsKey(obj)){
+        for (String obj : course.objectives) {
+            if (!getAttemptMap().objectiveMap.containsKey(obj)) {
                 objs.add(obj);
             }
         }
@@ -108,8 +111,8 @@ public class Enrollment {
     public int computeObjectiveGrade(String objective) {
         AttemptList attemptList = attemptMap.getAttemptList(objective);
         int maxGrade = 0;
-        for(Attempt a : attemptList.list){
-            if( a.getScore() > maxGrade){
+        for (Attempt a : attemptList.list) {
+            if (a.getScore() > maxGrade) {
                 maxGrade = a.getScore();
             }
         }
@@ -117,14 +120,14 @@ public class Enrollment {
     }
 
     public String toString() {
-        return "Enrollment{" +
-                "id=" + id +
-                ", course=" + course +
-                ", student=" + student +
-                ", date='" + date + '\'' +
-                ", withdrawn=" + withdrawn +
-                ", attemptMap=" + attemptMap +
-                '}';
+        return "Enrollment{"
+                + "id=" + id
+                + ", course=" + course
+                + ", student=" + student
+                + ", date='" + date + '\''
+                + ", withdrawn=" + withdrawn
+                + ", attemptMap=" + attemptMap
+                + '}';
     }
 
     @Override
@@ -132,11 +135,20 @@ public class Enrollment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Enrollment that = (Enrollment) o;
-        return Objects.equals(id, that.id) && Objects.equals(course, that.course) && Objects.equals(student, that.student) && Objects.equals(date, that.date) && withdrawn.equals(that.withdrawn) && Objects.equals(attemptMap, that.attemptMap);
+        return Objects.equals(id, that.id)
+                && Objects.equals(course, that.course)
+                && Objects.equals(student, that.student)
+                && Objects.equals(date, that.date)
+                && withdrawn.equals(that.withdrawn)
+                && Objects.equals(attemptMap, that.attemptMap);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, course, student, date, withdrawn, attemptMap);
+    }
+
+    public void deleteObjective(String object) {
+        attemptMap.deleteObjective(object);
     }
 }

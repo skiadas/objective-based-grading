@@ -1,16 +1,12 @@
 package obg.interactor;
 
 import obg.core.ErrorResponse;
-import obg.core.Presenter;
 import obg.core.entity.Course;
 import obg.core.entity.Enrollment;
-import obg.core.entity.ObjectiveGroup;
 import obg.core.entity.Student;
 import obg.gateway.ObjectiveGroupGradeGateway;
 import obg.presenter.ObjectiveGroupGradePresenter;
 import obg.request.ObjectiveGroupGradeRequest;
-
-import java.util.UUID;
 
 public class ObjectiveGroupGradeInteractor {
 
@@ -27,15 +23,14 @@ public class ObjectiveGroupGradeInteractor {
 
         if (student == null) {
             presenter.reportError(ErrorResponse.INVALID_STUDENT);
-        }
-        else if (course == null) {
+        } else if (course == null) {
             presenter.reportError(ErrorResponse.INVALID_COURSE);
-        }
-        else if (!course.isValidObjective(request.objective)) {
+        } else if (!course.isValidObjective(request.objective)) {
             presenter.reportError(ErrorResponse.INVALID_OBJECTIVE);
-        }
-        else if (enrollment == null) {
+        } else if (enrollment == null) {
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
+        } else {
+
         }
     }
 }

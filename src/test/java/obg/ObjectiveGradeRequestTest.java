@@ -12,7 +12,7 @@ public class ObjectiveGradeRequestTest extends TestCase {
     public void testObjectiveGradeRequest() {
         UUID randID = randomUUID();
         ObjectiveGradeRequest objective = new ObjectiveGradeRequest("JackJ", randID);
-        assertEquals("JackJ", objective.getStudentId());
-        assertEquals(randID, objective.getCourseId());
+        assertEquals("JackJ", objective.studentId);
+        assertEquals(randID, objective.courseId);
     }
 }

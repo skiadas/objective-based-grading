@@ -1,4 +1,4 @@
-package obg;
+package obg.interactor;
 
 import obg.core.Presenter;
 import obg.gateway.AttemptRequestGateway;

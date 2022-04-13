@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static obg.core.entity.ObjectiveGroup.*;
-import static obg.core.entity.ObjectiveGroup.BASIC;
 
 public class GradeBreakPoints {
     private final HashMap<String, EnumMap<ObjectiveGroup, Integer>> gradeBreaks = new HashMap<>();
@@ -50,10 +49,9 @@ public class GradeBreakPoints {
         throw new RuntimeException("No matching breakpoint found");
     }
 
-    public String getLetterGrade(EnumMap<ObjectiveGroup,Integer> targetScore){
-        for (BreakpointEntry be :
-                breakpointEntries) {
-            if(be.targetScores == targetScore){
+    public String getLetterGrade(EnumMap<ObjectiveGroup,Integer> targetScore) {
+        for (BreakpointEntry be : breakpointEntries) {
+            if (be.targetScores == targetScore) {
                 return be.letterGrade;
             }
         }
@@ -68,12 +66,12 @@ public class GradeBreakPoints {
         breakpointEntries.add(entry);
     }
 
-    public void add(String letterGrade, EnumMap<ObjectiveGroup, Integer> targetScores){
-        BreakpointEntry entry = new BreakpointEntry(letterGrade, targetScores );
+    public void add(String letterGrade, EnumMap<ObjectiveGroup, Integer> targetScores) {
+        BreakpointEntry entry = new BreakpointEntry(letterGrade, targetScores);
         addEntry(entry);
     }
 
-    public void remove(String letterGrade){
+    public void remove(String letterGrade) {
         breakpointEntries.removeIf(i -> i.letterGrade.equals(letterGrade));
     }
 
@@ -87,22 +85,22 @@ public class GradeBreakPoints {
         }
 
         public boolean hasSameScoreAs(BreakpointEntry be) {
-           return this.targetScores.get(BASIC) == be.targetScores.get(BASIC) &&
-                   this.targetScores.get(CORE) == be.targetScores.get(CORE) &&
-                   this.targetScores.get(EXTRA) == be.targetScores.get(EXTRA);
+            return this.targetScores.get(BASIC) == be.targetScores.get(BASIC)
+                    && this.targetScores.get(CORE) == be.targetScores.get(CORE)
+                    && this.targetScores.get(EXTRA) == be.targetScores.get(EXTRA);
 
         }
 
         public boolean isNoLessThan(BreakpointEntry be) {
-            return this.targetScores.get(BASIC) >= be.targetScores.get(BASIC) &&
-                    this.targetScores.get(CORE) >= be.targetScores.get(CORE) &&
-                    this.targetScores.get(EXTRA) >= be.targetScores.get(EXTRA);
+            return this.targetScores.get(BASIC) >= be.targetScores.get(BASIC)
+                    && this.targetScores.get(CORE) >= be.targetScores.get(CORE)
+                    && this.targetScores.get(EXTRA) >= be.targetScores.get(EXTRA);
         }
 
         public boolean isNoMoreThan(BreakpointEntry be) {
-            return this.targetScores.get(BASIC) <= be.targetScores.get(BASIC) &&
-                    this.targetScores.get(CORE) <= be.targetScores.get(CORE) &&
-                    this.targetScores.get(EXTRA) <= be.targetScores.get(EXTRA);
+            return this.targetScores.get(BASIC) <= be.targetScores.get(BASIC)
+                    && this.targetScores.get(CORE) <= be.targetScores.get(CORE)
+                    && this.targetScores.get(EXTRA) <= be.targetScores.get(EXTRA);
         }
     }
 }

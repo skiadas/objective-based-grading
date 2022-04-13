@@ -37,7 +37,7 @@ public class Course {
     @Transient
     public EnumMap<ObjectiveGroup, String> objectiveByGroups = new EnumMap<>(ObjectiveGroup.class);
 
-    private Course() {
+    protected Course() {
     }
 
     public Course(UUID courseId, String courseName, List<Student> students) {
@@ -55,6 +55,7 @@ public class Course {
     public Course(String courseName) {
         this(UUID.randomUUID(), courseName);
     }
+
 
 
     public UUID getCourseId() {
@@ -76,7 +77,8 @@ public class Course {
     }
 
     public boolean isValidLetterGrade(String letterGrade) {
-        List<String> letterGrades = new ArrayList<>(List.of("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"));
+        List<String> letterGrades = new ArrayList<>(
+                List.of("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"));
         return letterGrades.contains(letterGrade);
     }
 
@@ -93,8 +95,7 @@ public class Course {
 
         if (isValidObjectiveGroup(group)) {
             return objectiveByGroups.get(group);
-        }
-        else {
+        } else {
             throw new RuntimeException(group.toString() + ": Not Found");
         }
     }
@@ -108,9 +109,7 @@ public class Course {
     }
 
     public void removeObjective(ObjectiveGroup obj) {
-        if (objectiveByGroups.containsKey(obj)) {
-            objectiveByGroups.remove(obj);
-        }
+        objectiveByGroups.remove(obj);
     }
 
     public boolean isValidObjective(String objective) {
@@ -118,7 +117,9 @@ public class Course {
         return objectiveList.contains(objective);
     }
 
-    public void removeStudent(Student student){students.remove(student);}
+    public void removeStudent(Student student) {
+        students.remove(student);
+    }
 
     public void addEnrollment(Enrollment enrollment) {
         enrollments.add(enrollment);

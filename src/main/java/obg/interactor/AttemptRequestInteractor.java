@@ -24,9 +24,11 @@ public class AttemptRequestInteractor implements Interactor {
         } else if (!gateway.objectiveInCourse(request.objective, request.courseId)) {
             presenter.reportError(ErrorResponse.INVALID_OBJECTIVE);
         }
-
         Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enroll);
+        gateway.getEnrollment(request.courseId,request.studentId).subtractRemainingAttempts();
         presenter.presentAttempt(attempt);
     }
+
+    // In class: change around some of the checks to account for no negative remainingAttempts
 
 }

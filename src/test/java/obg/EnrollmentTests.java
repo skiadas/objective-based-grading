@@ -1,6 +1,7 @@
 package obg;
 
 import obg.core.entity.*;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,20 +13,25 @@ public class EnrollmentTests {
     private Course course;
     private Student student;
     private Enrollment enroll;
+    private String date;
+    private Boolean withdrawn;
+    private UUID courseId;
+    private UUID studentId;
+
+
+    @Before
+    public void setUp() {
+        courseId = UUID.randomUUID();
+        studentId = UUID.randomUUID();
+        course = new Course(courseId, "test course");
+        student = new Student(studentId, "Test student");
+        date = "08-13-2022";
+        withdrawn = false;
+        enroll = new Enrollment(course, student, date, withdrawn);
+    }
 
     @Test
     public void creatingEmptyEnrollmentList() {
-
-        UUID courseId = UUID.randomUUID();
-        UUID studentId = UUID.randomUUID();
-
-        course = new Course(courseId, "test course");
-        student = new Student(studentId, "Test student");
-        String date = "08-13-2022";
-        Boolean withdrawn = false;
-
-        enroll = new Enrollment(course, student, date, withdrawn);
-
         assertEquals(courseId, course.courseId);
         assertEquals(studentId, student.studentId);
         assertTrue(enroll.attemptMap.isEmpty());
@@ -33,17 +39,6 @@ public class EnrollmentTests {
 
     @Test
     public void checkingStudentInEnrollment() {
-
-        UUID courseId = UUID.randomUUID();
-        UUID studentId = UUID.randomUUID();
-
-        course = new Course(courseId, "test course");
-        student = new Student(studentId, "Test student");
-        String date = "08-13-2022";
-        Boolean withdrawn = false;
-
-        enroll = new Enrollment(course, student, date, withdrawn);
-
         assertEquals(courseId, course.courseId);
         assertEquals(studentId, student.studentId);
         assertEquals(enroll.getStudent(), student);
@@ -51,17 +46,6 @@ public class EnrollmentTests {
 
     @Test
     public void checkingCourseIsInEnrollment() {
-
-        UUID courseId = UUID.randomUUID();
-        UUID studentId = UUID.randomUUID();
-
-        course = new Course(courseId, "test course");
-        student = new Student(studentId, "Test student");
-        String date = "08-13-2022";
-        Boolean withdrawn = false;
-
-        enroll = new Enrollment(course, student, date, withdrawn);
-
         assertEquals(courseId, course.courseId);
         assertEquals(studentId, student.studentId);
         assertEquals(enroll.getCourse(), course);
@@ -69,17 +53,6 @@ public class EnrollmentTests {
 
     @Test
     public void checkingWithdrawnIsInEnrollment() {
-
-        UUID courseId = UUID.randomUUID();
-        UUID studentId = UUID.randomUUID();
-
-        course = new Course(courseId, "test course");
-        student = new Student(studentId, "Test student");
-        String date = "08-13-2022";
-        Boolean withdrawn = false;
-
-        enroll = new Enrollment(course, student, date, withdrawn);
-
         assertEquals(courseId, course.courseId);
         assertEquals(studentId, student.studentId);
         assertFalse(enroll.getWithdrawn());
@@ -105,27 +78,39 @@ public class EnrollmentTests {
 
     @Test
     public void getUnattemptedObjectivesTest(){
-        UUID courseId = UUID.randomUUID();
-        UUID studentId = UUID.randomUUID();
+        Course course2 = new Course(courseId, "test course");
+        Enrollment enroll2 = new Enrollment(course2, student);
 
-        course = new Course(courseId, "test course");
-        student = new Student(studentId, "Test student");
-        enroll = new Enrollment(course, student);
+        course2.objectives.add( "obj1");
+        course2.objectives.add("obj2");
 
-        course.objectives.add( "obj1");
-        course.objectives.add("obj2");
-
-        Attempt attempt = new Attempt("obj2", 1, enroll);
-        enroll.addAttempt(attempt);
+        Attempt attempt = new Attempt("obj2", 1, enroll2);
+        enroll2.addAttempt(attempt);
 
         ArrayList<String> objs = new ArrayList<>();
         objs.add("obj1");
 
-        ArrayList<String> unattemptedObjectives = enroll.getUnattemptedObjectives();
-        assertNotEquals(course.objectives, objs);
+        ArrayList<String> unattemptedObjectives = enroll2.getUnattemptedObjectives();
+        assertNotEquals(course2.objectives, objs);
         assertEquals(objs , unattemptedObjectives);
     }
 
+    @Test
+    public void deleteObjectFromEnrollment(){
+        Course course2 = new Course(courseId, "test course");
+        Enrollment enroll2 = new Enrollment(course, student);
+
+        course2.objectives.add( "obj1");
+        course2.objectives.add("obj2");
+
+        Attempt attempt = new Attempt("obj1", 1, enroll2);
+        Attempt attempt2 = new Attempt("obj2", 2, enroll2);
+        enroll2.addAttempt(attempt);
+        enroll2.addAttempt(attempt2);
+        enroll2.deleteObjective("obj2");
+
+        assertNull(enroll2.getAttemptMap().getAttemptList("obj2"));
+    }
 
     @Test
     public void computeObjectiveGradeTest(){
@@ -143,8 +128,7 @@ public class EnrollmentTests {
         enroll.addAttempt(attempt2);
         attempt.assignScore(2);
         attempt2.assignScore(3);
-        int objGrade = 0;
-        objGrade = enroll.computeObjectiveGrade(obj);
+        int objGrade = enroll.computeObjectiveGrade(obj);
         assertEquals(3, objGrade);
 
 
@@ -154,14 +138,12 @@ public class EnrollmentTests {
     public void enrollmentHasRemaingAttemptsField() {
         UUID courseId = UUID.randomUUID();
         UUID studentId = UUID.randomUUID();
-        course = new Course(courseId, "test course");
-        student = new Student(studentId, "Test student");
-        Course course2 = new Course(UUID.randomUUID(), "course2");
-        Student student2 = new Student(UUID.randomUUID(), "student2");
+        Course course1 = new Course(courseId, "test course");
+        Student student1 = new Student(studentId, "Test student");
         int remainingAttempts1 = 40;
         int remainingAttempts2 = 6;
-        Enrollment enrollment1 = new Enrollment(course, student, remainingAttempts1);
-        Enrollment enrollment2 = new Enrollment(course, student, remainingAttempts2);
+        Enrollment enrollment1 = new Enrollment(course1, student1, remainingAttempts1);
+        Enrollment enrollment2 = new Enrollment(course1, student1, remainingAttempts2);
         assertEquals(remainingAttempts1,enrollment1.getRemainingAttempts());
         assertEquals(remainingAttempts2,enrollment2.getRemainingAttempts());
     }

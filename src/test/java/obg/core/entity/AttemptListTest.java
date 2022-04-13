@@ -33,7 +33,6 @@ public class AttemptListTest extends TestCase {
 
     private Attempt getAttempt2() {
         AttemptRequestGateway gateway2 = mock(AttemptRequestGateway.class);
-        UUID randID2 = randomUUID();
         AttemptRequestRequest request2 = new AttemptRequestRequest("DoeJ24", randID, "L1");
         Course course2 = new Course(randID, "courseName");
         Student student2 = new Student(randomUUID(), request.studentId);

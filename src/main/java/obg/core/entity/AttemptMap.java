@@ -7,28 +7,22 @@ public class AttemptMap {
 
     HashMap<String, AttemptList> objectiveMap = new HashMap<>();
 
-    public void createObjectiveList(String obj, AttemptList attempts) {
-        add(obj, attempts);
-    }
-
     public void add(String obj, AttemptList attempts) {
-
         if (objectiveMap.containsKey(obj)) {
             objectiveMap.get(obj).addAll(attempts);
-        }
-        else {
+        } else {
             objectiveMap.put(obj, attempts);
         }
     }
 
-    public void add(String obj, Attempt attempt){
+    public void add(String obj, Attempt attempt) {
         if (!objectiveMap.containsKey(obj)) {
             objectiveMap.put(obj, new AttemptList());
         }
         objectiveMap.get(obj).add(attempt);
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return objectiveMap.isEmpty();
     }
 
@@ -47,5 +41,9 @@ public class AttemptMap {
     @Override
     public int hashCode() {
         return Objects.hash(objectiveMap);
+    }
+
+    public void deleteObjective(String object) {
+        objectiveMap.remove(object);
     }
 }

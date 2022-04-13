@@ -82,4 +82,18 @@ public class AttemptRequestTest {
         interactor.handle(request, presenter);
         verify(presenter).presentAttempt(attempt);
     }
+
+    @Test
+    public void canSubtractRemainingAttempts() {
+        Enrollment enrollment_3 = new Enrollment(course, student,40 );
+        when(gateway.getCourse(request.courseId)).thenReturn(course);
+        when(gateway.getStudent(request.studentId)).thenReturn(student);
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment_3);
+        when(gateway.objectiveInCourse(request.objective, request.courseId)).thenReturn(true);
+        when(gateway.getStudentIsEnrolled(request.studentId, request.courseId)).thenReturn(true);
+        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enrollment_3);
+        interactor.handle(request, presenter);
+        verify(presenter).presentAttempt(attempt);
+        assertEquals(39,enrollment_3.getRemainingAttempts());
+    }
 }

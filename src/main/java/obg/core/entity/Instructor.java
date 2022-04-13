@@ -40,7 +40,9 @@ public class Instructor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Instructor that = (Instructor) o;
-        return Objects.equals(instructorId, that.instructorId) && Objects.equals(first, that.first) && Objects.equals(last, that.last);
+        return Objects.equals(instructorId, that.instructorId)
+                && Objects.equals(first, that.first)
+                && Objects.equals(last, that.last);
     }
 
     @Override
