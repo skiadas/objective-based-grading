@@ -159,4 +159,18 @@ public class EnrollmentTests {
         assertEquals(39, enrollment1.getRemainingAttempts());
         assertEquals(5, enrollment2.getRemainingAttempts());
     }
+
+    @Test
+    public void computeObjectiveGroupGradeTest(){
+        course.addObjective(ObjectiveGroup.BASIC, "S1");
+        course.addObjective(ObjectiveGroup.BASIC, "S2");
+        Attempt attempt = new Attempt("S1", 1, enroll);
+        Attempt attempt2 = new Attempt("S2", 1, enroll);
+        enroll.addAttempt(attempt);
+        enroll.addAttempt(attempt2);
+        attempt.assignScore(2);
+        attempt2.assignScore(3);
+        int grade = enroll.computeObjectiveGroupGrade(ObjectiveGroup.BASIC);
+        assertEquals(2, grade);
+    }
 }

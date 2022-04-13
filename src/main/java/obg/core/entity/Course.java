@@ -35,7 +35,7 @@ public class Course {
     public GradeBreakPoints gradeBreaks = GradeBreakPoints.prePopulated();
 
     @Transient
-    public EnumMap<ObjectiveGroup, String> objectiveByGroups = new EnumMap<>(ObjectiveGroup.class);
+    public EnumMap<ObjectiveGroup, ArrayList<String>> objectivesByGroup = new EnumMap<>(ObjectiveGroup.class);
 
     protected Course() {
     }
@@ -91,25 +91,35 @@ public class Course {
     }
 
 
-    public String getObjectivesFor(ObjectiveGroup group) {
-
+    public ArrayList<String> getObjectivesFor(ObjectiveGroup group) {
         if (isValidObjectiveGroup(group)) {
-            return objectiveByGroups.get(group);
+            System.out.println(objectives);
+
+            return objectivesByGroup.get(group);
         } else {
             throw new RuntimeException(group.toString() + ": Not Found");
         }
     }
 
     public boolean isValidObjectiveGroup(ObjectiveGroup group) {
-        return objectiveByGroups.containsKey(group);
+        return objectivesByGroup.containsKey(group);
     }
 
     public void addObjective(ObjectiveGroup group, String obj) {
-        objectiveByGroups.put(group, obj);
+        if(objectivesByGroup.containsKey(group)) {
+            objectivesByGroup.get(group).add(objectivesByGroup.get(group).size()-1, obj);
+            ArrayList<String> objs = objectivesByGroup.get(group);
+            objectivesByGroup.put(group, objs);
+        }
+        else{
+            ArrayList<String> objs = new ArrayList<>();
+            objs.add(0, obj);
+            objectivesByGroup.put(group, objs);
+        }
     }
 
     public void removeObjective(ObjectiveGroup obj) {
-        objectiveByGroups.remove(obj);
+        objectivesByGroup.remove(obj);
     }
 
     public boolean isValidObjective(String objective) {

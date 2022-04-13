@@ -151,4 +151,14 @@ public class Enrollment {
     public void deleteObjective(String object) {
         attemptMap.deleteObjective(object);
     }
+
+    public int computeObjectiveGroupGrade(ObjectiveGroup objGroup) {
+        int lowestGrade = 4;
+        for(String obj : course.getObjectivesFor(objGroup)){
+            if( computeObjectiveGrade(obj) < lowestGrade){
+                lowestGrade = computeObjectiveGrade(obj);
+            }
+        }
+        return lowestGrade;
+    }
 }
