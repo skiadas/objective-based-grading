@@ -25,6 +25,7 @@ public class AttemptRequestInteractor implements Interactor {
             presenter.reportError(ErrorResponse.INVALID_OBJECTIVE);
         }
         Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enroll);
+        gateway.getEnrollment(request.courseId,request.studentId).removeRemainingAttempts();
         presenter.presentAttempt(attempt);
     }
 

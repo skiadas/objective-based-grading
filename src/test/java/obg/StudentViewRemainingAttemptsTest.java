@@ -84,4 +84,18 @@ public class StudentViewRemainingAttemptsTest {
         verify(presenter).presentRemainingAttempts(enrollment.getRemainingAttempts());
         verify(gateway).getEnrollment(request.courseId,request.studentId);
     }
+
+    @Test
+    public void canAddToRemainingAttempts() {
+        Enrollment enrollment = new Enrollment(course,student,40);
+        enrollment.addRemainingAttempts();
+        assertEquals(41,enrollment.getRemainingAttempts());
+    }
+
+    @Test
+    public void canRemoveRemainingAttempts() {
+        Enrollment enrollment = new Enrollment(course,student,40);
+        enrollment.removeRemainingAttempts();
+        assertEquals(39,enrollment.getRemainingAttempts());
+    }
 }
