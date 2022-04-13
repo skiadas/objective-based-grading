@@ -76,7 +76,7 @@ public class AttemptRequestTest {
     }
 
     @Test
-    public void checkInvalidAttemptNumberTest() {
+    public void checkInvalidAttemptNumberWithZeroTest() {
         Enrollment enrollment_4 = new Enrollment(course, student,0 );
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(request.studentId)).thenReturn(student);
@@ -88,4 +88,19 @@ public class AttemptRequestTest {
         verify(presenter).presentAttempt(attempt);
         verify(presenter).reportError(ErrorResponse.INVALID_ATTEMPTNUMBER);
     }
+
+    @Test
+    public void checkInvalidAttemptNumberWithNegative() {
+        Enrollment enrollment_4 = new Enrollment(course, student,-1 );
+        when(gateway.getCourse(request.courseId)).thenReturn(course);
+        when(gateway.getStudent(request.studentId)).thenReturn(student);
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment_4);
+        when(gateway.objectiveInCourse(request.objective, request.courseId)).thenReturn(true);
+        when(gateway.getStudentIsEnrolled(request.studentId, request.courseId)).thenReturn(true);
+        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enrollment_4);
+        interactor.handle(request, presenter);
+        verify(presenter).presentAttempt(attempt);
+        verify(presenter).reportError(ErrorResponse.INVALID_ATTEMPTNUMBER);
+    }
+
 }
