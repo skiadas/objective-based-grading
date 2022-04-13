@@ -160,8 +160,8 @@ public class SqlBackedGateway implements Gateway {
     }
 
     @Override
-    public void addStudent(String username) {
-
+    public void addStudent(Student username) {
+        save(username);
     }
 
     @Override

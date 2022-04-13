@@ -1,10 +1,7 @@
 package webserver;
 
 import obg.core.Presenter;
-import obg.core.entity.Attempt;
-import obg.core.entity.Course;
-import obg.core.entity.Enrollment;
-import obg.core.entity.Instructor;
+import obg.core.entity.*;
 import obg.response.TargetGradeRequirementsResponse;
 import spark.ModelAndView;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -68,6 +65,11 @@ public class ResultProducer implements Presenter {
 
     public void presentObjectiveGrade(int objGrade) {
         // TODO
+    }
+
+    @Override
+    public void presentAddedStudent(Student student) {
+
     }
 
     public void presentPendingAttempts() {

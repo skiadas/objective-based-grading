@@ -3,6 +3,7 @@ package obg.core;
 import obg.core.entity.Attempt;
 import obg.core.entity.Course;
 import obg.core.entity.Enrollment;
+import obg.core.entity.Student;
 import obg.presenter.InstructorCanDeleteAttemptPresenter;
 import obg.presenter.StudentViewRemainingAttemptsPresenter;
 import obg.response.TargetGradeRequirementsResponse;
@@ -31,4 +32,6 @@ public interface Presenter extends InstructorCanDeleteAttemptPresenter, StudentV
     void presentsRemovedStudent(Enrollment enrollment);
 
     void presentObjectiveGrade(int objGrade);
+
+    void presentAddedStudent(Student student);
 }

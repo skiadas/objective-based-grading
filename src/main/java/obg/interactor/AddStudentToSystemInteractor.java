@@ -2,6 +2,7 @@ package obg.interactor;
 
 import obg.core.ErrorResponse;
 import obg.core.Presenter;
+import obg.core.entity.Student;
 import obg.gateway.AddStudentToSystemGateway;
 import obg.request.AddStudentToSystemRequest;
 
@@ -18,7 +19,9 @@ public class AddStudentToSystemInteractor {
         if (gateway.getStudentUsername(request.userName) != null) {
             presenter.reportError(ErrorResponse.EXISTING_STUDENT);
         } else {
-            gateway.addStudent(request.userName);
+            Student student = new Student(request.userName);
+            gateway.addStudent(student);
+            presenter.presentAddedStudent(student);
         }
     }
 }

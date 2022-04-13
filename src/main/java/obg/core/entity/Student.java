@@ -33,6 +33,10 @@ public class Student {
         this.userName = givenStudent.userName;
     }
 
+    public Student(String userName) {
+        this(UUID.randomUUID(), userName);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,6 +52,10 @@ public class Student {
 
     public UUID getStudentId() {
         return studentId;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
 }
