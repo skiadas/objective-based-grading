@@ -104,7 +104,9 @@ public class SqlBackedGateway implements Gateway {
 
     @Override
     public Student getStudent(UUID studentId) {
-        return null;
+        TypedQuery<Student> q = em.createQuery("SELECT s FROM Student s WHERE s.studentId = :studentId", Student.class);
+        q.setParameter("studentId", studentId);
+        return q.getSingleResult();
     }
 
     @Override
