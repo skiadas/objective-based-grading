@@ -84,7 +84,7 @@ public class AttemptRequestTest {
     }
 
     @Test
-    public void canRemoveRemainingAttempts() {
+    public void canSubtractRemainingAttempts() {
         Enrollment enrollment_3 = new Enrollment(course, student,40 );
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(request.studentId)).thenReturn(student);

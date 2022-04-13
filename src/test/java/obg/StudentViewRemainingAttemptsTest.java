@@ -86,6 +86,21 @@ public class StudentViewRemainingAttemptsTest {
     }
 
     @Test
+    public void canAddToZeroAttempts() {
+        Enrollment enrollment = new Enrollment(course,student,0);
+        enrollment.addRemainingAttempts();
+        assertEquals(1,enrollment.getRemainingAttempts());
+    }
+
+    @Test
+    public void canSubtractRemainingAttemptsZero() {
+        Enrollment enrollment = new Enrollment(course,student,0);
+        enrollment.subtractRemainingAttempts();
+        assertEquals(-1,enrollment.getRemainingAttempts());
+    }
+    // This should not work this way
+
+    @Test
     public void canAddToRemainingAttempts() {
         Enrollment enrollment = new Enrollment(course,student,40);
         enrollment.addRemainingAttempts();
@@ -93,9 +108,11 @@ public class StudentViewRemainingAttemptsTest {
     }
 
     @Test
-    public void canRemoveRemainingAttempts() {
+    public void canSubtractRemainingAttempts() {
         Enrollment enrollment = new Enrollment(course,student,40);
-        enrollment.removeRemainingAttempts();
+        enrollment.subtractRemainingAttempts();
         assertEquals(39,enrollment.getRemainingAttempts());
     }
+
+    // in class: Check edge case of having zero remainingAttempts
 }

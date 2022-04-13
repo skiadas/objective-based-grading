@@ -77,7 +77,7 @@ public class Enrollment {
 
     public void addRemainingAttempts(){remainingAttempts++;}
 
-    public void removeRemainingAttempts(){remainingAttempts--;}
+    public void subtractRemainingAttempts(){remainingAttempts--;}
 
     public void addAttempt(Attempt attempt) {
         attemptMap.add(attempt.objective, attempt);
