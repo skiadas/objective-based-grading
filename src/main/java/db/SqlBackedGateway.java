@@ -34,14 +34,6 @@ public class SqlBackedGateway implements Gateway {
         return q.getSingleResult();
     }
 
-    public Enrollment getEnrolledStudent() {
-        return null;
-    }
-
-    public Course getEnrolledCourse() {
-        return null;
-    }
-
     public Student getStudent(String username) {
         TypedQuery<Student> q = em.createQuery("SELECT s FROM Student s WHERE s.userName = :username", Student.class);
         q.setParameter("username", username);

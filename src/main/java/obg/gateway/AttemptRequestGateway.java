@@ -19,7 +19,4 @@ public interface AttemptRequestGateway {
 
     Enrollment getEnrollment(UUID courseId, String studentId);
 
-    Enrollment getEnrolledStudent();
-
-    Course getEnrolledCourse();
 }

@@ -49,28 +49,6 @@ public class AttemptRequestTest {
     }
 
     @Test
-    public void checkInvalidStudentErrorTest() {
-        Enrollment enrollment_2 = new Enrollment(course, null, "12-15-2020", false);
-        when(gateway.getAttemptNumber()).thenReturn(1);
-        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment_2);
-        when(gateway.getEnrolledStudent()).thenReturn(null);
-        interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
-    }
-
-    @Test
-    public void CheckInvalidCourseErrorTest() {
-        Enrollment enrollment_2 = new Enrollment(null, student, "12-15-2020", false);
-        when(gateway.getAttemptNumber()).thenReturn(1);
-        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment_2);
-        when(gateway.getEnrolledCourse()).thenReturn(null);
-        interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
-    }
-
-
-
-    @Test
     public void VerifyPresenterIsCalledForNewAttempt(){
         when(gateway.getAttemptNumber()).thenReturn(1);
         when(gateway.getCourse(request.courseId)).thenReturn(course);
@@ -95,5 +73,19 @@ public class AttemptRequestTest {
         interactor.handle(request, presenter);
         verify(presenter).presentAttempt(attempt);
         assertEquals(39,enrollment_3.getRemainingAttempts());
+    }
+
+    @Test
+    public void checkInvalidAttemptNumberTest() {
+        Enrollment enrollment_4 = new Enrollment(course, student,0 );
+        when(gateway.getCourse(request.courseId)).thenReturn(course);
+        when(gateway.getStudent(request.studentId)).thenReturn(student);
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment_4);
+        when(gateway.objectiveInCourse(request.objective, request.courseId)).thenReturn(true);
+        when(gateway.getStudentIsEnrolled(request.studentId, request.courseId)).thenReturn(true);
+        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enrollment_4);
+        interactor.handle(request, presenter);
+        verify(presenter).presentAttempt(attempt);
+        verify(presenter).reportError(ErrorResponse.INVALID_ATTEMPTNUMBER);
     }
 }
