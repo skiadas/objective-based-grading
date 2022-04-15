@@ -38,7 +38,7 @@ public class instructorCanDeleteAttemptTest {
         instructorUUID = UUIDfromString(request.instructorId);
         attemptUUID = UUIDfromString(request.attemptId);
         instructor = new Instructor(request.instructorId, "first", "last");
-        enrollment = new Enrollment(new Course(UUID.randomUUID(), "course"), new Student(UUID.randomUUID(), "student"));
+        enrollment = new Enrollment(new Course(UUID.randomUUID(), "course"), new Student(UUID.randomUUID(), "student"),40);
         attempt = new Attempt("obj1", 1, enrollment);
     }
 
@@ -87,6 +87,17 @@ public class instructorCanDeleteAttemptTest {
         interactor.handle(request, presenter);
         verify(gateway, Mockito.times(1)).removeAttempt(attempt.getLongId());
         verify(presenter).presentSuccessfulRemove("Successfully Removed");
+    }
+
+    @Test
+    public void interactorAddsToAttemptsRemaning() {
+        when(gateway.getInstructor(instructorUUID)).thenReturn(instructor);
+        when(gateway.getAttempt(attemptUUID)).thenReturn(attempt);
+        enrollment.getCourse().setInstructor(instructor);
+        interactor.handle(request, presenter);
+        verify(gateway, Mockito.times(1)).removeAttempt(attempt.getLongId());
+        verify(presenter).presentSuccessfulRemove("Successfully Removed");
+        assertEquals(41,enrollment.getRemainingAttempts());
     }
 
     private UUID UUIDfromString(String stringId) {
