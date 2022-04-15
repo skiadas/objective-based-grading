@@ -23,9 +23,11 @@ public class SqlBackedGateway implements Gateway {
         return false;
     }
 
+    @Override
     public int getAttemptNumber() {
         return 0;
     }
+
 
     public Enrollment getEnrollment(UUID courseId, String studentId) {
         TypedQuery<Enrollment> q = em.createQuery("SELECT e FROM Enrollment e WHERE (e.student.studentId =:studentId) AND (e.course.courseId =: courseId)", Enrollment.class);

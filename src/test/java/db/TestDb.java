@@ -322,13 +322,31 @@ public class TestDb {
         gatewayFactory.doWithGateway(gateway -> {
                     gateway.addStudent(student1);
                     gateway.addStudent(student2);
+                }
+        );
+        gatewayFactory.doWithGateway(gateway -> {
             Student retrievedStudent1 = gateway.getStudent(studentId1);
             Student retrievedStudent2 = gateway.getStudent(studentId2);
             assertEquals(retrievedStudent1, student1);
             assertEquals(retrievedStudent2, student2);
+        });
+
+    }
+
+    @Test()
+    public void errorThrownWhenUserNameTaken(){
+        UUID studentId1 = randomUUID();
+        Student student1 = new Student(studentId1, "student1");
+        UUID studentId2 = randomUUID();
+        Student student2 = new Student(studentId2, "student1");
+        gatewayFactory.doWithGateway(gateway -> {
+                    gateway.addStudent(student1);
                 }
         );
-
+        gatewayFactory.doWithGateway(gateway -> {
+                    gateway.addStudent(student2);
+                }
+        );
     }
 
     private void printQueryResults(EntityManager em, String query) {

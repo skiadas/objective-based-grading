@@ -20,7 +20,12 @@ public class Attempt {
     @Basic
     String objective;
 
+    public int getAttemptNumber() {
+        return attemptNumber;
+    }
+
     @Basic
+    @Column(columnDefinition = "long", unique = true)
     int attemptNumber;
 
     @ManyToOne
