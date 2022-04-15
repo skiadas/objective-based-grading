@@ -54,6 +54,11 @@ public class ResultProducer implements Presenter {
         // TODO
     }
 
+    @Override
+    public void presentTargetGradeUnmetRequirements(List<ObjectiveGroup> unmetRequirements) {
+        // TODO
+    }
+
     public void presentPendingAttempts(List<Attempt> pendingAttempts) {
         // TODO
     }
