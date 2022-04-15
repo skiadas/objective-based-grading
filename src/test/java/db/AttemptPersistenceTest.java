@@ -20,7 +20,7 @@ public class AttemptPersistenceTest {
         String objective = "obj";
         int attemptNumber = 1;
         Course course = new Course(UUID.randomUUID(), "course");
-        Student student = new Student(UUID.randomUUID(), "student");
+        Student student = new Student(UUID.randomUUID(), UUID.randomUUID().toString());
         Enrollment enrollment = new Enrollment(course, student);
         Attempt attempt = new Attempt(objective, attemptNumber, enrollment);
         gatewayFactory.doWithGateway(gateway -> {

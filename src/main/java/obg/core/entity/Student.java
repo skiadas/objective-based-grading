@@ -16,6 +16,7 @@ public class Student {
     public UUID studentId;
 
     @Basic
+    @Column(unique = true)
     public String userName;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)

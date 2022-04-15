@@ -25,7 +25,7 @@ public class Attempt {
     }
 
     @Basic
-    @Column(columnDefinition = "long", unique = true)
+    @Column(columnDefinition = "long")
     int attemptNumber;
 
     @ManyToOne
