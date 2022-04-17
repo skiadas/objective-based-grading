@@ -54,7 +54,6 @@ public class AttemptRequestTest {
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(request.studentId)).thenReturn(student);
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment);
-        when(gateway.objectiveInCourse(request.objective, request.courseId)).thenReturn(true);
         when(gateway.getStudentIsEnrolled(request.studentId, request.courseId)).thenReturn(true);
         Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enrollment);
         interactor.handle(request, presenter);
@@ -67,7 +66,6 @@ public class AttemptRequestTest {
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(request.studentId)).thenReturn(student);
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment_3);
-        when(gateway.objectiveInCourse(request.objective, request.courseId)).thenReturn(true);
         when(gateway.getStudentIsEnrolled(request.studentId, request.courseId)).thenReturn(true);
         Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enrollment_3);
         interactor.handle(request, presenter);
@@ -81,7 +79,6 @@ public class AttemptRequestTest {
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(request.studentId)).thenReturn(student);
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment_4);
-        when(gateway.objectiveInCourse(request.objective, request.courseId)).thenReturn(true);
         when(gateway.getStudentIsEnrolled(request.studentId, request.courseId)).thenReturn(true);
         Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enrollment_4);
         interactor.handle(request, presenter);
@@ -95,7 +92,6 @@ public class AttemptRequestTest {
         when(gateway.getCourse(request.courseId)).thenReturn(course);
         when(gateway.getStudent(request.studentId)).thenReturn(student);
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment_4);
-        when(gateway.objectiveInCourse(request.objective, request.courseId)).thenReturn(true);
         when(gateway.getStudentIsEnrolled(request.studentId, request.courseId)).thenReturn(true);
         Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enrollment_4);
         interactor.handle(request, presenter);

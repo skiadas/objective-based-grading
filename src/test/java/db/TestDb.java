@@ -1,7 +1,7 @@
 package db;
 
 import obg.core.entity.*;
-import org.hibernate.exception.ConstraintViolationException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.persistence.*;
@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
+import static obg.core.entity.ObjectiveGroup.BASIC;
 import static org.junit.Assert.*;
 
 public class TestDb {

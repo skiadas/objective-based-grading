@@ -11,8 +11,6 @@ public interface AttemptRequestGateway {
 
     Student getStudent(String userName);
 
-    boolean objectiveInCourse(String objective, UUID courseId);
-
     boolean getStudentIsEnrolled(String userName, UUID courseId);
 
     int getAttemptNumber();

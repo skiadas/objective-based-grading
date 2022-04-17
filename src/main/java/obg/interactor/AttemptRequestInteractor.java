@@ -19,7 +19,7 @@ public class AttemptRequestInteractor implements Interactor {
         Enrollment enroll = gateway.getEnrollment(request.courseId, request.studentId);
         if (gateway.getEnrollment(request.courseId, request.studentId) == null){
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
-        } else if (!gateway.objectiveInCourse(request.objective, request.courseId)) {
+        } else if (!enroll.course.isValidObjective(request.objective)) {
             presenter.reportError(ErrorResponse.INVALID_OBJECTIVE);
         } else if (gateway.getAttemptNumber() <= 0) {
             presenter.reportError(ErrorResponse.INVALID_ATTEMPTNUMBER );
