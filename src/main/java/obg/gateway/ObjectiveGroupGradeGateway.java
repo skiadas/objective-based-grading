@@ -8,8 +8,6 @@ import java.util.UUID;
 
 public interface ObjectiveGroupGradeGateway {
 
-    Student getStudent(UUID studentId);
-    Course getCourse(UUID courseId);
-    Enrollment getEnrollment(UUID courseId, UUID studentID);
+    Enrollment getEnrollment(UUID courseId, String studentID);
 
 }

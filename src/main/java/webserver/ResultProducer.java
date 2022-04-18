@@ -77,6 +77,11 @@ public class ResultProducer implements Presenter {
 
     }
 
+    @Override
+    public void presentObjectiveGroupGrade(int objectiveGroupGrade) {
+
+    }
+
     public void presentPendingAttempts() {
         //TODO
     }

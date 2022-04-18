@@ -1,15 +1,12 @@
 package obg;
 
 import obg.core.ErrorResponse;
-import obg.core.entity.Course;
-import obg.core.entity.Enrollment;
-import obg.core.entity.Student;
+import obg.core.Presenter;
+import obg.core.entity.*;
 import obg.gateway.ObjectiveGroupGradeGateway;
 import obg.interactor.ObjectiveGroupGradeInteractor;
-import obg.presenter.ObjectiveGroupGradePresenter;
 import obg.request.ObjectiveGroupGradeRequest;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -21,57 +18,42 @@ public class ObjectiveGroupGradeTest {
     private ObjectiveGroupGradeRequest request;
     private ObjectiveGroupGradeInteractor interactor;
     private ObjectiveGroupGradeGateway gateway;
-    private ObjectiveGroupGradePresenter presenter;
-    private final UUID studentID = UUID.randomUUID();
-    private final UUID courseID = UUID.randomUUID();
-    private Student student;
-    private Course course;
+    private Presenter presenter;
+    private Enrollment enroll;
+    private Attempt attempt1;
+    private Attempt attempt2;
+    private int objGroupGrade;
 
     @Before
     public void setUp() {
-        course = new Course(courseID, "CS327");
-        student = new Student(studentID, "Jay");
-        request = new ObjectiveGroupGradeRequest(courseID, studentID, "L1");
+        request = new ObjectiveGroupGradeRequest(UUID.randomUUID(), "Joe", ObjectiveGroup.BASIC);
         gateway = mock(ObjectiveGroupGradeGateway.class);
-        presenter = mock(ObjectiveGroupGradePresenter.class);
-        interactor = new ObjectiveGroupGradeInteractor(gateway);
+        presenter = mock(Presenter.class);
+        interactor = new ObjectiveGroupGradeInteractor(gateway, presenter);
+        enroll = new Enrollment(new Course(request.courseID, "course1"), new Student(UUID.randomUUID(), request.studentID));
+        enroll.getCourse().addObjective(ObjectiveGroup.BASIC,"S1");
+        enroll.getCourse().addObjective(ObjectiveGroup.BASIC, "S2");
+        attempt1 = new Attempt("S1", 1, enroll);
+        attempt2 = new Attempt("S2", 1, enroll);
+        enroll.addAttempt(attempt1);
+        enroll.addAttempt(attempt2);
+        attempt1.assignScore(2);
+        attempt2.assignScore(3);
+        objGroupGrade = 2;
     }
 
     @Test
-    public void checkInvalidStudentTest() {
-        when(gateway.getStudent(studentID)).thenReturn(null);
-        interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.INVALID_STUDENT);
-        verify(gateway).getStudent(studentID);
-    }
-
-    @Test
-    public void checkInvalidCourseTest() {
-        when(gateway.getCourse(courseID)).thenReturn(null);
-        when(gateway.getStudent(studentID)).thenReturn(student);
-        interactor.handle(request, presenter);
-        verify(presenter).reportError(ErrorResponse.INVALID_COURSE);
-        verify(gateway).getCourse(courseID);
-    }
-
-    @Test
-    public void checkInvalidObjectiveTest() {
-        ObjectiveGroupGradeRequest request1 = new ObjectiveGroupGradeRequest(courseID, studentID, "J1");
-        when(gateway.getCourse(courseID)).thenReturn(course);
-        when(gateway.getStudent(studentID)).thenReturn(student);
-        interactor.handle(request1, presenter);
-        verify(presenter).reportError(ErrorResponse.INVALID_OBJECTIVE);
-    }
-
-    @Test
-    @Ignore
-    public void checkStudentIsNotInCourse() {
-        when(gateway.getCourse(courseID)).thenReturn(course);
-        when(gateway.getStudent(studentID)).thenReturn(student);
-        when(gateway.getEnrollment(courseID, studentID)).thenReturn(null);
-        interactor.handle(request, presenter);
+    public void InvalidEnrollmentTest(){
+        when(gateway.getEnrollment(request.courseID, request.studentID)).thenReturn(null);
+        interactor.handle(request);
         verify(presenter).reportError(ErrorResponse.INVALID_ENROLLMENT);
-        verify(gateway).getEnrollment(courseID, studentID);
+    }
+
+    @Test
+    public void ReturnObjectiveGroupGrade(){
+        when(gateway.getEnrollment(request.courseID, request.studentID)).thenReturn(enroll);
+        interactor.handle(request);
+        verify(presenter).presentObjectiveGroupGrade(objGroupGrade);
     }
 
 }

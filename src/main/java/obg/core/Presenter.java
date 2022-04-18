@@ -33,4 +33,6 @@ public interface Presenter extends InstructorCanDeleteAttemptPresenter, StudentV
     void presentObjectiveGrade(int objGrade);
 
     void presentAddedStudent(Student student);
+
+    void presentObjectiveGroupGrade(int objectiveGroupGrade);
 }
