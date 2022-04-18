@@ -1,70 +1,99 @@
 package obg;
 
-import obg.core.ErrorResponse;
 import obg.core.Presenter;
 import obg.core.entity.*;
 import obg.gateway.ViewUnmetRequirementTargetGradeGateway;
 import obg.interactor.ViewTargetGradeUnmetRequirementsInteractor;
 import obg.request.ViewUnmetRequirementTargetGradeRequest;
-import obg.response.TargetGradeRequirementsResponse;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
+import static java.util.UUID.randomUUID;
 import static org.mockito.Mockito.*;
 
 public class ViewUnmetRequirementTargetGradeInteractorTests {
-    private ViewUnmetRequirementTargetGradeRequest request;
-    private ViewUnmetRequirementTargetGradeGateway gateway;
     private ViewTargetGradeUnmetRequirementsInteractor interactor;
     private Presenter presenter;
+
+    private Attempt basicAttempt;
+    private Attempt coreAttempt;
+    private Attempt extraAttempt;
+
+    private ViewUnmetRequirementTargetGradeRequest request;
 
     @Before
     public void setUp() {
         presenter = mock(Presenter.class);
-        request = new ViewUnmetRequirementTargetGradeRequest("student", UUID.randomUUID(), "A");
+
+        Course course = new Course(randomUUID(), "courseName");
+        course.addObjective(ObjectiveGroup.BASIC, "basic");
+        course.addObjective(ObjectiveGroup.CORE, "core");
+        course.addObjective(ObjectiveGroup.EXTRA, "extra");
+
+        Student student = new Student(randomUUID(), "userName");
+        Enrollment enrollment = new Enrollment(course, student, "12-15-2020", false);
+
+        basicAttempt = new Attempt("basic", 1, enrollment);
+        coreAttempt = new Attempt("core", 1, enrollment);
+        extraAttempt = new Attempt("extra", 1, enrollment);
+
+        enrollment.addAttempt(basicAttempt);
+        enrollment.addAttempt(coreAttempt);
+        enrollment.addAttempt(extraAttempt);
+
+        ViewUnmetRequirementTargetGradeGateway gateway = mock(ViewUnmetRequirementTargetGradeGateway.class);
+        request = new ViewUnmetRequirementTargetGradeRequest(student.getStudentId().toString(), course.getCourseId(), "A");
+        when(gateway.getCourse(request.courseId)).thenReturn(course);
+        when(gateway.getStudent(request.studentId)).thenReturn(student);
+        when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enrollment);
+        interactor = new ViewTargetGradeUnmetRequirementsInteractor(gateway);
     }
 
     @Test
-    public void noRequirementsForTargetGrade() {
-        //when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(null);
-
-//        Attempt attempt = new Attempt("obj1", 1, enrollment);
-//        Attempt attemptAssigned = new Attempt("obj2", 1, enrollment);
-//        AttemptList expectedList = new AttemptList();
-//        enrollment.addAttempt(attemptAssigned);
-//        when(gateway.getEnrollment(course, student)).thenReturn(enrollment);
-//        interactor.handle(request, presenter);
-
-        // Need this:
-        //verify(presenter).presentTargetGradeUnmetRequirements(expectedList);
-    }
-
-    @Test
-    public void oneRequirementsForTargetGrade() {
-    }
-
-    @Test
-    public void twoRequirementsForTargetGrade() {
-    }
-
-    @Test
-    public void threeRequirementsForTargetGrade() {
-    }
-
-    private void assertGeneratesCorrectResponse(String grade, int b, int c, int e) {
-        ViewUnmetRequirementTargetGradeRequest request = new ViewUnmetRequirementTargetGradeRequest("student",UUID.randomUUID(), grade);
-        when(gateway.getCourse(request.courseId)).thenReturn(new Course(UUID.randomUUID(), "course"));
+    public void noUnmetRequirementsForTargetGrade() {
+        basicAttempt.assignScore(4);
+        coreAttempt.assignScore(4);
+        extraAttempt.assignScore(3);
         interactor.handle(request, presenter);
-        verify(presenter).presentTargetGradeRequirements(generateExpectedResponse(grade, b, c, e));
+        verify(presenter).presentTargetGradeUnmetRequirements(new ArrayList<>());
     }
 
-    private TargetGradeRequirementsResponse generateExpectedResponse(String grade, int b, int c, int e) {
-        TargetGradeRequirementsResponse expectedResponse = new TargetGradeRequirementsResponse(grade);
-        expectedResponse.objectiveRequirements.put(ObjectiveGroup.BASIC, b);
-        expectedResponse.objectiveRequirements.put(ObjectiveGroup.CORE, c);
-        expectedResponse.objectiveRequirements.put(ObjectiveGroup.EXTRA, e);
-        return expectedResponse;
+    @Test
+    public void basicUnmetRequirementForTargetGrade() {
+        basicAttempt.assignScore(3);
+        coreAttempt.assignScore(4);
+        extraAttempt.assignScore(3);
+        interactor.handle(request, presenter);
+        verify(presenter).presentTargetGradeUnmetRequirements(List.of(ObjectiveGroup.BASIC));
+    }
+
+    @Test
+    public void coreUnmetRequirementForTargetGrade() {
+        basicAttempt.assignScore(4);
+        coreAttempt.assignScore(3);
+        extraAttempt.assignScore(3);
+        interactor.handle(request, presenter);
+        verify(presenter).presentTargetGradeUnmetRequirements(List.of(ObjectiveGroup.CORE));
+    }
+
+    @Test
+    public void extraUnmetRequirementForTargetGrade() {
+        basicAttempt.assignScore(4);
+        coreAttempt.assignScore(4);
+        extraAttempt.assignScore(2);
+        interactor.handle(request, presenter);
+        verify(presenter).presentTargetGradeUnmetRequirements(List.of(ObjectiveGroup.EXTRA));
+    }
+
+    @Test
+    public void noRequirementsMetForTargetGrade() {
+        basicAttempt.assignScore(3);
+        coreAttempt.assignScore(3);
+        extraAttempt.assignScore(2);
+        interactor.handle(request, presenter);
+        verify(presenter).presentTargetGradeUnmetRequirements(List.of(ObjectiveGroup.BASIC, ObjectiveGroup.CORE, ObjectiveGroup.EXTRA));
     }
 }

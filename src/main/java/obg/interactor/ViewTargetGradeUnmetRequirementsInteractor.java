@@ -34,22 +34,15 @@ public class ViewTargetGradeUnmetRequirementsInteractor {
         } else {
             // All inputs are now validated
             EnumMap<ObjectiveGroup, Integer> targetRequirements = course.gradeBreaks.getScore(request.letterGrade);
-
-            int scoreBasic = enrollment.computeObjectiveGroupGrade(ObjectiveGroup.BASIC);
-            int scoreCore = enrollment.computeObjectiveGroupGrade(ObjectiveGroup.CORE);
-            int scoreExtra = enrollment.computeObjectiveGroupGrade(ObjectiveGroup.EXTRA);
-
             List<ObjectiveGroup> unmetRequirements = new ArrayList<>();
-            if (scoreBasic < targetRequirements.get(ObjectiveGroup.BASIC)) {
-                unmetRequirements.add(ObjectiveGroup.BASIC);
-            }
-            if (scoreCore < targetRequirements.get(ObjectiveGroup.CORE)) {
-                unmetRequirements.add(ObjectiveGroup.CORE);
-            }
-            if (scoreExtra < targetRequirements.get(ObjectiveGroup.EXTRA)) {
-                unmetRequirements.add(ObjectiveGroup.EXTRA);
-            }
 
+            for (ObjectiveGroup objectiveGroup : ObjectiveGroup.values()) {
+                int actualScore = enrollment.computeObjectiveGroupGrade(objectiveGroup);
+                int targetScore = targetRequirements.get(objectiveGroup);
+                if (actualScore < targetScore) {
+                    unmetRequirements.add(objectiveGroup);
+                }
+            }
             presenter.presentTargetGradeUnmetRequirements(unmetRequirements);
         }
     }
