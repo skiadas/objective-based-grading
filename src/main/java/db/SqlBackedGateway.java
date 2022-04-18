@@ -20,7 +20,12 @@ public class SqlBackedGateway implements Gateway {
     }
 
     public boolean getStudentIsEnrolled(String userName, UUID courseId) {
-        return false;
+        if(getEnrollment(courseId, userName)==null){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     @Override
@@ -162,6 +167,8 @@ public class SqlBackedGateway implements Gateway {
 
     @Override
     public Student getStudentUsername(String username) {
-        return null;
+        TypedQuery<Student> q = em.createQuery("SELECT s FROM Student s WHERE s.userName = :userName", Student.class);
+        q.setParameter("userName", username);
+        return q.getSingleResult();
     }
 }
