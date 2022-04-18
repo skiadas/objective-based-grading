@@ -1,9 +1,6 @@
 package obg.core;
 
-import obg.core.entity.Attempt;
-import obg.core.entity.Course;
-import obg.core.entity.Enrollment;
-import obg.core.entity.Student;
+import obg.core.entity.*;
 import obg.presenter.InstructorCanDeleteAttemptPresenter;
 import obg.presenter.StudentViewRemainingAttemptsPresenter;
 import obg.response.TargetGradeRequirementsResponse;
@@ -21,6 +18,8 @@ public interface Presenter extends InstructorCanDeleteAttemptPresenter, StudentV
 
     void presentTargetGradeRequirements(TargetGradeRequirementsResponse response);
 
+    void presentTargetGradeUnmetRequirements(List<ObjectiveGroup> unmetRequirements);
+
     void presentPendingAttempts(List<Attempt> pendingAttempts);
 
     void presentUnattemptedObjectives(List<String> objectives);
@@ -34,4 +33,6 @@ public interface Presenter extends InstructorCanDeleteAttemptPresenter, StudentV
     void presentObjectiveGrade(int objGrade);
 
     void presentAddedStudent(Student student);
+
+    void presentObjectiveGroupGrade(int objectiveGroupGrade);
 }

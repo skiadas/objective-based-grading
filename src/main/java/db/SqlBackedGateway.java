@@ -15,10 +15,6 @@ public class SqlBackedGateway implements Gateway {
         this.em = em;
     }
 
-    public boolean objectiveInCourse(String objective, UUID courseId) {
-        return false;
-    }
-
     public boolean getStudentIsEnrolled(String userName, UUID courseId) {
         if(getEnrollment(courseId, userName)==null){
             return false;

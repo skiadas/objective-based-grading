@@ -1,36 +1,27 @@
 package obg.interactor;
 
 import obg.core.ErrorResponse;
-import obg.core.entity.Course;
-import obg.core.entity.Enrollment;
-import obg.core.entity.Student;
+import obg.core.Presenter;
 import obg.gateway.ObjectiveGroupGradeGateway;
-import obg.presenter.ObjectiveGroupGradePresenter;
 import obg.request.ObjectiveGroupGradeRequest;
 
 public class ObjectiveGroupGradeInteractor {
 
     private final ObjectiveGroupGradeGateway gateway;
+    private final Presenter presenter;
 
-    public ObjectiveGroupGradeInteractor(ObjectiveGroupGradeGateway gateway) {
+    public ObjectiveGroupGradeInteractor(ObjectiveGroupGradeGateway gateway, Presenter presenter) {
+        this.presenter = presenter;
         this.gateway = gateway;
     }
 
-    public void handle(ObjectiveGroupGradeRequest request, ObjectiveGroupGradePresenter presenter) {
-        Student student = gateway.getStudent(request.studentID);
-        Course course = gateway.getCourse(request.courseID);
-        Enrollment enrollment = gateway.getEnrollment(request.courseID, request.studentID);
-
-        if (student == null) {
-            presenter.reportError(ErrorResponse.INVALID_STUDENT);
-        } else if (course == null) {
-            presenter.reportError(ErrorResponse.INVALID_COURSE);
-        } else if (!course.isValidObjective(request.objective)) {
-            presenter.reportError(ErrorResponse.INVALID_OBJECTIVE);
-        } else if (enrollment == null) {
+    public void handle(ObjectiveGroupGradeRequest request) {
+        if (gateway.getEnrollment(request.courseID, request.studentID ) == null) {
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
-        } else {
-
+        }
+        else {
+            int objectiveGroupGrade = gateway.getEnrollment( request.courseID, request.studentID).computeObjectiveGroupGrade(request.objGroup);
+            presenter.presentObjectiveGroupGrade(objectiveGroupGrade);
         }
     }
 }

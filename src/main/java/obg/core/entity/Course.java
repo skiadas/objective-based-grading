@@ -51,6 +51,10 @@ public class Course {
         this.courseName = courseName;
         students = new ArrayList<>();
     }
+    public Course(UUID courseId, String courseName, List<Student> students,
+                  EnumMap<ObjectiveGroup,ArrayList<String>> objectivslist){
+
+    }
 
     public Course(String courseName) {
         this(UUID.randomUUID(), courseName);
@@ -123,8 +127,12 @@ public class Course {
     }
 
     public boolean isValidObjective(String objective) {
-        List<String> objectiveList = new ArrayList<>(List.of("L1", "L2", "S1", "S2", "C1", "C2"));
-        return objectiveList.contains(objective);
+        for (ObjectiveGroup group :objectivesByGroup.keySet()) {
+            if(objectivesByGroup.get(group).contains(objective)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void removeStudent(Student student) {

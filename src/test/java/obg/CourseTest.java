@@ -40,4 +40,9 @@ public class CourseTest {
         course.getObjectivesFor(ObjectiveGroup.BASIC);
     }
 
+    @Test
+    public void isValidObjectiveGivenValidObjective() {
+        course.addObjective(ObjectiveGroup.CORE,"C1");
+        assertEquals(true,course.isValidObjective("C1"));
+    }
 }

@@ -6,15 +6,8 @@ import obg.core.entity.Student;
 
 import java.util.UUID;
 
-public interface AttemptRequestGateway {
+public interface ViewUnmetRequirementTargetGradeGateway {
+    Student getStudent(String studentId);
     Course getCourse(UUID courseId);
-
-    Student getStudent(String userName);
-
-    boolean getStudentIsEnrolled(String userName, UUID courseId);
-
-    int getAttemptNumber();
-
     Enrollment getEnrollment(UUID courseId, String studentId);
-
 }

@@ -1,6 +1,7 @@
 package db;
 
 import obg.core.entity.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
+import static obg.core.entity.ObjectiveGroup.BASIC;
 import static org.junit.Assert.*;
 
 public class TestDb {
@@ -23,8 +25,8 @@ public class TestDb {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("test");
         EntityManager em = factory.createEntityManager();
         UUID studentId = UUID.randomUUID();
-        Student student = new Student(studentId, "skiadas");
-        Student student2 = new Student(studentId, "skiadas2");
+        Student student = new Student(studentId, UUID.randomUUID().toString());
+        Student student2 = new Student(studentId, UUID.randomUUID().toString());
         em.getTransaction().begin();
         em.persist(student);
         em.persist(student2);
@@ -34,22 +36,23 @@ public class TestDb {
     @Test
     public void testCanConnect() {
         UUID studentId = UUID.randomUUID();
-        Student student = new Student(studentId, "skiadas");
+        Student student = new Student(studentId, UUID.randomUUID().toString());
         gatewayFactory.doWithGateway(gateway -> gateway.save(student));
     }
 
     @Test
     public void canFindStudentByUsername() {
         UUID studentId = UUID.randomUUID();
-        Student student = new Student(studentId, "skiadas");
+        String username = studentId.toString();
+        Student student = new Student(studentId, username);
         gatewayFactory.doWithGateway(gateway -> {
             gateway.save(student);
-            gateway.save(new Student(UUID.randomUUID(), "anotherStudent"));
-            gateway.save(new Student(UUID.randomUUID(), "yetAnotherStudent"));
+            gateway.save(randomStudent());
+            gateway.save(randomStudent());
         });
         gatewayFactory.doWithGateway(gateway -> {
-            Student retrievedStudent = gateway.getStudent("skiadas");
-            assertEquals("skiadas", retrievedStudent.userName);
+            Student retrievedStudent = gateway.getStudent(username);
+            assertEquals(username, retrievedStudent.userName);
             assertEquals(student, retrievedStudent);
         });
     }
@@ -80,8 +83,8 @@ public class TestDb {
 
     @Test
     public void canEnrollStudentsInCourses() {
-        Student student1 = new Student(UUID.randomUUID(), "joe23");
-        Student student2 = new Student(UUID.randomUUID(), "jane24");
+        Student student1 = randomStudent();
+        Student student2 = randomStudent();
         Course course1 = new Course(UUID.randomUUID(), "course1");
         Course course2 = new Course(UUID.randomUUID(), "course2");
         gatewayFactory.doWithGateway(gateway -> {
@@ -119,9 +122,9 @@ public class TestDb {
     @Test
     public void canGetStudentCourses(){
         UUID student1Id = randomUUID();
-        Student student1 = new Student(student1Id, "joe23" + student1Id);
+        Student student1 = new Student(student1Id, UUID.randomUUID().toString() + student1Id);
         UUID student2Id = randomUUID();
-        Student student2 = new Student(student2Id, "jane24" + student2Id);
+        Student student2 = new Student(student2Id, UUID.randomUUID().toString() + student2Id);
         UUID course1ID = randomUUID();
         Course course1 = new Course(course1ID, "course1" + course1ID);
         UUID course2ID = randomUUID();
@@ -151,9 +154,9 @@ public class TestDb {
     @Test
     public void canGetEnrollmentFromGateway(){
         UUID student1Id = randomUUID();
-        Student student1 = new Student(student1Id, "joe23" + student1Id);
+        Student student1 = new Student(student1Id, UUID.randomUUID().toString() + student1Id);
         UUID student2Id = randomUUID();
-        Student student2 = new Student(student2Id, "jane24" + student2Id);
+        Student student2 = new Student(student2Id, UUID.randomUUID().toString() + student2Id);
         UUID course1ID = randomUUID();
         Course course1 = new Course(course1ID, "course1" + course1ID);
         UUID course2ID = randomUUID();
@@ -176,9 +179,9 @@ public class TestDb {
     @Test
     public void canRemoveStudentFromCourse(){
         UUID student1Id = randomUUID();
-        Student student1 = new Student(student1Id, "joe23" + student1Id);
+        Student student1 = new Student(student1Id, UUID.randomUUID().toString() + student1Id);
         UUID student2Id = randomUUID();
-        Student student2 = new Student(student2Id, "jane24" + student2Id);
+        Student student2 = new Student(student2Id, UUID.randomUUID().toString() + student2Id);
         UUID course1ID = randomUUID();
         Course course1 = new Course(course1ID, "course1" + course1ID);
         UUID course2ID = randomUUID();
@@ -255,7 +258,7 @@ public class TestDb {
     @Test
     public void canAddEnrollment() {
         Course course = new Course(UUID.randomUUID(),"course");
-        Student student = new Student(UUID.randomUUID(), "student");
+        Student student = randomStudent();
         Enrollment enrollment = new Enrollment(course, student);
         gatewayFactory.doWithGateway(gateway ->  {
             gateway.save(course);
@@ -289,8 +292,8 @@ public class TestDb {
     public void canSaveAttempt() {
         Course course1 = new Course(UUID.randomUUID(),"course1");
         Course course2 = new Course(UUID.randomUUID(),"course2");
-        Student student1 = new Student(UUID.randomUUID(), "student1");
-        Student student2 = new Student(UUID.randomUUID(), "student2");
+        Student student1 = randomStudent();
+        Student student2 = randomStudent();
         Enrollment enrollment1 = new Enrollment(course1, student2);
         Enrollment enrollment2 = new Enrollment(course2, student2);
         Attempt attempt1 = new Attempt("obj1", 1, enrollment1);
@@ -316,9 +319,9 @@ public class TestDb {
     @Test
     public void canAddStudentsToSystem() {
         UUID studentId1 = randomUUID();
-        Student student1 = new Student(studentId1, "student1");
+        Student student1 = new Student(studentId1, UUID.randomUUID().toString());
         UUID studentId2 = randomUUID();
-        Student student2 = new Student(studentId2, "student2");
+        Student student2 = new Student(studentId2, UUID.randomUUID().toString());
         gatewayFactory.doWithGateway(gateway -> {
                     gateway.addStudent(student1);
                     gateway.addStudent(student2);
@@ -333,12 +336,11 @@ public class TestDb {
 
     }
 
-    @Test()
+    @Test(expected = Exception.class)
     public void errorThrownWhenUserNameTaken(){
-        UUID studentId1 = randomUUID();
-        Student student1 = new Student(studentId1, "student1");
-        UUID studentId2 = randomUUID();
-        Student student2 = new Student(studentId2, "student1");
+        String userName = randomUUID().toString();
+        Student student1 = new Student(randomUUID(), userName);
+        Student student2 = new Student(randomUUID(), userName);
         gatewayFactory.doWithGateway(gateway -> {
                     gateway.addStudent(student1);
                 }
@@ -365,6 +367,10 @@ public class TestDb {
             System.out.println();
         });
         System.out.println("====================================");
+    }
+
+    private Student randomStudent() {
+        return new Student(UUID.randomUUID(), UUID.randomUUID().toString());
     }
 }
 
