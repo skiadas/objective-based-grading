@@ -351,6 +351,29 @@ public class TestDb {
         );
     }
 
+    @Test
+    public void getStudentIsEnrolledIsTrueIfStudentIsEnrolled(){
+        Course course1 = new Course(UUID.randomUUID(),"course1");
+        Course course2 = new Course(UUID.randomUUID(),"course2");
+        Student student1 = randomStudent();
+        Student student2 = randomStudent();
+        Enrollment enrollment1 = new Enrollment(course1, student1);
+        Enrollment enrollment2 = new Enrollment(course2, student2);
+
+        gatewayFactory.doWithGateway(gateway ->{
+            gateway.save(course1);
+            gateway.save(course2);
+            gateway.save(student1);
+            gateway.save(student2);
+            gateway.save(enrollment1);
+        });
+        gatewayFactory.doWithGateway(gateway ->{
+
+            assertTrue(gateway.getStudentIsEnrolled(student1.userName, course1.getCourseId()));
+            assertFalse(gateway.getStudentIsEnrolled(student2.userName, course2.getCourseId()));
+        });
+    }
+
     private void printQueryResults(EntityManager em, String query) {
         List<Object[]> resultList = em.createQuery(query).getResultList();
         printList(query, resultList);

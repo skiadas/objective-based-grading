@@ -5,6 +5,7 @@ import obg.gateway.Gateway;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,12 +17,12 @@ public class SqlBackedGateway implements Gateway {
     }
 
     public boolean getStudentIsEnrolled(String userName, UUID courseId) {
-        if(getEnrollment(courseId, userName)==null){
-            return false;
-        }
-        else{
-            return true;
-        }
+        TypedQuery<Long> q = em.createQuery("SELECT count(e) FROM Enrollment e WHERE (e.student.userName =:userName) AND (e.course.courseId =: courseId)", Long.class);
+        q.setParameter("userName",  userName);
+        q.setParameter("courseId", courseId);
+        List e = q.getResultList();
+        System.out.println(e.get(0));
+        return (Long) (e).get(0) != 0;
     }
 
     @Override
