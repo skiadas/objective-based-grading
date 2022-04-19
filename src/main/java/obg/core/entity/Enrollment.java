@@ -100,9 +100,9 @@ public class Enrollment {
 
     public ArrayList<String> getUnattemptedObjectives() {
         ArrayList<String> objs = new ArrayList<>();
-        for (String obj : course.objectives) {
-            if (!getAttemptMap().objectiveMap.containsKey(obj)) {
-                objs.add(obj);
+        for (Object obj : course.objectivesByGroup.values().toArray()) {
+            if (getAttemptMap().objectiveMap.containsKey(obj.toString())) {
+                objs.add(obj.toString());
             }
         }
         return objs;

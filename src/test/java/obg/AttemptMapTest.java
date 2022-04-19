@@ -1,17 +1,16 @@
 package obg;
 
-import obg.core.Presenter;
 import obg.core.entity.*;
 import obg.gateway.AttemptRequestGateway;
-import obg.interactor.ObjectiveGradeInteractor;
 import obg.request.ObjectiveGradeRequest;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
-
 import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class AttemptMapTest {
     public UUID randId;

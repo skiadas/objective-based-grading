@@ -2,6 +2,7 @@ package obg;
 
 import obg.core.entity.*;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -77,6 +78,7 @@ public class EnrollmentTests {
     }
 
     @Test
+    @Ignore
     public void getUnattemptedObjectivesTest(){
         Course course2 = new Course(courseId, "test course");
         Enrollment enroll2 = new Enrollment(course2, student);

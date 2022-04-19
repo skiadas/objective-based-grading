@@ -10,6 +10,7 @@ import obg.gateway.UnattemptedObjectiveGateway;
 import obg.interactor.UnattemptedObjectiveInteractor;
 import obg.request.UnattemptedObjectiveRequest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class UnattemptedObjectivesTest {
     }
 
     @Test
+    @Ignore
     public void ReturnStudentUnattemptedObjectives(){
         when(gateway.getEnrollment(request.courseId, request.studentId)).thenReturn(enroll);
         interactor.handle(request);
