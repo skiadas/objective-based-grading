@@ -5,7 +5,6 @@ import obg.gateway.Gateway;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

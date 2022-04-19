@@ -17,15 +17,15 @@ public class AttemptRequestInteractor implements Interactor {
 
     public void handle(AttemptRequestRequest request, Presenter presenter) {
         Enrollment enroll = gateway.getEnrollment(request.courseId, request.studentId);
+        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enroll);
         if (gateway.getEnrollment(request.courseId, request.studentId) == null){
             presenter.reportError(ErrorResponse.INVALID_ENROLLMENT);
         } else if (!enroll.course.isValidObjective(request.objective)) {
             presenter.reportError(ErrorResponse.INVALID_OBJECTIVE);
-        } else if (gateway.getAttemptNumber() <= 0) {
+        } else if (attempt.getAttemptNumber() <= 0) {
             presenter.reportError(ErrorResponse.INVALID_ATTEMPTNUMBER );
 
         }
-        Attempt attempt = new Attempt(request.objective, gateway.getAttemptNumber(), enroll);
         gateway.getEnrollment(request.courseId,request.studentId).subtractRemainingAttempts();
         presenter.presentAttempt(attempt);
     }
